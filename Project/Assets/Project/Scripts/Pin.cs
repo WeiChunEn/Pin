@@ -7,6 +7,7 @@ using UnityEngine;
 public class Pin : MonoBehaviour
 {
     public float _fSpeed;
+    public GameObject _gCheck_Point;
     private Rigidbody2D _rb;
     // Use this for initialization
     void Start()
@@ -26,8 +27,13 @@ public class Pin : MonoBehaviour
     {
         if(col.tag == "Ball")
         {
+
+            _gCheck_Point.transform.SetParent(col.transform);
             _rb.velocity = Vector2.zero;
             transform.SetParent(col.transform);
+           
+            print(Mathf.Atan2(_gCheck_Point.transform.localPosition.y, _gCheck_Point.transform.localPosition.x)*180/Mathf.PI);
+           
         }
     }
 }
