@@ -29,7 +29,8 @@ public class ShopState : ISceneState
         Home_Btn.onClick.AddListener(delegate ()
         {
             Debug.Log("Test");
-            OnHomeBtnClick(Home_Btn); });
+            OnHomeBtnClick(Home_Btn);
+        });
 
         Debug.Log(Home_Btn.name);
     }
@@ -38,7 +39,7 @@ public class ShopState : ISceneState
     {
        
         Debug.Log(Click_Btn.name);
-        m_Manager.SetState(new StartState(m_Manager), "StartScene");
+        m_Manager.SetState(new MainState(m_Manager), "MainScene");
     }
 
 

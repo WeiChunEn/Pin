@@ -22,14 +22,14 @@ public class LevelState : ISceneState
         Button Home_Btn = GameObject.Find("Home_Btn").GetComponent<Button>();
         Home_Btn.onClick.AddListener(() => OnHomeBtnClick(Home_Btn));
 
-        Debug.Log(Home_Btn.name);
+       // Debug.Log(Home_Btn.name);
     }
 
     public void OnHomeBtnClick(Button Click_Btn)
     {
 
         Debug.Log(Click_Btn.name);
-        m_Manager.SetState(new StartState(m_Manager), "StartScene");
+        m_Manager.SetState(new MainState(m_Manager), "MainScene");
     }
 
 }

@@ -7,14 +7,27 @@ public class SceneStateManager
 {
     private ISceneState m_State;
     private bool m_bRunBegin = false;
-
+    private string m_LoadSceneName;
+    private AsyncOperation asyncOperation;
+    private int displayProgress;
+    
     public SceneStateManager()
     { }
 
     // 設定狀態
     public void SetState(ISceneState State, string LoadSceneName)
     {
+       // Debug.Log(12332);
+        if (LoadSceneName!="")
+        {
+            m_LoadSceneName = LoadSceneName;
+        }
+        else
+        {
+            m_LoadSceneName = "StartScene";
+        }
         Debug.Log ("SetState:"+State.ToString());
+      //  Debug.Log(m_LoadSceneName);
         m_bRunBegin = false;
 
         // 載入場景
@@ -31,27 +44,44 @@ public class SceneStateManager
     // 載入場景
     private void LoadScene(string LoadSceneName)
     {
+
         if (LoadSceneName == null || LoadSceneName.Length == 0)
             return;
+
         SceneManager.LoadScene(LoadSceneName);
-        
+       
     }
 
     // 更新
     public void StateUpdate()
     {
-        // 是否還在載入
+
+
         if (Application.isLoadingLevel)
-           return;
+        {
+            return;
+        }
+
+
+        //是否還在載入
+
+
+
 
         // 通知新的State開始
         if (m_State != null && m_bRunBegin == false)
         {
+           
             m_State.StateBegin();
             m_bRunBegin = true;
+            
         }
 
         if (m_State != null)
+        {
+            
             m_State.StateUpdate();
+        }
+            
     }
 }

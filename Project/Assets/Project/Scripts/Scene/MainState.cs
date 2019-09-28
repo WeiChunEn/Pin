@@ -1,0 +1,45 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class MainState : ISceneState
+{
+    public MainState(SceneStateManager Manager):base(Manager)
+    {
+        this.StateName = "MainScene";
+    }
+    public override void StateBegin()
+    {
+        //取得按鈕
+        Find_Btn();
+        
+    }
+    private void Find_Btn()
+    {
+        Button Start_Btn = GameObject.Find("Start_Btn").GetComponent<Button>();
+        Button Limit_Btn = GameObject.Find("Limit_Btn").GetComponent<Button>();
+        Button Shop_Btn = GameObject.Find("Shop_Btn").GetComponent<Button>();
+        Start_Btn.onClick.AddListener(() => OnLevelBtnClick(Start_Btn));
+        Limit_Btn.onClick.AddListener(() => OnLimitBtnClick(Limit_Btn));
+        Shop_Btn.onClick.AddListener(() => OnShopBtnClick(Shop_Btn));
+    }
+    private void OnLevelBtnClick(Button Click_Btn)
+    {
+        Debug.Log(Click_Btn.name);
+        m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
+    }
+    private void OnShopBtnClick(Button Click_Btn)
+    {
+        Debug.Log(Click_Btn.name);
+        m_Manager.SetState(new ShopState(m_Manager), "ShopScene");
+    }
+    private void OnLimitBtnClick(Button Click_Btn)
+    {
+        Debug.Log(Click_Btn.name);
+       // m_Manager.SetState(new LimitState(m_Manager), "LimitScene");
+    }
+
+
+   
+}

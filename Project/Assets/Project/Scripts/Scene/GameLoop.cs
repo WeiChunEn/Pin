@@ -21,6 +21,7 @@ public class GameLoop : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         // 設定起始的場景
         m_SceneStateManager.SetState(new StartState(m_SceneStateManager), "");
     }
