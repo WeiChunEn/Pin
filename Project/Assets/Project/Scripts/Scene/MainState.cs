@@ -37,7 +37,7 @@ public class MainState : ISceneState
     private void OnLimitBtnClick(Button Click_Btn)
     {
         Debug.Log(Click_Btn.name);
-       // m_Manager.SetState(new LimitState(m_Manager), "LimitScene");
+        m_Manager.SetState(new LimitState(m_Manager), "LimitScene");
     }
 
 

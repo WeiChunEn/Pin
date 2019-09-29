@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Project/Scene/LevelScene.unity
     guid: f2b4e6c2543bbed4794195ca54a40be6
   - enabled: 1
+    path: Assets/Project/Scene/LimitScene.unity
+    guid: 1d7291a942f97e04d9b5523c299d8a36
+  - enabled: 1
     path: Assets/Project/Scene/ShopScene.unity
     guid: bab5e6ad65d45dc47bdd98591fa5e2e1
   - enabled: 1
