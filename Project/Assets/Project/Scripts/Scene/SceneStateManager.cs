@@ -17,17 +17,17 @@ public class SceneStateManager
     // 設定狀態
     public void SetState(ISceneState State, string LoadSceneName)
     {
-       // Debug.Log(12332);
-        if (LoadSceneName!="")
-        {
-            m_LoadSceneName = LoadSceneName;
-        }
-        else
-        {
-            m_LoadSceneName = "StartScene";
-        }
+        m_LoadSceneName = LoadSceneName;
+        //if (LoadSceneName!="")
+        //{
+        //    m_LoadSceneName = LoadSceneName;
+        //}
+        //else
+        //{
+        //    m_LoadSceneName = "StartScene";
+        //}
         Debug.Log ("SetState:"+State.ToString());
-      //  Debug.Log(m_LoadSceneName);
+      
         m_bRunBegin = false;
 
         // 載入場景
@@ -45,8 +45,8 @@ public class SceneStateManager
     private void LoadScene(string LoadSceneName)
     {
 
-        if (LoadSceneName == null || LoadSceneName.Length == 0)
-            return;
+        //if (LoadSceneName == null || LoadSceneName.Length == 0)
+        //    return;
 
         SceneManager.LoadScene(LoadSceneName);
        

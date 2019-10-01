@@ -20,9 +20,11 @@ public class MainState : ISceneState
         Button Start_Btn = GameObject.Find("Start_Btn").GetComponent<Button>();
         Button Limit_Btn = GameObject.Find("Limit_Btn").GetComponent<Button>();
         Button Shop_Btn = GameObject.Find("Shop_Btn").GetComponent<Button>();
+        Button Leave_Btn = GameObject.Find("Leave_Btn").GetComponent<Button>();
         Start_Btn.onClick.AddListener(() => OnLevelBtnClick(Start_Btn));
         Limit_Btn.onClick.AddListener(() => OnLimitBtnClick(Limit_Btn));
         Shop_Btn.onClick.AddListener(() => OnShopBtnClick(Shop_Btn));
+        Leave_Btn.onClick.AddListener(() => OnLeaveBtnClick(Leave_Btn));
     }
     private void OnLevelBtnClick(Button Click_Btn)
     {
@@ -38,6 +40,11 @@ public class MainState : ISceneState
     {
         Debug.Log(Click_Btn.name);
         m_Manager.SetState(new LimitState(m_Manager), "LimitScene");
+    }
+    private void OnLeaveBtnClick(Button Click_Btn)
+    {
+        Debug.Log(Click_Btn.name);
+        Application.Quit();
     }
 
 

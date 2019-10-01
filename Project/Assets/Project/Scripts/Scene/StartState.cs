@@ -14,6 +14,7 @@ public class StartState : ISceneState
     }
     public override void StateUpdate()
     {
+
         m_Manager.SetState(new MainState(m_Manager), "MainScene");
     }
 

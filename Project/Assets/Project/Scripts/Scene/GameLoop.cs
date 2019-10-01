@@ -14,16 +14,15 @@ public class GameLoop : MonoBehaviour
         // 切換場景不會被刪除
         GameObject.DontDestroyOnLoad(this.gameObject);
 
-        // 亂數種子
-        //UnityEngine.Random.seed = (int)DateTime.Now.Ticks;
+       
     }
 
     // Use this for initialization
     void Start()
     {
-
+        m_SceneStateManager.SetState(new MainState(m_SceneStateManager), "MainScene");
         // 設定起始的場景
-        m_SceneStateManager.SetState(new StartState(m_SceneStateManager), "");
+        //m_SceneStateManager.SetState(new StartState(m_SceneStateManager), "");
     }
 
     // Update is called once per frame
