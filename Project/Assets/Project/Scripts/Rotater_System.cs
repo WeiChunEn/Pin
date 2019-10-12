@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class Rotater_System : MonoBehaviour
 {
     public float _fSpeed;
     // Use this for initialization
