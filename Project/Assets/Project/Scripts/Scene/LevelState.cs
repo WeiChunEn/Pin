@@ -21,10 +21,13 @@ public class LevelState : ISceneState
 
         Button Home_Btn = GameObject.Find("Home_Btn").GetComponent<Button>();
         Button Shop_Btn = GameObject.Find("Shop_Btn").GetComponent<Button>();
+        Button Sound_Btn = GameObject.Find("Sound_Btn").GetComponent<Button>();
         Button Level_1_Btn = GameObject.Find("Level_1").GetComponent<Button>();
         Home_Btn.onClick.AddListener(() => OnHomeBtnClick(Home_Btn));
         Shop_Btn.onClick.AddListener(() => OnShopBtnClick(Shop_Btn));
         Level_1_Btn.onClick.AddListener(() => OnLevel_1_BtnClick(Level_1_Btn));
+        Sound_Btn.onClick.AddListener(() => OnSoundBtnClick(Sound_Btn));
+
 
         // Debug.Log(Home_Btn.name);
     }
@@ -46,5 +49,16 @@ public class LevelState : ISceneState
         Debug.Log(Click_Btn.name);
         m_Manager.SetState(new GameState(m_Manager), "GameScene");
     }
+    private void OnSoundBtnClick(Button Click_Btn)
+    {
+        if (Click_Btn.gameObject.GetComponent<Image>().sprite.name == "SoundOn")
+        {
+            Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOff");
+        }
+        else
+        {
+            Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOn");
+        }
 
+    }
 }
