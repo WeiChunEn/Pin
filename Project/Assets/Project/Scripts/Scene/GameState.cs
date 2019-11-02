@@ -11,12 +11,12 @@ public class GameState : ISceneState
     }
     public override void StateBegin()
     {
-        Project.Instance.Initinal();
+        Ass.Instance.Initinal();
         Find_Btn();
     }
     public override void StateUpdate()
     {
-        Project.Instance.Update();
+        Ass.Instance.Update();
     }
     private void Find_Btn()
     {
