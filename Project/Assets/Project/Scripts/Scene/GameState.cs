@@ -35,6 +35,8 @@ public class GameState : ISceneState
     {
 
         Debug.Log(Click_Btn.name);
+       // Ass.Instance._sClear_Type = "two";
+        Ass.Instance.Load_Level();
         m_Manager.SetState(new MainState(m_Manager), "MainScene");
     }
 }
