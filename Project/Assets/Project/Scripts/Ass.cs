@@ -33,6 +33,7 @@ public class Ass
         if (Input.GetButtonDown("Fire1"))
         {
             Create_Pin();
+            //
         }
     }
 
