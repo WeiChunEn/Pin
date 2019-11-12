@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GameSystem 
+public abstract class GameSystem
 {
     protected Ass m_Ass = null;
     public GameSystem(Ass ass)

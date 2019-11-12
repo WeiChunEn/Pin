@@ -112,8 +112,8 @@ public class LevelState : ISceneState
     private void OnLevel_BtnClick(Button Click_Btn)
     {
         Debug.Log(Click_Btn.name);
-        Ass.Instance._iNow_Level = Int32.Parse(Click_Btn.name)-1;
-      
+        Ass.Instance._iNow_Level = Int32.Parse(Click_Btn.name);
+        
         m_Manager.SetState(new GameState(m_Manager), "GameScene");
     }
     private void OnSoundBtnClick(Button Click_Btn)

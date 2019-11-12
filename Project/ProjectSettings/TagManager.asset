@@ -7,6 +7,7 @@ TagManager:
   - Ball
   - true
   - false
+  - Pin
   layers:
   - Default
   - TransparentFX

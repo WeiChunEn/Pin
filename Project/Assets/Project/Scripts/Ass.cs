@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Ass
 {
     private GameObject m_Pin;
     private GameObject m_Spawn;
-    private Pin_System m_Pin_System = null;
-    private Rotater_System m_Rotater_System = null;
+    public  Rotater_System m_Rotater_System = null;
     private PlayerSystem m_Player_Ststem = null;
+    private LevelSystem m_Level_System = null;
+    public bool _bGame_Start;
+    private int m_Pin_Num;
+    
     public int _iNow_Level;
     public string[] _sClear_Level = new string[15];
     public string[,] _sLevel_Star=new string[15, 3];
     public string _sClear_Type;
+
+    public int _iPlayer_Point;
+    public int _iLevel_Point;
     //private enum Clear_Type
     //{
     //    fail,
@@ -21,7 +28,7 @@ public class Ass
     //    three
     //}
     //public string _sClear_Type;
-    private LevelSystem m_Level_System = null;
+   
     //Singleton
     private static Ass _instance;
     public static Ass Instance
@@ -37,30 +44,44 @@ public class Ass
 
     public void Initinal()
     {
-        
+        _bGame_Start = false;
         m_Pin = Resources.Load<GameObject>("Prefebs/Pin");
-        m_Spawn = GameObject.Find("Spawn");
-         m_Level_System = new LevelSystem(this);
-        //m_Pin_System = new Pin_System(this);
-        m_Player_Ststem = new PlayerSystem(this);
         
+         m_Level_System = new LevelSystem(this);
+        m_Player_Ststem = new PlayerSystem(this);
+        m_Rotater_System = new Rotater_System(this);
+        m_Spawn = GameObject.Find("Spawn");
+
+
     }
     public void Update()
     {
-        InputProcess();
+        if(_bGame_Start == true)
+        {
+            InputProcess();
+
+            m_Rotater_System.Update();
+        }
+        
+       
+           
+        
+        
     }
     private void InputProcess()
     {
         if (Input.GetButtonDown("Fire1"))
         {
             Create_Pin();
-
+            
         }
     }
 
     public GameObject Create_Pin()
     {
+       
         return UnityEngine.Object.Instantiate(m_Pin, m_Spawn.transform.position, m_Spawn.transform.rotation, m_Spawn.transform);
+       
     }
 
     //public void Level_End()

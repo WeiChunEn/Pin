@@ -30,7 +30,7 @@ public class LevelSystem : GameSystem
 
     public void Level_End(string _sClear_Type)
     {
-        _sClear_Level[_iNow_Level] = "true";
+        _sClear_Level[_iNow_Level-1] = "true";
         switch (_sClear_Type)
         {
             case "fail":

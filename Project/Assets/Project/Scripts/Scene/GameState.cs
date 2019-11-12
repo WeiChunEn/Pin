@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class GameState : ISceneState
 {
+    
     public GameState (SceneStateManager Manager):base(Manager)
     {
         this.StateName = "GameScene";
@@ -12,6 +14,7 @@ public class GameState : ISceneState
     public override void StateBegin()
     {
         Ass.Instance.Initinal();
+        Debug.Log(Ass.Instance._iNow_Level);
         Find_Btn();
     }
     public override void StateUpdate()
