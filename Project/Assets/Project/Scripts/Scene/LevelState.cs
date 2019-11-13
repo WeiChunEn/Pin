@@ -41,7 +41,7 @@ public class LevelState : ISceneState
     {
         m_Level_Star_Array = new GameObject[15, 3];
         m_Level_Array = new GameObject[15];
-        Debug.Log(Ass.Instance._sClear_Level[0]);
+        
         for (int i = 0; i < 15; i++)
         {
             m_Level_Array[i] = GameObject.Find((i + 1).ToString());
@@ -51,7 +51,7 @@ public class LevelState : ISceneState
             }
             if (m_Level_Array[i].tag == "true")
             {
-                Debug.Log(m_Level_Array[i].tag);
+                
                 m_Level_Array[i].GetComponent<Button>().interactable = true;
             }
            
@@ -64,7 +64,7 @@ public class LevelState : ISceneState
                 {
                     m_Level_Star_Array[i, j].tag = Ass.Instance._sLevel_Star[i, j];
                 }
-                // m_Level_Star_Array[i, j].tag = Ass.Instance._sLevel_Star[i, j];
+                
                 if (m_Level_Star_Array[i, j].tag == "true")
                 {
                     m_Level_Star_Array[i, j].SetActive(true);
@@ -83,6 +83,10 @@ public class LevelState : ISceneState
         Button Shop_Btn = GameObject.Find("Shop_Btn").GetComponent<Button>();
         Button Sound_Btn = GameObject.Find("Sound_Btn").GetComponent<Button>();
         Button Level_1_Btn = GameObject.Find("1").GetComponent<Button>();
+        Button Level_2_Btn = GameObject.Find("2").GetComponent<Button>();
+        Button Level_3_Btn = GameObject.Find("3").GetComponent<Button>();
+        Button Level_4_Btn = GameObject.Find("4").GetComponent<Button>();
+        Button Level_5_Btn = GameObject.Find("5").GetComponent<Button>();
         m_First_Next_Page_Btn = GameObject.Find("First_Next_Page_Btn").GetComponent<Button>();
         m_Second_Next_Page_Btn = GameObject.Find("Second_Next_Page_Btn").GetComponent<Button>();
         m_Second_Last_Page_Btn = GameObject.Find("Second_Last_Page_Btn").GetComponent<Button>();
@@ -90,6 +94,10 @@ public class LevelState : ISceneState
         Home_Btn.onClick.AddListener(() => OnHomeBtnClick(Home_Btn));
         Shop_Btn.onClick.AddListener(() => OnShopBtnClick(Shop_Btn));
         Level_1_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_1_Btn));
+        Level_2_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_2_Btn));
+        Level_3_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_3_Btn));
+        Level_4_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_4_Btn));
+        Level_5_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_5_Btn));
         Sound_Btn.onClick.AddListener(() => OnSoundBtnClick(Sound_Btn));
         m_First_Next_Page_Btn.onClick.AddListener(() => First_Next_PageBtnClick());
         m_Second_Next_Page_Btn.onClick.AddListener(() => Second_Next_PageBtnClick());

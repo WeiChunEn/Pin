@@ -49,7 +49,7 @@ public class Pin_System : MonoBehaviour
             transform.SetParent(col.transform);
            
             _fBall_Degree = Mathf.Atan2(_gCheck_Point.transform.localPosition.y, _gCheck_Point.transform.localPosition.x) * 180 / Mathf.PI;
-            print(_fBall_Degree);
+          //  print(_fBall_Degree);
             Set_Point(col);
 
 
@@ -144,5 +144,11 @@ public class Pin_System : MonoBehaviour
                 }
                 break;
         }
+    }
+
+
+    public void Game_ReStart()
+    {
+
     }
 }

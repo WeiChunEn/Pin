@@ -32,6 +32,7 @@ public class GameState : ISceneState
 
         Button Clear_Level_Btn = GameObject.Find("Clear_Level_Btn").GetComponent<Button>();
         Button Over_Level_Btn = GameObject.Find("Over_Level_Btn").GetComponent<Button>();
+        Button Restart_Btn = GameObject.Find("Restart").GetComponent<Button>();
         Clear_Level_Btn.onClick.AddListener(delegate ()
         {
 
@@ -42,6 +43,11 @@ public class GameState : ISceneState
 
             OnOverLevelBtnClick(Over_Level_Btn);
         });
+        Restart_Btn.onClick.AddListener(delegate ()
+        {
+
+            OnRestartLevelBtnClick(Restart_Btn);
+        });
 
     }
 
@@ -49,17 +55,30 @@ public class GameState : ISceneState
     {
 
         Debug.Log(Click_Btn.name);
-        //Ass.Instance.Set_Star();
-       Ass.Instance.Load_Level();
+        
+        Ass.Instance.Set_Star();
+        Ass.Instance.Load_Level();
+        Ass.Instance._iNow_Level = 0;
+       
+      
         m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
     }
     private void OnOverLevelBtnClick(Button Click_Btn)
     {
-
-        Debug.Log(Click_Btn.name);
         
-       // Ass.Instance.Set_Star();
+        Debug.Log(Click_Btn.name);
+        Ass.Instance._sClear_Type = "fail";
         Ass.Instance.Load_Level();
+        Ass.Instance. _iNow_Level = 0;
+        
+        
+        
         m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
+    }
+    private void OnRestartLevelBtnClick(Button Click_Btn)
+    {
+        Debug.Log(Click_Btn.name);
+        m_Manager.SetState(new GameState(m_Manager), "GameScene");
+        
     }
 }

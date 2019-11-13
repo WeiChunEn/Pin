@@ -20,11 +20,13 @@ public class Rotater_System : GameSystem
     private GameObject m_Intro;
     private Button m_Close_Intro;
     private Button m_Game_Over;
+    
     // Use this for initialization
     public override void Initialize()
     {
         m_Level_Point = 0;
-        if(m_Ass._iNow_Level!=0)
+        
+        if (m_Ass._iNow_Level != 0)
         {
             for (int i = 0; i < 15; i++)
             {
@@ -42,15 +44,20 @@ public class Rotater_System : GameSystem
                 }
             }
         }
-        
+
         if (m_Ass._iNow_Level == 1 || m_Ass._iNow_Level == 6 || m_Ass._iNow_Level == 11 || m_Ass._iNow_Level == 14 || m_Ass._iNow_Level == 15)
         {
+            m_Ass._bCountDown_Start = false;
             m_Intro = GameObject.Find("Intro");
             m_Close_Intro = GameObject.Find("Close").gameObject.GetComponent<Button>();
             m_Close_Intro.onClick.AddListener(delegate ()
             {
-                Game_Start();
+                Count_Down_Start();
             });
+        }
+        else
+        {
+            m_Ass._bCountDown_Start = true; 
         }
         m_Rotater = GameObject.Find("Point");
         m_Ball = GameObject.Find("Ball");
@@ -67,18 +74,18 @@ public class Rotater_System : GameSystem
     public override void Update()
     {
 
-   
 
+       
         if (m_Rotater)
         {
             m_Rotater.name = m_Ass._iNow_Level.ToString();
             m_Pin_Num.GetComponent<TextMeshPro>().text = m_Ass._iPin_Num.ToString();
             m_Rotater.transform.Rotate(0, 0, _fSpeed * Time.deltaTime);
-            if(m_Ball.tag == "Over")
+            if (m_Ball.tag == "Over")
             {
                 m_Ass.GameOver();
             }
-            else if(m_Ball.tag == "Clear")
+            else if (m_Ball.tag == "Clear")
             {
                 m_Ass.GameClear();
             }
@@ -98,12 +105,16 @@ public class Rotater_System : GameSystem
         m_Rotater_Array = null;
 
     }
-    private void Game_Start()
+    private void Count_Down_Start()
     {
-        m_Ass._bGame_Start = true;
-        m_Ass._gGameCanvas.GetComponent<Canvas>().sortingOrder = -1;
-        m_Intro.SetActive(false);
-        m_Ass.Set_Pin_Num();
+        if (m_Intro)
+        {
+            m_Intro.SetActive(false);
+            m_Ass._bCountDown_Start = true;
+        }
+        
+       
+       
 
     }
 
