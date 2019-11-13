@@ -25,27 +25,30 @@ public class LevelSystem : GameSystem
     }
     public override void Initialize()
     {
-        _iNow_Level = m_Ass._iNow_Level;
+        _iNow_Level = m_Ass._iNow_Level-1;
     }
 
     public void Level_End(string _sClear_Type)
     {
-        _sClear_Level[_iNow_Level-1] = "true";
+        
         switch (_sClear_Type)
         {
             case "fail":
                 break;
             case "one":
                 _sLevel_Star[_iNow_Level, 0] = "true";
+                _sClear_Level[_iNow_Level+1] = "true";
                 break;
             case "two":
                 _sLevel_Star[_iNow_Level, 0] = "true";
                 _sLevel_Star[_iNow_Level, 1] = "true";
+                _sClear_Level[_iNow_Level + 1] = "true";
                 break;
             case "three":
                 _sLevel_Star[_iNow_Level, 0] = "true";
                 _sLevel_Star[_iNow_Level, 1] = "true";
                 _sLevel_Star[_iNow_Level, 2] = "true";
+                _sClear_Level[_iNow_Level + 1] = "true";
                 break;
         }
     }

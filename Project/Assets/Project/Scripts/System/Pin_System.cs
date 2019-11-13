@@ -12,6 +12,8 @@ public class Pin_System : MonoBehaviour
     public float _fSpeed;
     public GameObject _gCheck_Point;
     public GameObject _gPoint_Text;
+    public GameObject _gBall;
+    public GameObject _gCan_Shoot;
     private float _fBall_Degree;
     private Rigidbody2D _rb;
     // Use this for initialization
@@ -21,7 +23,10 @@ public class Pin_System : MonoBehaviour
         _fSpeed = 5.0f;
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = Vector2.up * _fSpeed;
+        _gBall = GameObject.Find("Ball");
+        _gCan_Shoot = GameObject.Find("CanShoot");
         
+
     }
 
     // Update is called once per frame
@@ -36,8 +41,9 @@ public class Pin_System : MonoBehaviour
         {
            
             _gPoint_Text = GameObject.Find("PointText");
-           
-            
+            _gCan_Shoot.tag = "true";
+
+
             _gCheck_Point.transform.SetParent(col.transform);
             _rb.velocity = Vector2.zero;
             transform.SetParent(col.transform);
@@ -50,7 +56,11 @@ public class Pin_System : MonoBehaviour
         }
         if(col.tag == "Pin")
         {
-            print("GameOver");
+            _gBall.tag = "Over";
+        }
+        if(gameObject.tag=="Last"&& col.tag =="Ball")
+        {
+            _gBall.tag = "Clear";
         }
     }
     public void Set_Point(Collider2D col)
@@ -67,6 +77,66 @@ public class Pin_System : MonoBehaviour
                     _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
                 }
                 else if(-180.0 <= _fBall_Degree && _fBall_Degree <= -90.0 || 90.0 <= _fBall_Degree && _fBall_Degree <= 180.0)
+                {
+                    tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
+                    tmp += 5;
+                    _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+                }
+                break;
+            case "2":
+                if (-90.0 <= _fBall_Degree && _fBall_Degree <= 0.0 || 0.0 <= _fBall_Degree && _fBall_Degree <= 90.0)
+                {
+
+                    tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
+                    tmp += 10;
+                    _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+                }
+                else if (-180.0 <= _fBall_Degree && _fBall_Degree <= -90.0 || 90.0 <= _fBall_Degree && _fBall_Degree <= 180.0)
+                {
+                    tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
+                    tmp += 5;
+                    _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+                }
+                break;
+            case "3":
+                if (-90.0 <= _fBall_Degree && _fBall_Degree <= 0.0 || 0.0 <= _fBall_Degree && _fBall_Degree <= 90.0)
+                {
+
+                    tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
+                    tmp += 10;
+                    _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+                }
+                else if (-180.0 <= _fBall_Degree && _fBall_Degree <= -90.0 || 90.0 <= _fBall_Degree && _fBall_Degree <= 180.0)
+                {
+                    tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
+                    tmp += 5;
+                    _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+                }
+                break;
+            case "4":
+                if (-90.0 <= _fBall_Degree && _fBall_Degree <= 0.0 || 0.0 <= _fBall_Degree && _fBall_Degree <= 90.0)
+                {
+
+                    tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
+                    tmp += 10;
+                    _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+                }
+                else if (-180.0 <= _fBall_Degree && _fBall_Degree <= -90.0 || 90.0 <= _fBall_Degree && _fBall_Degree <= 180.0)
+                {
+                    tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
+                    tmp += 5;
+                    _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+                }
+                break;
+            case "5":
+                if (-90.0 <= _fBall_Degree && _fBall_Degree <= 0.0 || 0.0 <= _fBall_Degree && _fBall_Degree <= 90.0)
+                {
+
+                    tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
+                    tmp += 10;
+                    _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+                }
+                else if (-180.0 <= _fBall_Degree && _fBall_Degree <= -90.0 || 90.0 <= _fBall_Degree && _fBall_Degree <= 180.0)
                 {
                     tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
                     tmp += 5;

@@ -19,12 +19,13 @@ public class LevelState : ISceneState
 
     public LevelState(SceneStateManager Manager) : base(Manager)
     {
-        Ass.Instance.Initinal();
+       
         this.StateName = "LevelScene";
+        Ass.Instance.Initinal();
     }
     public override void StateBegin()
     {
-       
+        
         m_FirstPage = GameObject.Find("FirstPage");
         m_SecondPage = GameObject.Find("SecondPage");
         m_ThirdPage = GameObject.Find("ThirdPage");

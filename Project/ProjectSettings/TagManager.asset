@@ -8,6 +8,10 @@ TagManager:
   - true
   - false
   - Pin
+  - Start
+  - Over
+  - Last
+  - Clear
   layers:
   - Default
   - TransparentFX

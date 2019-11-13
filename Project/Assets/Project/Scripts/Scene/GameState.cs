@@ -13,33 +13,53 @@ public class GameState : ISceneState
     }
     public override void StateBegin()
     {
+        Find_Btn();
         Ass.Instance.Initinal();
         Debug.Log(Ass.Instance._iNow_Level);
-        Find_Btn();
+       
     }
     public override void StateUpdate()
     {
         Ass.Instance.Update();
     }
+    public override void StateEnd()
+    {
+        Debug.Log("End");
+        Ass.Instance.Release();
+    }
     private void Find_Btn()
     {
 
-        Button Home_Btn = GameObject.Find("Set_Btn").GetComponent<Button>();
-        Home_Btn.onClick.AddListener(delegate ()
+        Button Clear_Level_Btn = GameObject.Find("Clear_Level_Btn").GetComponent<Button>();
+        Button Over_Level_Btn = GameObject.Find("Over_Level_Btn").GetComponent<Button>();
+        Clear_Level_Btn.onClick.AddListener(delegate ()
         {
 
-            OnHomeBtnClick(Home_Btn);
+            OnClearLevelBtnClick(Clear_Level_Btn);
+        });
+        Over_Level_Btn.onClick.AddListener(delegate ()
+        {
+
+            OnOverLevelBtnClick(Over_Level_Btn);
         });
 
-        Debug.Log(Home_Btn.name);
     }
 
-    private void OnHomeBtnClick(Button Click_Btn)
+    private void OnClearLevelBtnClick(Button Click_Btn)
     {
 
         Debug.Log(Click_Btn.name);
-       // Ass.Instance._sClear_Type = "two";
+        //Ass.Instance.Set_Star();
+       Ass.Instance.Load_Level();
+        m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
+    }
+    private void OnOverLevelBtnClick(Button Click_Btn)
+    {
+
+        Debug.Log(Click_Btn.name);
+        
+       // Ass.Instance.Set_Star();
         Ass.Instance.Load_Level();
-        m_Manager.SetState(new MainState(m_Manager), "MainScene");
+        m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
     }
 }

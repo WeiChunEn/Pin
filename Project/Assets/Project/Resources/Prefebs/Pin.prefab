@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 114163956834289214}
   m_Layer: 5
   m_Name: Pin
-  m_TagString: Pin
+  m_TagString: Last
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -196,6 +196,8 @@ MonoBehaviour:
   _fSpeed: 0
   _gCheck_Point: {fileID: 1622920458697160}
   _gPoint_Text: {fileID: 0}
+  _gBall: {fileID: 0}
+  _gCan_Shoot: {fileID: 0}
 --- !u!212 &212044116307417742
 SpriteRenderer:
   m_ObjectHideFlags: 1

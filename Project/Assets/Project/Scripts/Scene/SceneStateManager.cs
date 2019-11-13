@@ -35,7 +35,11 @@ public class SceneStateManager
 
         // 通知前一個State結束
         if (m_State != null)
+        {
+           
             m_State.StateEnd();
+        }
+           
 
         // 設定
         m_State = State;
@@ -56,14 +60,14 @@ public class SceneStateManager
     public void StateUpdate()
     {
 
-
+        //是否還在載入
         if (Application.isLoadingLevel)
         {
             return;
         }
 
 
-        //是否還在載入
+        
 
 
 
