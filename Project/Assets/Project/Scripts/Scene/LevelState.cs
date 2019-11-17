@@ -87,6 +87,11 @@ public class LevelState : ISceneState
         Button Level_3_Btn = GameObject.Find("3").GetComponent<Button>();
         Button Level_4_Btn = GameObject.Find("4").GetComponent<Button>();
         Button Level_5_Btn = GameObject.Find("5").GetComponent<Button>();
+        Button Level_6_Btn = GameObject.Find("6").GetComponent<Button>();
+        Button Level_7_Btn = GameObject.Find("7").GetComponent<Button>();
+        Button Level_8_Btn = GameObject.Find("8").GetComponent<Button>();
+        Button Level_9_Btn = GameObject.Find("9").GetComponent<Button>();
+        Button Level_10_Btn = GameObject.Find("10").GetComponent<Button>();
         m_First_Next_Page_Btn = GameObject.Find("First_Next_Page_Btn").GetComponent<Button>();
         m_Second_Next_Page_Btn = GameObject.Find("Second_Next_Page_Btn").GetComponent<Button>();
         m_Second_Last_Page_Btn = GameObject.Find("Second_Last_Page_Btn").GetComponent<Button>();
@@ -98,6 +103,11 @@ public class LevelState : ISceneState
         Level_3_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_3_Btn));
         Level_4_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_4_Btn));
         Level_5_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_5_Btn));
+        Level_6_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_6_Btn));
+        Level_7_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_7_Btn));
+        Level_8_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_8_Btn));
+        Level_9_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_9_Btn));
+        Level_10_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_10_Btn));
         Sound_Btn.onClick.AddListener(() => OnSoundBtnClick(Sound_Btn));
         m_First_Next_Page_Btn.onClick.AddListener(() => First_Next_PageBtnClick());
         m_Second_Next_Page_Btn.onClick.AddListener(() => Second_Next_PageBtnClick());

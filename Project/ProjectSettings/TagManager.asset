@@ -12,6 +12,8 @@ TagManager:
   - Over
   - Last
   - Clear
+  - +
+  - '-'
   layers:
   - Default
   - TransparentFX

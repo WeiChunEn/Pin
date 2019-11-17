@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 public class Rotater_System : GameSystem
 {
 
@@ -18,6 +19,8 @@ public class Rotater_System : GameSystem
     private GameObject m_Ball;
     private GameObject[] m_Rotater_Array = new GameObject[15];
     private GameObject m_Intro;
+    private GameObject _gRotate_Speed;
+    
     private Button m_Close_Intro;
     private Button m_Game_Over;
     
@@ -63,7 +66,8 @@ public class Rotater_System : GameSystem
         m_Ball = GameObject.Find("Ball");
         m_Pin_Num = GameObject.Find("Pin_Num");
         m_Level_Point_Text = GameObject.Find("PointText");
-        _fSpeed = 100.0f;
+        _gRotate_Speed = GameObject.Find("RotaterSpeed");
+        
 
 
 
@@ -75,7 +79,7 @@ public class Rotater_System : GameSystem
     {
 
 
-       
+        _fSpeed = Int32.Parse(_gRotate_Speed.transform.GetChild(0).name);
         if (m_Rotater)
         {
             m_Rotater.name = m_Ass._iNow_Level.ToString();
