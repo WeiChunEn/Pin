@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerSystem : GameSystem
 {
     private int m_Player_Point;
+    
 
     public PlayerSystem(Ass ass):base(ass)
     {
@@ -12,7 +14,21 @@ public class PlayerSystem : GameSystem
     }
     public override void Initialize()
     {
-        m_Player_Point = m_Ass._iPlayer_Point;
+        
+        
+        
+        
+
+        
+      
+       
     }
+
+    public override void Update()
+    {
+        
+    }
+
+    
 
 }

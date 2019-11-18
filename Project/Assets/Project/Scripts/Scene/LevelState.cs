@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using TMPro;
 
 public class LevelState : ISceneState
 {
@@ -12,6 +13,7 @@ public class LevelState : ISceneState
     private GameObject m_ThirdPage;
     private GameObject[,] m_Level_Star_Array;
     private GameObject[] m_Level_Array;
+    public GameObject _gPlayer_Point;
     private Button m_First_Next_Page_Btn;
     private Button m_Second_Next_Page_Btn;
     private Button m_Second_Last_Page_Btn;
@@ -25,10 +27,12 @@ public class LevelState : ISceneState
     }
     public override void StateBegin()
     {
-        
+        PlayerPrefs.DeleteAll();
         m_FirstPage = GameObject.Find("FirstPage");
         m_SecondPage = GameObject.Find("SecondPage");
         m_ThirdPage = GameObject.Find("ThirdPage");
+        _gPlayer_Point = GameObject.Find("Player_Point");
+        //Ass.Instance.Load_Data();
         Find_Btn();
         Find_Level();
         m_SecondPage.SetActive(false);
@@ -41,7 +45,7 @@ public class LevelState : ISceneState
     {
         m_Level_Star_Array = new GameObject[15, 3];
         m_Level_Array = new GameObject[15];
-        
+        int tmp_Star_Num = 0;
         for (int i = 0; i < 15; i++)
         {
             m_Level_Array[i] = GameObject.Find((i + 1).ToString());
@@ -68,6 +72,8 @@ public class LevelState : ISceneState
                 if (m_Level_Star_Array[i, j].tag == "true")
                 {
                     m_Level_Star_Array[i, j].SetActive(true);
+                    tmp_Star_Num++;
+                    
                 }
                
 
@@ -75,6 +81,10 @@ public class LevelState : ISceneState
                
             }
         }
+        Ass.Instance._iPlayer_Point = tmp_Star_Num;
+        _gPlayer_Point.GetComponent<TextMeshProUGUI>().text = Ass.Instance._iPlayer_Point.ToString();
+        
+        
     }
     private void Find_Btn()
     {

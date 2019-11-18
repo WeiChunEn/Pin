@@ -99,6 +99,7 @@ public class Ass
     }
     public void Update()
     {
+        m_Player_Ststem.Update();
         if (_bCountDown_Start == true)
         {
             _fCount_Down += Time.deltaTime;
@@ -156,11 +157,12 @@ public class Ass
             InputProcess();
 
             m_Rotater_System.Update();
-            _fGame_Time -= Time.deltaTime;
+
+            
             if(_iNow_Level >= 6 && _iNow_Level <= 15)
             {
-                
-                if(_fGame_Time > 60&& _fGame_Time<=70||_fGame_Time<=10)
+                _fGame_Time -= Time.deltaTime;
+                if (_fGame_Time > 60&& _fGame_Time<=70||_fGame_Time<=10)
                 {
                     _gGame_Time.GetComponent<TextMeshProUGUI>().text = "0" + ((int)_fGame_Time / 60).ToString() + ":" +"0"+ ((int)_fGame_Time % 60).ToString();
 
@@ -211,14 +213,20 @@ public class Ass
     private void InputProcess()
     {
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
-
+        
 		                 if (Input.touchCount == 1 && _gCan_Shoot.tag == "true")
                         {
+       Touch touch;
+            touch = Input.GetTouch(0);
+            if(touch.phase == TouchPhase.Began)
+            {
+        
                             Create_Pin();
             if (_iPin_Num == 1)
             {
 
                 m_Pin.tag = "Last";
+            }
             }
 
                         }
@@ -227,6 +235,7 @@ public class Ass
 
         if (Input.GetButtonDown("Fire1") && _gCan_Shoot.tag == "true")
         {
+            
             Create_Pin();
             if (_iPin_Num == 1)
             {
@@ -304,6 +313,9 @@ public class Ass
         {
             case "fail":
                 break;
+            case "Clear":
+                _sClear_Level[_iNow_Level] = "true";
+                break;
             case "one":
                 _sLevel_Star[_iNow_Level - 1, 0] = "true";
                 _sClear_Level[_iNow_Level] = "true";
@@ -341,6 +353,7 @@ public class Ass
         _sClear_Type = "fail";
         _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
         _bGame_Start = false;
+        
 
 
 
@@ -389,11 +402,15 @@ public class Ass
         switch (_iNow_Level)
         {
             case 1:
-                if (_iLevel_Point < 30)
+                if (_iLevel_Point < 50)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 60)
                 {
                     _sClear_Type = "one";
                 }
-                else if (_iLevel_Point < 50)
+                else if(_iLevel_Point<70)
                 {
                     _sClear_Type = "two";
                 }
@@ -403,21 +420,11 @@ public class Ass
                 }
                 break;
             case 2:
-                if (_iLevel_Point < 60)
+                if (_iLevel_Point < 50)
                 {
-                    _sClear_Type = "one";
+                    _sClear_Type = "Clear";
                 }
-                else if (_iLevel_Point < 90)
-                {
-                    _sClear_Type = "two";
-                }
-                else
-                {
-                    _sClear_Type = "three";
-                }
-                break;
-            case 3:
-                if (_iLevel_Point < 70)
+                else if (_iLevel_Point < 70)
                 {
                     _sClear_Type = "one";
                 }
@@ -430,8 +437,30 @@ public class Ass
                     _sClear_Type = "three";
                 }
                 break;
+            case 3:
+                if (_iLevel_Point < 50)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 80)
+                {
+                    _sClear_Type = "one";
+                }
+                else if (_iLevel_Point < 110)
+                {
+                    _sClear_Type = "two";
+                }
+                else
+                {
+                    _sClear_Type = "three";
+                }
+                break;
             case 4:
-                if (_iLevel_Point < 130)
+                if (_iLevel_Point < 120)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 150)
                 {
                     _sClear_Type = "one";
                 }
@@ -447,6 +476,10 @@ public class Ass
             case 5:
                 if (_iLevel_Point < 150)
                 {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 180)
+                {
                     _sClear_Type = "one";
                 }
                 else if (_iLevel_Point < 200)
@@ -459,7 +492,11 @@ public class Ass
                 }
                 break;
             case 6:
-                if (_iLevel_Point < 90)
+                if (_iLevel_Point < 70)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 90)
                 {
                     _sClear_Type = "one";
                 }
@@ -473,7 +510,11 @@ public class Ass
                 }
                 break;
             case 7:
-                if (_iLevel_Point < 150)
+                if (_iLevel_Point < 120)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 150)
                 {
                     _sClear_Type = "one";
                 }
@@ -487,7 +528,11 @@ public class Ass
                 }
                 break;
             case 8:
-                if (_iLevel_Point < 270)
+                if (_iLevel_Point < 240)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 270)
                 {
                     _sClear_Type = "one";
                 }
@@ -501,11 +546,15 @@ public class Ass
                 }
                 break;
             case 9:
-                if (_iLevel_Point < 330)
+                if (_iLevel_Point < 300)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 330)
                 {
                     _sClear_Type = "one";
                 }
-                else if (_iLevel_Point < 350)
+                else if (_iLevel_Point < 360)
                 {
                     _sClear_Type = "two";
                 }
@@ -515,11 +564,15 @@ public class Ass
                 }
                 break;
             case 10:
-                if (_iLevel_Point < 350)
+                if (_iLevel_Point < 330)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 360)
                 {
                     _sClear_Type = "one";
                 }
-                else if (_iLevel_Point < 380)
+                else if (_iLevel_Point < 400)
                 {
                     _sClear_Type = "two";
                 }
@@ -538,6 +591,31 @@ public class Ass
     /// </summary>
     public void Save_Data()
     {
-        //PlayerPrefs.SetString("Level"+_iNow_Level.ToString(),)
+        for(int i= 0; i<15;i++)
+        {
+            for(int j = 0; j<3;j++)
+            {
+                //PlayerPrefs.SetString("PlayerStar" + i.ToString()+"_" + j.ToString(), _sLevel_Star[i, j]);
+               
+            }
+          //  PlayerPrefs.SetString("PlayerLevel" + i.ToString(), _sClear_Level[i]);
+            
+        }
+    }
+    /// <summary>
+    /// 讀取資料
+    /// </summary>
+    public void Load_Data()
+    {
+        for (int i = 0; i < 15; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                _sLevel_Star[i, j] = PlayerPrefs.GetString("PlayerStar" + i.ToString() + "_" + j.ToString());
+               
+            }
+            _sClear_Level[i] =  PlayerPrefs.GetString("PlayerLevel" + i.ToString());
+            
+        }
     }
 }

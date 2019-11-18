@@ -77,12 +77,12 @@ public class GameState : ISceneState
     {
 
         Debug.Log(Click_Btn.name);
-        
+        Ass.Instance.Save_Data();
         Ass.Instance.Set_Star();
         Ass.Instance.Load_Level();
         Ass.Instance._iNow_Level = 0;
-       
-      
+        Ass.Instance.Save_Data();
+
         m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
     }
     private void OnOverBackLevelBtnClick(Button Click_Btn)
@@ -92,7 +92,7 @@ public class GameState : ISceneState
         Ass.Instance._sClear_Type = "fail";
         Ass.Instance.Load_Level();
         Ass.Instance. _iNow_Level = 0;
-
+        Ass.Instance.Save_Data();
         m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
     }
     private void OnRestartLevelBtnClick(Button Click_Btn)
@@ -111,6 +111,7 @@ public class GameState : ISceneState
         
         Ass.Instance.Load_Level();
         Ass.Instance._iNow_Level = 0;
+        Ass.Instance.Save_Data();
         m_Manager.SetState(new MainState(m_Manager), "MainScene");
 
     }
@@ -120,6 +121,7 @@ public class GameState : ISceneState
         Ass.Instance.Set_Star();
         Ass.Instance.Load_Level();
         Ass.Instance._iNow_Level += 1;
+        Ass.Instance.Save_Data();
         m_Manager.SetState(new GameState(m_Manager), "GameScene");
     }
 }
