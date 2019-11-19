@@ -29,7 +29,7 @@ public class GameState : ISceneState
     }
     private void Find_Btn()
     {
-
+        GameObject Set_Btn = GameObject.Find("Set_Btn");
         Button Clear_Level_Btn = GameObject.Find("Clear_Level_Btn").GetComponent<Button>();
         Button Clear_Restart_Btn = GameObject.Find("ClearRestart").GetComponent<Button>();
         Button Next_Level_Btn = GameObject.Find("NextLevel").GetComponent<Button>();
@@ -37,7 +37,13 @@ public class GameState : ISceneState
         Button Over_Level_Btn = GameObject.Find("Over_Level_Btn").GetComponent<Button>();
         Button Over_Restart_Btn = GameObject.Find("OverRestart").GetComponent<Button>();
         Button Over_Home_Btn = GameObject.Find("OverHome").GetComponent<Button>();
-        
+        Button Set_Btn1_5 = Set_Btn.transform.GetChild(0).GetComponent<Button>();
+        Button Set_Btn6_10 = Set_Btn.transform.GetChild(1).GetComponent<Button>();
+        Button Set_Btn11_15 = Set_Btn.transform.GetChild(2).GetComponent<Button>();
+        Button Set_Home = GameObject.Find("SetHome").GetComponent<Button>();
+        Button Set_Music = GameObject.Find("SetMusic").GetComponent<Button>();
+        Button Set_Close = GameObject.Find("SetClose").GetComponent<Button>();
+        Button Set_Level = GameObject.Find("SetLevel").GetComponent<Button>();
         Clear_Level_Btn.onClick.AddListener(delegate ()
         {
 
@@ -69,6 +75,30 @@ public class GameState : ISceneState
         Next_Level_Btn.onClick.AddListener(delegate ()
         {
             OnNextLevelBtnClick(Next_Level_Btn);
+        });
+        Set_Btn1_5.onClick.AddListener(delegate ()
+        {
+            Ass.Instance.Set_Open_Menu();
+        });
+        Set_Btn6_10.onClick.AddListener(delegate ()
+        {
+            Ass.Instance.Set_Open_Menu();
+        });
+        Set_Btn11_15.onClick.AddListener(delegate ()
+        {
+            Ass.Instance.Set_Open_Menu();
+        });
+        Set_Close.onClick.AddListener(delegate ()
+        {
+            Ass.Instance.Set_Close_Menu();
+        });
+        Set_Level.onClick.AddListener(delegate ()
+        {
+            OnSetLevelBtnClick(Set_Level);
+        });
+        Set_Home.onClick.AddListener(delegate ()
+        {
+            OnSetHomeBtnClick(Set_Home);
         });
 
     }
@@ -123,5 +153,16 @@ public class GameState : ISceneState
         Ass.Instance._iNow_Level += 1;
         Ass.Instance.Save_Data();
         m_Manager.SetState(new GameState(m_Manager), "GameScene");
+    }
+
+    private void OnSetHomeBtnClick(Button Clicl_Btn)
+    {
+        Ass.Instance._iNow_Level = 0;
+        m_Manager.SetState(new MainState(m_Manager), "MainScene");
+    }
+    private void OnSetLevelBtnClick(Button Clicl_Btn)
+    {
+        Ass.Instance._iNow_Level = 0;
+        m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
     }
 }

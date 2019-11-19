@@ -81,7 +81,7 @@ public class LevelState : ISceneState
                
             }
         }
-        Ass.Instance._iPlayer_Point = tmp_Star_Num;
+        Ass.Instance._iPlayer_Point = tmp_Star_Num*10;
         _gPlayer_Point.GetComponent<TextMeshProUGUI>().text = Ass.Instance._iPlayer_Point.ToString();
         
         
