@@ -53,7 +53,7 @@ public class LevelState : ISceneState
             {
                 m_Level_Array[i].tag = Ass.Instance._sClear_Level[i];
             }
-            if (m_Level_Array[i].tag == "true")
+            if (m_Level_Array[i].tag == "false")
             {
                 
                 m_Level_Array[i].GetComponent<Button>().interactable = true;
@@ -102,6 +102,11 @@ public class LevelState : ISceneState
         Button Level_8_Btn = GameObject.Find("8").GetComponent<Button>();
         Button Level_9_Btn = GameObject.Find("9").GetComponent<Button>();
         Button Level_10_Btn = GameObject.Find("10").GetComponent<Button>();
+        Button Level_11_Btn = GameObject.Find("11").GetComponent<Button>();
+        Button Level_12_Btn = GameObject.Find("12").GetComponent<Button>();
+        Button Level_13_Btn = GameObject.Find("13").GetComponent<Button>();
+        Button Level_14_Btn = GameObject.Find("14").GetComponent<Button>();
+        Button Level_15_Btn = GameObject.Find("15").GetComponent<Button>();
         m_First_Next_Page_Btn = GameObject.Find("First_Next_Page_Btn").GetComponent<Button>();
         m_Second_Next_Page_Btn = GameObject.Find("Second_Next_Page_Btn").GetComponent<Button>();
         m_Second_Last_Page_Btn = GameObject.Find("Second_Last_Page_Btn").GetComponent<Button>();
@@ -118,6 +123,11 @@ public class LevelState : ISceneState
         Level_8_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_8_Btn));
         Level_9_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_9_Btn));
         Level_10_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_10_Btn));
+        Level_11_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_11_Btn));
+        Level_12_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_12_Btn));
+        Level_13_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_13_Btn));
+        Level_14_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_14_Btn));
+        Level_15_Btn.onClick.AddListener(() => OnLevel_BtnClick(Level_15_Btn));
         Sound_Btn.onClick.AddListener(() => OnSoundBtnClick(Sound_Btn));
         m_First_Next_Page_Btn.onClick.AddListener(() => First_Next_PageBtnClick());
         m_Second_Next_Page_Btn.onClick.AddListener(() => Second_Next_PageBtnClick());

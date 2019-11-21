@@ -32,6 +32,11 @@ public class Ass
     public int _iPlayer_Point;      //玩家分數
     public int _iLevel_Point;     //關卡分數
     public float _fGame_Time;        //遊戲時間
+    private int[] m_Skill_Time; //技能發動的時間
+    private int[] m_Skill_Over_Time; //技能結束的時間
+    private bool[] m_14_Skill = new bool[2];  //  14關技能\
+    private bool[] m_15_Skill = new bool[3];  // 15關技能
+
 
     //Singleton
     private static Ass _instance;
@@ -77,6 +82,26 @@ public class Ass
                 _gSet_Btn.transform.GetChild(2).gameObject.SetActive(true);
             }
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin11-15");
+        }
+        if (_iNow_Level == 14)
+        {
+            m_Skill_Time = new int[2];
+            m_Skill_Over_Time = new int[2];
+            for (int i = 0; i < 2; i++)
+            {
+                m_Skill_Time[i] = UnityEngine.Random.Range(10, (int)_fGame_Time);
+                Debug.Log(m_Skill_Time[i]);
+            }
+        }
+        else if (_iNow_Level == 15)
+        {
+            m_Skill_Time = new int[3];
+            m_Skill_Over_Time = new int[3];
+            for (int i = 0; i < 3; i++)
+            {
+                m_Skill_Time[i] = UnityEngine.Random.Range(10, (int)_fGame_Time);
+                Debug.Log(m_Skill_Time[i]);
+            }
         }
         _gGameCanvas = GameObject.Find("GameCanvas");
         _gGameOver_Panel = GameObject.Find("GameOver");
@@ -159,7 +184,7 @@ public class Ass
         {
 
             InputProcess();
-
+            
             m_Rotater_System.Update();
 
 
@@ -184,6 +209,31 @@ public class Ass
                 if (_fGame_Time <= 20)
                 {
                     _gGame_Time.GetComponent<TextMeshProUGUI>().color = new Color(229f / 255f, 30f / 255f, 38f / 255f);
+                }
+                if (_iNow_Level == 14)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        
+                        if (m_Skill_Time[i] == Convert.ToInt32(_fGame_Time))
+                        {
+                            m_Skill_Over_Time[i] = m_Skill_Time[i] - 10;
+                            m_Skill_Time[i] = -1;
+                            Skill_Start();
+                        }
+                    }
+                }
+                else if (_iNow_Level == 15)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (m_Skill_Time[i] == (int)_fGame_Time)
+                        {
+                            m_Skill_Over_Time[i] = m_Skill_Time[i] - 10;
+                            m_Skill_Time[i] = -1;
+                            Skill_Start();
+                        }
+                    }
                 }
             }
             if (_fGame_Time <= 0)
@@ -312,6 +362,21 @@ public class Ass
                 _iPin_Num = 15;
                 break;
             case 10:
+                _iPin_Num = 15;
+                break;
+            case 11:
+                _iPin_Num = 15;
+                break;
+            case 12:
+                _iPin_Num = 15;
+                break;
+            case 13:
+                _iPin_Num = 15;
+                break;
+            case 14:
+                _iPin_Num = 15;
+                break;
+            case 15:
                 _iPin_Num = 15;
                 break;
         }
@@ -618,6 +683,84 @@ public class Ass
             _gSet_Menu.SetActive(false);
             _bGame_Start = true;
             _gGameCanvas.GetComponent<Canvas>().sortingOrder = -1;
+        }
+    }
+
+
+    public void Skill_Start()
+    {
+        if (_iNow_Level == 14)
+        {
+
+            int tmp = UnityEngine.Random.Range(0, 2);
+            if (tmp == 0 && m_14_Skill[tmp] == true)
+            {
+                m_14_Skill[tmp + 1] = true;
+            }
+            else if (tmp == 1 && m_14_Skill[tmp] == true)
+            {
+                m_14_Skill[tmp - 1] = true;
+            }
+            else
+            {
+                m_14_Skill[tmp] = true;
+            }
+
+
+            Debug.Log(m_14_Skill[0]);
+            Debug.Log(m_14_Skill[1]);
+
+
+        }
+        else if (_iNow_Level == 15)
+        {
+
+            int tmp = UnityEngine.Random.Range(0, 3);
+            if (tmp == 0 && m_15_Skill[tmp] == true)
+            {
+                tmp = UnityEngine.Random.Range(1, 3);
+                if (tmp == 1 && m_15_Skill[tmp] == true)
+                {
+                    m_15_Skill[tmp + 1] = true;
+                }
+                else if(tmp==2&&m_15_Skill[tmp]==true)
+                {
+                    m_15_Skill[tmp - 1] = true;
+                }
+
+            }
+            else if (tmp == 1 && m_15_Skill[tmp] == true)
+            {
+                if (m_15_Skill[tmp - 1]==true)
+                {
+                    m_15_Skill[tmp + 1] = true;
+                }
+                else if(m_15_Skill[tmp + 1])
+                {
+                    m_15_Skill[tmp - 1] = true;
+                }
+                
+            }
+            else if(tmp == 2 && m_15_Skill[tmp] == true)
+            {
+                tmp = UnityEngine.Random.Range(0, 2);
+                if (tmp == 1 && m_15_Skill[tmp] == true)
+                {
+                    m_15_Skill[tmp - 1] = true;
+                }
+                else if (tmp == 0 && m_15_Skill[tmp] == true)
+                {
+                    m_15_Skill[tmp + 1] = true;
+                }
+            }
+            else
+            {
+                m_15_Skill[tmp] = true;
+            }
+            Debug.Log(m_15_Skill[0]);
+            Debug.Log(m_15_Skill[1]);
+            Debug.Log(m_15_Skill[2]);
+
         }
     }
     /// <summary>

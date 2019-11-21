@@ -25,7 +25,7 @@ public class LimitState : ISceneState
         Button Home_Btn = GameObject.Find("Home_Btn").GetComponent<Button>();
         Home_Btn.onClick.AddListener(delegate ()
         {
-            Debug.Log("Test");
+            
             OnHomeBtnClick(Home_Btn);
         });
 

@@ -13,7 +13,7 @@ public class GameLoop : MonoBehaviour
     {
         // 切換場景不會被刪除
         GameObject.DontDestroyOnLoad(this.gameObject);
-
+		  
        
     }
 
