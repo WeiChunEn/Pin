@@ -27,7 +27,7 @@ public class LevelState : ISceneState
     }
     public override void StateBegin()
     {
-        PlayerPrefs.DeleteAll();
+       // PlayerPrefs.DeleteAll();
         m_FirstPage = GameObject.Find("FirstPage");
         m_SecondPage = GameObject.Find("SecondPage");
         m_ThirdPage = GameObject.Find("ThirdPage");
@@ -53,7 +53,7 @@ public class LevelState : ISceneState
             {
                 m_Level_Array[i].tag = Ass.Instance._sClear_Level[i];
             }
-            if (m_Level_Array[i].tag == "false")
+            if (m_Level_Array[i].tag == "true")
             {
                 
                 m_Level_Array[i].GetComponent<Button>().interactable = true;

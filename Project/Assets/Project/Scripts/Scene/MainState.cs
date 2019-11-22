@@ -29,14 +29,14 @@ public class MainState : ISceneState
         {
             m_LeaderBoard.tag = "true";
             Leader_Btn.interactable = true;
-            Debug.Log(123);
+            
 
         }
         else if (info.normalizedTime >= 1.0f && info.IsName("LeaderBoard_Close") && m_LeaderBoard.tag == "true")
         {
             m_LeaderBoard.tag = "false";
             Leader_Btn.interactable = true;
-            Debug.Log(321);
+            
         }
 
 

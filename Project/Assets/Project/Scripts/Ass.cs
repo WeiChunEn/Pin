@@ -12,6 +12,8 @@ public class Ass
     public GameObject _gGameCanvas; //遊戲關卡的Canvas
     public GameObject _gGameOver_Panel; //GameOver的Panel
     public GameObject _gGameClear_Panel; //GameClear的Panel
+    public GameObject _gLimitOver_Panel;    //極限失敗的Panel
+    public GameObject _gLimitClear_Panel;    //極限通關的Panel
     public GameObject _gCan_Shoot;  //判斷能不能發射的
     public GameObject _gPoint_Text; //關卡分數
     public GameObject _gCountDown; //倒數計時
@@ -69,6 +71,7 @@ public class Ass
         }
         else if (_iNow_Level <= 10)
         {
+            _fGame_Time = 80;
             if (_gSet_Btn)
             {
                 _gSet_Btn.transform.GetChild(1).gameObject.SetActive(true);
@@ -77,6 +80,7 @@ public class Ass
         }
         else if (_iNow_Level <= 15)
         {
+            _fGame_Time = 100;
             if (_gSet_Btn)
             {
                 _gSet_Btn.transform.GetChild(2).gameObject.SetActive(true);
@@ -123,7 +127,16 @@ public class Ass
         _gCan_Shoot = GameObject.Find("CanShoot");
         _gGame_Time = GameObject.Find("GameTime");
 
-
+        if(_iNow_Level==-1)
+        {
+            _fGame_Time = 180;
+            m_Pin = Resources.Load<GameObject>("Prefebs/PinLimit");
+            _gLimitClear_Panel= GameObject.Find("LimitClear");
+            _gLimitOver_Panel = GameObject.Find("LimitOver");
+            _gLimitOver_Panel.SetActive(false);
+            _gLimitClear_Panel.SetActive(false);
+            _gSet_Menu.SetActive(false);
+        }
 
     }
     public void Update()
