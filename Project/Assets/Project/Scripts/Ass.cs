@@ -460,6 +460,25 @@ public class Ass
         _gGameClear_Panel.SetActive(true);
         _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
         _bGame_Start = false;
+        Set_Star();
+        Load_Level();
+        Save_Data();
+        _gGameClear_Panel.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = _iLevel_Point.ToString();
+        switch (_sClear_Type)
+        {
+            case "Clear":
+                _gGameClear_Panel.transform.GetChild(2).gameObject.SetActive(true);
+                break;
+            case "one":
+                _gGameClear_Panel.transform.GetChild(3).gameObject.SetActive(true);
+                break;
+            case "two":
+                _gGameClear_Panel.transform.GetChild(4).gameObject.SetActive(true);
+                break;
+            case "three":
+                _gGameClear_Panel.transform.GetChild(5).gameObject.SetActive(true);
+                break;
+        }
 
     }
     /// <summary>
