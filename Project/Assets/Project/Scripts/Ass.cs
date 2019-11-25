@@ -12,14 +12,15 @@ public class Ass
     public GameObject _gGameCanvas; //遊戲關卡的Canvas
     public GameObject _gGameOver_Panel; //GameOver的Panel
     public GameObject _gGameClear_Panel; //GameClear的Panel
-    public GameObject _gLimitOver_Panel;    //極限失敗的Panel
-    public GameObject _gLimitClear_Panel;    //極限通關的Panel
+    public GameObject _gLimit_Panel;    //極限的Panel
+    public GameObject _gCheck_Limit; //判斷是否為極限關卡
     public GameObject _gCan_Shoot;  //判斷能不能發射的
     public GameObject _gPoint_Text; //關卡分數
     public GameObject _gCountDown; //倒數計時
     public GameObject _gGame_Time; //遊戲時間物件
     public GameObject _gSet_Btn; //設定的按鈕
     public GameObject _gSet_Menu; //設定的介面
+    public GameObject _gLimit_Record;//極限紀錄
     public Rotater_System m_Rotater_System = null;
     private PlayerSystem m_Player_Ststem = null;
     private LevelSystem m_Level_System = null;
@@ -30,6 +31,8 @@ public class Ass
     public string[] _sClear_Level = new string[15];     //關卡Array
     public string[,] _sLevel_Star = new string[15, 3];  //關卡星星Array
     public string _sClear_Type;         //通關狀態
+    public string _sLimit_Record;       //這次極限分數Array
+    public string[,] _sAll_Limit_Record; //全部極限分數Array
     public float _fCount_Down;          //倒數秒數
     public int _iPlayer_Point;      //玩家分數
     public int _iLevel_Point;     //關卡分數
@@ -60,6 +63,11 @@ public class Ass
         _fCount_Down = 0.0f;
         _fGame_Time = 60;
         _gSet_Btn = GameObject.Find("Set_Btn");
+        _gCheck_Limit = GameObject.Find("Limit");
+        if(_gCheck_Limit)
+        {
+            _iNow_Level = -1;
+        }
         if (_iNow_Level <= 5)
         {
             if (_gSet_Btn)
@@ -71,7 +79,7 @@ public class Ass
         }
         else if (_iNow_Level <= 10)
         {
-            _fGame_Time = 80;
+            
             if (_gSet_Btn)
             {
                 _gSet_Btn.transform.GetChild(1).gameObject.SetActive(true);
@@ -131,11 +139,10 @@ public class Ass
         {
             _fGame_Time = 180;
             m_Pin = Resources.Load<GameObject>("Prefebs/PinLimit");
-            _gLimitClear_Panel= GameObject.Find("LimitClear");
-            _gLimitOver_Panel = GameObject.Find("LimitOver");
-            _gLimitOver_Panel.SetActive(false);
-            _gLimitClear_Panel.SetActive(false);
+            _gLimit_Panel = GameObject.Find("Limit_Menu");
+            _gLimit_Panel.SetActive(false);
             _gSet_Menu.SetActive(false);
+            m_Pin.tag = "Pin";
         }
 
     }
@@ -249,9 +256,36 @@ public class Ass
                     }
                 }
             }
-            if (_fGame_Time <= 0)
+            else if(_iNow_Level == -1)
+            {
+                _fGame_Time -= Time.deltaTime;
+                if (_fGame_Time > 60 && _fGame_Time <= 70 || _fGame_Time <= 10)
+                {
+                    _gGame_Time.GetComponent<TextMeshProUGUI>().text = "0" + ((int)_fGame_Time / 60).ToString() + ":" + "0" + ((int)_fGame_Time % 60).ToString();
+
+                }
+                else if (_fGame_Time == 60)
+                {
+
+                    _gGame_Time.GetComponent<TextMeshProUGUI>().text = "0" + ((int)_fGame_Time / 60).ToString() + ":" + "0" + "0";
+                }
+                else
+                {
+                    _gGame_Time.GetComponent<TextMeshProUGUI>().text = "0" + ((int)_fGame_Time / 60).ToString() + ":" + ((int)_fGame_Time % 60).ToString();
+
+                }
+                if (_fGame_Time <= 20)
+                {
+                    _gGame_Time.GetComponent<TextMeshProUGUI>().color = new Color(229f / 255f, 30f / 255f, 38f / 255f);
+                }
+            }
+            if (_fGame_Time <= 0&&_iNow_Level!=-1)
             {
                 GameOver();
+            }
+            else if(_iNow_Level==-1&&_fGame_Time<=0)
+            {
+                GameClear();
             }
 
 
@@ -392,6 +426,9 @@ public class Ass
             case 15:
                 _iPin_Num = 15;
                 break;
+            case -1:
+                _iPin_Num = 1000;
+                break;
         }
     }
 
@@ -442,9 +479,18 @@ public class Ass
     /// </summary>
     public void GameOver()
     {
-        _gGameOver_Panel.SetActive(true);
+        
         _sClear_Type = "fail";
-        _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
+        if (_iNow_Level != -1)
+        {
+            _gGameOver_Panel.SetActive(true);
+            _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
+        }
+        else if (_iNow_Level == -1)
+        {
+            _gLimit_Panel.SetActive(true);
+            _gCheck_Limit.GetComponent<Canvas>().sortingOrder = 1;
+        }
         _bGame_Start = false;
 
 
@@ -457,8 +503,17 @@ public class Ass
     public void GameClear()
     {
 
-        _gGameClear_Panel.SetActive(true);
-        _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
+        
+        if (_iNow_Level != -1)
+        {
+            _gGameClear_Panel.SetActive(true);
+            _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
+        }
+        else if (_iNow_Level == -1)
+        {
+            _gLimit_Panel.SetActive(true);
+            _gCheck_Limit.GetComponent<Canvas>().sortingOrder = 1;
+        }
         _bGame_Start = false;
         Set_Star();
         Load_Level();
@@ -481,13 +536,7 @@ public class Ass
         }
 
     }
-    /// <summary>
-    /// 重玩一次
-    /// </summary>
-    public void Game_Restart()
-    {
-
-    }
+    
     /// <summary>
     /// 倒數計時
     /// </summary>
@@ -497,7 +546,15 @@ public class Ass
 
         _gCountDown.SetActive(false);
         _bGame_Start = true;
-        _gGameCanvas.GetComponent<Canvas>().sortingOrder = -1;
+        if(_iNow_Level!=-1)
+        {
+            _gGameCanvas.GetComponent<Canvas>().sortingOrder = -1;
+        }
+        else if(_iNow_Level==-1)
+        {
+            _gCheck_Limit.GetComponent<Canvas>().sortingOrder = -1;
+        }
+        
         Set_Pin_Num();
         _bCountDown_Start = false;
         _fCount_Down = 0.0f;
@@ -704,7 +761,15 @@ public class Ass
         {
             _gSet_Menu.SetActive(true);
             _bGame_Start = false;
-            _gGameCanvas.GetComponent<Canvas>().sortingOrder = 4;
+            if (_iNow_Level != -1)
+            {
+                _gGameCanvas.GetComponent<Canvas>().sortingOrder = 4;
+            }
+            else if (_iNow_Level == -1)
+            {
+                _gCheck_Limit.GetComponent<Canvas>().sortingOrder = 4;
+            }
+           
         }
 
     }
@@ -714,11 +779,20 @@ public class Ass
         {
             _gSet_Menu.SetActive(false);
             _bGame_Start = true;
-            _gGameCanvas.GetComponent<Canvas>().sortingOrder = -1;
+            if (_iNow_Level != -1)
+            {
+                _gGameCanvas.GetComponent<Canvas>().sortingOrder = -1;
+            }
+            else if (_iNow_Level == -1)
+            {
+                _gCheck_Limit.GetComponent<Canvas>().sortingOrder = -1;
+            }
         }
     }
 
-
+    /// <summary>
+    /// 14-15關技能
+    /// </summary>
     public void Skill_Start()
     {
         if (_iNow_Level == 14)
@@ -800,31 +874,47 @@ public class Ass
     /// </summary>
     public void Save_Data()
     {
-        for (int i = 0; i < 15; i++)
+        if(_iNow_Level!=-1)
         {
-            for (int j = 0; j < 3; j++)
+            for (int i = 0; i < 15; i++)
             {
-                //PlayerPrefs.SetString("PlayerStar" + i.ToString()+"_" + j.ToString(), _sLevel_Star[i, j]);
+                for (int j = 0; j < 3; j++)
+                {
+                    //PlayerPrefs.SetString("PlayerStar" + i.ToString()+"_" + j.ToString(), _sLevel_Star[i, j]);
+
+                }
+                //  PlayerPrefs.SetString("PlayerLevel" + i.ToString(), _sClear_Level[i]);
 
             }
-            //  PlayerPrefs.SetString("PlayerLevel" + i.ToString(), _sClear_Level[i]);
+        }
+        else
+        {
 
         }
+        
     }
     /// <summary>
     /// 讀取資料
     /// </summary>
     public void Load_Data()
     {
-        for (int i = 0; i < 15; i++)
+        if(_iNow_Level!=-1)
         {
-            for (int j = 0; j < 3; j++)
+            for (int i = 0; i < 15; i++)
             {
-                _sLevel_Star[i, j] = PlayerPrefs.GetString("PlayerStar" + i.ToString() + "_" + j.ToString());
+                for (int j = 0; j < 3; j++)
+                {
+                    _sLevel_Star[i, j] = PlayerPrefs.GetString("PlayerStar" + i.ToString() + "_" + j.ToString());
+
+                }
+                _sClear_Level[i] = PlayerPrefs.GetString("PlayerLevel" + i.ToString());
 
             }
-            _sClear_Level[i] = PlayerPrefs.GetString("PlayerLevel" + i.ToString());
+        }
+        else
+        {
 
         }
+       
     }
 }

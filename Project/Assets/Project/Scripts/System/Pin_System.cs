@@ -15,6 +15,7 @@ public class Pin_System : MonoBehaviour
     public GameObject _gBall;
     public GameObject _gCan_Shoot;
     public GameObject _gRotaterSpeed;
+    public GameObject _gCheck_Limit;
     
     private float _fBall_Degree;
     private Rigidbody2D _rb;
@@ -22,9 +23,19 @@ public class Pin_System : MonoBehaviour
     void Start()
     {
         _gRotaterSpeed = GameObject.Find("RotaterSpeed");
-        _fSpeed = 5.0f;
+        _gCheck_Limit = GameObject.Find("Limit");
+        if(_gCheck_Limit)
+        {
+            _fSpeed = 60.0f;
+        }
+        else
+        {
+            _fSpeed = 5.0f;
+        }
+        
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = Vector2.up * _fSpeed;
+        
         _gBall = GameObject.Find("Ball");
         _gCan_Shoot = GameObject.Find("CanShoot");
         
@@ -34,7 +45,7 @@ public class Pin_System : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+       
     }
 
     private void OnTriggerEnter2D(Collider2D col)

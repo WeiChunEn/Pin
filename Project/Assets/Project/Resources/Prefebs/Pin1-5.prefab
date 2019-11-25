@@ -199,6 +199,7 @@ MonoBehaviour:
   _gBall: {fileID: 0}
   _gCan_Shoot: {fileID: 0}
   _gRotaterSpeed: {fileID: 0}
+  _gCheck_Limit: {fileID: 0}
 --- !u!212 &212044116307417742
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -285,5 +286,5 @@ SpriteRenderer:
   m_Size: {x: 12.8, y: 12.54}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
