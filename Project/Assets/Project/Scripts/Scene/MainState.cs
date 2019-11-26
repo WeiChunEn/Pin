@@ -94,7 +94,7 @@ public class MainState : ISceneState
     {
         if (m_LeaderBoard.tag == "false")
         {
-            Debug.Log(32221);
+            
             
             m_LeaderBoard.GetComponent<Animator>().SetTrigger("Open");
            
@@ -103,7 +103,7 @@ public class MainState : ISceneState
         }
         else if (m_LeaderBoard.tag == "true")
         {
-            Debug.Log(32222341);
+            
             
             m_LeaderBoard.GetComponent<Animator>().SetTrigger("Close");
            

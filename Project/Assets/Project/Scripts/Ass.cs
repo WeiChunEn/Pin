@@ -31,8 +31,10 @@ public class Ass
     public string[] _sClear_Level = new string[15];     //關卡Array
     public string[,] _sLevel_Star = new string[15, 3];  //關卡星星Array
     public string _sClear_Type;         //通關狀態
-    public string _sLimit_Record;       //這次極限分數Array
-    public string[,] _sAll_Limit_Record; //全部極限分數Array
+    public string _sLimit_Record;       //這次極限人名
+    public int _iLimit_Record;              //這次極限分數
+    public string[] _sAll_Limit_Record =new string[8]; //全部極限人名Array
+    public int[] _iAll_Limit_Int = new int[8]; //全部極限分數Array
     public float _fCount_Down;          //倒數秒數
     public int _iPlayer_Point;      //玩家分數
     public int _iLevel_Point;     //關卡分數
@@ -889,9 +891,37 @@ public class Ass
         }
         else
         {
-
+           
+            for (int i = 0; i < 8; i++)
+            {
+                PlayerPrefs.SetString("Player_Limit_Name" + i.ToString(), _sAll_Limit_Record[i]);
+                PlayerPrefs.SetInt("Player_Limit_Score" + i.ToString(), _iAll_Limit_Int[i]);
+            }
         }
         
+    }
+    /// <summary>
+    /// 排序極限分數
+    /// </summary>
+    public void Sort_Limit_Record()
+    {
+        for (int j = 7; j > 0; --j)
+            for (int k = 0; k < j; ++k)
+            {
+
+                if (_iAll_Limit_Int[k] < _iAll_Limit_Int[k + 1])
+                {
+
+                    int tmp2;
+                    string tmp3;
+                    tmp2 = _iAll_Limit_Int[k];
+                    _iAll_Limit_Int[k] = _iAll_Limit_Int[k + 1];
+                    _iAll_Limit_Int[k + 1] = tmp2;
+                    tmp3 = _sAll_Limit_Record[k];
+                    _sAll_Limit_Record[k] = _sAll_Limit_Record[k + 1];
+                    _sAll_Limit_Record[k + 1] = tmp3;
+                }
+            }
     }
     /// <summary>
     /// 讀取資料
@@ -913,7 +943,23 @@ public class Ass
         }
         else
         {
-
+            for(int i = 0; i<8;i++)
+            {
+                if(PlayerPrefs.GetString("Player_Limit_Name" + i.ToString())!="")
+                {
+                    
+                    _sAll_Limit_Record[i] = PlayerPrefs.GetString("Player_Limit_Name" + i.ToString());
+                    _iAll_Limit_Int[i] = PlayerPrefs.GetInt("Player_Limit_Score" + i.ToString());
+                }
+                else
+                {
+                    
+                    _sAll_Limit_Record[i] = "未命名";
+                    _iAll_Limit_Int[i] = Int32.Parse("0");
+                }
+                
+            }
+            
         }
        
     }
