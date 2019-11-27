@@ -13,6 +13,7 @@ public class LevelState : ISceneState
     private GameObject m_ThirdPage;
     private GameObject[,] m_Level_Star_Array;
     private GameObject[] m_Level_Array;
+    private GameObject m_Protected;
     public GameObject _gPlayer_Point;
     private Button m_First_Next_Page_Btn;
     private Button m_Second_Next_Page_Btn;
@@ -27,12 +28,14 @@ public class LevelState : ISceneState
     }
     public override void StateBegin()
     {
-       // PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         m_FirstPage = GameObject.Find("FirstPage");
         m_SecondPage = GameObject.Find("SecondPage");
         m_ThirdPage = GameObject.Find("ThirdPage");
         _gPlayer_Point = GameObject.Find("Player_Point");
-        //Ass.Instance.Load_Data();
+        m_Protected = GameObject.Find("Protected");
+        m_Protected.SetActive(false);
+        Ass.Instance.Load_Data();
         Find_Btn();
         Find_Level();
         m_SecondPage.SetActive(false);
@@ -140,11 +143,13 @@ public class LevelState : ISceneState
     {
 
         Debug.Log(Click_Btn.name);
+        m_Protected.SetActive(true);
         m_Manager.SetState(new MainState(m_Manager), "MainScene");
     }
     private void OnShopBtnClick(Button Click_Btn)
     {
         Debug.Log(Click_Btn.name);
+        m_Protected.SetActive(true);
         m_Manager.SetState(new ShopState(m_Manager), "ShopScene");
     }
 
@@ -152,7 +157,7 @@ public class LevelState : ISceneState
     {
         Debug.Log(Click_Btn.name);
         Ass.Instance._iNow_Level = Int32.Parse(Click_Btn.name);
-        
+        m_Protected.SetActive(true);
         m_Manager.SetState(new GameState(m_Manager), "GameScene");
     }
     private void OnSoundBtnClick(Button Click_Btn)

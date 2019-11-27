@@ -82,7 +82,7 @@ public class LimitState : ISceneState
     {
         for (int i = 0; i < 8; i++)
         {
-            m_Limit_Record.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = Ass.Instance._sAll_Limit_Record[i];
+            m_Limit_Record.transform.GetChild(i).GetComponent<Text>().text = Ass.Instance._sAll_Limit_Record[i];
             m_Limit_Record.transform.GetChild(i).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Ass.Instance._iAll_Limit_Int[i].ToString();
         }
     }
@@ -93,7 +93,7 @@ public class LimitState : ISceneState
         if (m_Limit_Now_Record > Ass.Instance._iAll_Limit_Int[7])
         {
             _bCan_Write = true;
-            Ass.Instance._sAll_Limit_Record[7] = m_Limit_Now_Name.GetComponent<TMP_InputField>().text;
+            Ass.Instance._sAll_Limit_Record[7] = m_Limit_Now_Name.GetComponent<InputField>().text;
             Ass.Instance._iAll_Limit_Int[7] = m_Limit_Now_Record;
             Ass.Instance.Sort_Limit_Record();
             Set_Record();
@@ -108,6 +108,7 @@ public class LimitState : ISceneState
     private void OnSetHomeBtnClick(Button Clicl_Btn)
     {
         Ass.Instance._iNow_Level = 0;
+
         m_Manager.SetState(new MainState(m_Manager), "MainScene");
     }
     private void OnRestartLimitBtnClick(Button Click_Btn)

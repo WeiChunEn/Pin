@@ -39,8 +39,8 @@ public class Ass
     public int _iPlayer_Point;      //玩家分數
     public int _iLevel_Point;     //關卡分數
     public float _fGame_Time;        //遊戲時間
-    private int[] m_Skill_Time; //技能發動的時間
-    private int[] m_Skill_Over_Time; //技能結束的時間
+    private int[] m_Skill_Time = new int[3]; //技能發動的時間
+    private int[] m_Skill_Over_Time = new int[3]; //技能結束的時間
     private bool[] m_14_Skill = new bool[2];  //  14關技能\
     private bool[] m_15_Skill = new bool[3];  // 15關技能
 
@@ -239,9 +239,18 @@ public class Ass
                         
                         if (m_Skill_Time[i] == Convert.ToInt32(_fGame_Time))
                         {
-                            m_Skill_Over_Time[i] = m_Skill_Time[i] - 10;
+                            
+                            
+
+                            Skill_Start(i);
                             m_Skill_Time[i] = -1;
-                            Skill_Start();
+                            Debug.Log((m_Skill_Over_Time[i]));
+                        }
+                        if(m_Skill_Over_Time[i] == Convert.ToInt32(_fGame_Time))
+                        {
+                            
+                            m_Skill_Over_Time[i] = -1;
+                            m_14_Skill[i] = false;
                         }
                     }
                 }
@@ -251,9 +260,9 @@ public class Ass
                     {
                         if (m_Skill_Time[i] == (int)_fGame_Time)
                         {
-                            m_Skill_Over_Time[i] = m_Skill_Time[i] - 10;
+                            
                             m_Skill_Time[i] = -1;
-                            Skill_Start();
+                            Skill_Start(i);
                         }
                     }
                 }
@@ -281,11 +290,11 @@ public class Ass
                     _gGame_Time.GetComponent<TextMeshProUGUI>().color = new Color(229f / 255f, 30f / 255f, 38f / 255f);
                 }
             }
-            if (_fGame_Time <= 0&&_iNow_Level!=-1)
+            if (_fGame_Time <= 0&&_iNow_Level!=-1&& _iLevel_Point < 0)
             {
                 GameOver();
             }
-            else if(_iNow_Level==-1&&_fGame_Time<=0)
+            else if(_iNow_Level==-1&&_fGame_Time<=0 && _iLevel_Point < 0)
             {
                 GameClear();
             }
@@ -345,12 +354,16 @@ public class Ass
             Debug.Log(EventSystem.current.currentSelectedGameObject);
             if (!EventSystem.current.currentSelectedGameObject)
             {
-                Create_Pin();
-                if (_iPin_Num == 1)
+                if(m_14_Skill[0]!=true)
                 {
+                    Create_Pin();
+                    if (_iPin_Num == 1)
+                    {
 
-                    m_Pin.tag = "Last";
+                        m_Pin.tag = "Last";
+                    }
                 }
+               
 
             }
 
@@ -795,7 +808,7 @@ public class Ass
     /// <summary>
     /// 14-15關技能
     /// </summary>
-    public void Skill_Start()
+    public void Skill_Start(int Skill_Num)
     {
         if (_iNow_Level == 14)
         {
@@ -804,14 +817,17 @@ public class Ass
             if (tmp == 0 && m_14_Skill[tmp] == true)
             {
                 m_14_Skill[tmp + 1] = true;
+                m_Skill_Over_Time[tmp + 1] = m_Skill_Time[Skill_Num] - 10;
             }
             else if (tmp == 1 && m_14_Skill[tmp] == true)
             {
                 m_14_Skill[tmp - 1] = true;
+                m_Skill_Over_Time[tmp - 1] = m_Skill_Time[Skill_Num] - 10;
             }
             else
             {
                 m_14_Skill[tmp] = true;
+                m_Skill_Over_Time[tmp] = m_Skill_Time[Skill_Num] - 10;
             }
 
 
@@ -882,10 +898,10 @@ public class Ass
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    //PlayerPrefs.SetString("PlayerStar" + i.ToString()+"_" + j.ToString(), _sLevel_Star[i, j]);
+                    PlayerPrefs.SetString("PlayerStar" + i.ToString()+"_" + j.ToString(), _sLevel_Star[i, j]);
 
                 }
-                //  PlayerPrefs.SetString("PlayerLevel" + i.ToString(), _sClear_Level[i]);
+                  PlayerPrefs.SetString("PlayerLevel" + i.ToString(), _sClear_Level[i]);
 
             }
         }

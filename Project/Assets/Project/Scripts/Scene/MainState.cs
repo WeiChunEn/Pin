@@ -8,6 +8,7 @@ public class MainState : ISceneState
 {
 
     private GameObject m_LeaderBoard;
+    private GameObject m_Protected;
     private Button Leader_Btn;
     public MainState(SceneStateManager Manager) : base(Manager)
     {
@@ -18,7 +19,8 @@ public class MainState : ISceneState
         //取得按鈕
         Find_Btn();
         m_LeaderBoard = GameObject.Find("LeaderBoard");
-
+        m_Protected = GameObject.Find("Protected");
+        m_Protected.SetActive(false);
 
     }
     public override void StateUpdate()
@@ -61,16 +63,19 @@ public class MainState : ISceneState
     private void OnLevelBtnClick(Button Click_Btn)
     {
         Debug.Log(Click_Btn.name);
+        m_Protected.SetActive(true);
         m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
     }
     private void OnShopBtnClick(Button Click_Btn)
     {
         Debug.Log(Click_Btn.name);
+        m_Protected.SetActive(true);
         m_Manager.SetState(new ShopState(m_Manager), "ShopScene");
     }
     private void OnLimitBtnClick(Button Click_Btn)
     {
         Debug.Log(Click_Btn.name);
+        m_Protected.SetActive(true);
         m_Manager.SetState(new LimitState(m_Manager), "LimitScene");
     }
     private void OnLeaveBtnClick(Button Click_Btn)
