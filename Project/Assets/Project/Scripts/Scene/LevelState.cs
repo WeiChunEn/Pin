@@ -28,7 +28,7 @@ public class LevelState : ISceneState
     }
     public override void StateBegin()
     {
-        //PlayerPrefs.DeleteAll();
+        
         m_FirstPage = GameObject.Find("FirstPage");
         m_SecondPage = GameObject.Find("SecondPage");
         m_ThirdPage = GameObject.Find("ThirdPage");

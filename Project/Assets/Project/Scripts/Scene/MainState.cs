@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,16 +11,23 @@ public class MainState : ISceneState
     private GameObject m_LeaderBoard;
     private GameObject m_Protected;
     private Button Leader_Btn;
+    private GameObject m_Limit_Record;
+    private string[] m_All_Limit_Record = new string[8]; //全部極限人名Array
+    private int[] m_All_Limit_Int = new int[8]; //全部極限分數Array
     public MainState(SceneStateManager Manager) : base(Manager)
     {
         this.StateName = "MainScene";
     }
     public override void StateBegin()
     {
+        
         //取得按鈕
         Find_Btn();
         m_LeaderBoard = GameObject.Find("LeaderBoard");
         m_Protected = GameObject.Find("Protected");
+        m_Limit_Record = GameObject.Find("Limit_Record");
+        Load_Data();
+        Set_Record();
         m_Protected.SetActive(false);
 
     }
@@ -116,6 +124,40 @@ public class MainState : ISceneState
 
         }
         Leader_Btn.interactable = false;
+    }
+
+
+    public void Load_Data()
+    {
+       
+            for (int i = 0; i < 8; i++)
+            {
+                if (PlayerPrefs.GetString("Player_Limit_Name" + i.ToString()) != "")
+                {
+
+                    m_All_Limit_Record[i] = PlayerPrefs.GetString("Player_Limit_Name" + i.ToString());
+                    m_All_Limit_Int[i] = PlayerPrefs.GetInt("Player_Limit_Score" + i.ToString());
+                }
+                else
+                {
+
+                    m_All_Limit_Record[i] = "未命名";
+                    m_All_Limit_Int[i] = Int32.Parse("0");
+                }
+
+            }
+
+        
+
+    }
+
+    public void Set_Record()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            m_Limit_Record.transform.GetChild(i).GetComponent<Text>().text = m_All_Limit_Record[i];
+            m_Limit_Record.transform.GetChild(i).transform.GetChild(0).GetComponent<Text>().text = m_All_Limit_Int[i].ToString();
+        }
     }
 
 }

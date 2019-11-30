@@ -258,11 +258,20 @@ public class Ass
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        if (m_Skill_Time[i] == (int)_fGame_Time)
+                        if (m_Skill_Time[i] == Convert.ToInt32(_fGame_Time))
                         {
-                            
-                            m_Skill_Time[i] = -1;
+
+
+
                             Skill_Start(i);
+                            m_Skill_Time[i] = -1;
+                            Debug.Log((m_Skill_Over_Time[i]));
+                        }
+                        if (m_Skill_Over_Time[i] == Convert.ToInt32(_fGame_Time))
+                        {
+
+                            m_Skill_Over_Time[i] = -1;
+                            m_15_Skill[i] = false;
                         }
                     }
                 }
@@ -363,7 +372,8 @@ public class Ass
                         m_Pin.tag = "Last";
                     }
                 }
-               
+                
+
 
             }
 
@@ -382,8 +392,14 @@ public class Ass
     /// <returns></returns>
     public GameObject Create_Pin()
     {
-        _iPin_Num--;
-
+        if (m_15_Skill[2] == true)
+        {
+            _iPin_Num--;
+        }
+        else
+        {
+            _iPin_Num++;
+        }
         _gCan_Shoot.tag = "false";
         return UnityEngine.Object.Instantiate(m_Pin, m_Spawn.transform.position, m_Spawn.transform.rotation, m_Spawn.transform);
 
@@ -846,10 +862,12 @@ public class Ass
                 if (tmp == 1 && m_15_Skill[tmp] == true)
                 {
                     m_15_Skill[tmp + 1] = true;
+                    m_Skill_Over_Time[tmp + 1] = m_Skill_Time[Skill_Num] - 10;
                 }
                 else if(tmp==2&&m_15_Skill[tmp]==true)
                 {
                     m_15_Skill[tmp - 1] = true;
+                    m_Skill_Over_Time[tmp - 1] = m_Skill_Time[Skill_Num] - 10;
                 }
 
             }
@@ -858,10 +876,12 @@ public class Ass
                 if (m_15_Skill[tmp - 1]==true)
                 {
                     m_15_Skill[tmp + 1] = true;
+                    m_Skill_Over_Time[tmp + 1] = m_Skill_Time[Skill_Num] - 10;
                 }
                 else if(m_15_Skill[tmp + 1])
                 {
                     m_15_Skill[tmp - 1] = true;
+                    m_Skill_Over_Time[tmp - 1] = m_Skill_Time[Skill_Num] - 10;
                 }
                 
             }
@@ -871,15 +891,18 @@ public class Ass
                 if (tmp == 1 && m_15_Skill[tmp] == true)
                 {
                     m_15_Skill[tmp - 1] = true;
+                    m_Skill_Over_Time[tmp - 1] = m_Skill_Time[Skill_Num] - 10;
                 }
                 else if (tmp == 0 && m_15_Skill[tmp] == true)
                 {
                     m_15_Skill[tmp + 1] = true;
+                    m_Skill_Over_Time[tmp + 1] = m_Skill_Time[Skill_Num] - 10;
                 }
             }
             else
             {
                 m_15_Skill[tmp] = true;
+                m_Skill_Over_Time[tmp] = m_Skill_Time[Skill_Num] - 10;
             }
             Debug.Log(m_15_Skill[0]);
             Debug.Log(m_15_Skill[1]);
