@@ -88,14 +88,23 @@ public class Ass
             }
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin6-10");
         }
-        else if (_iNow_Level <= 15)
+        else if (_iNow_Level <= 13)
         {
-            _fGame_Time = 100;
+            _fGame_Time = 60;
             if (_gSet_Btn)
             {
                 _gSet_Btn.transform.GetChild(2).gameObject.SetActive(true);
             }
-            m_Pin = Resources.Load<GameObject>("Prefebs/Pin11-15");
+            m_Pin = Resources.Load<GameObject>("Prefebs/Pin11-13");
+        }
+        else if (_iNow_Level <= 15)
+        {
+            _fGame_Time = 80;
+            if (_gSet_Btn)
+            {
+                _gSet_Btn.transform.GetChild(3).gameObject.SetActive(true);
+            }
+            m_Pin = Resources.Load<GameObject>("Prefebs/Pin14-15");
         }
         if (_iNow_Level == 14)
         {
@@ -209,7 +218,7 @@ public class Ass
             
             m_Rotater_System.Update();
 
-
+            _iLevel_Point = Int32.Parse(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
             if (_iNow_Level >= 6 && _iNow_Level <= 15)
             {
                 _fGame_Time -= Time.deltaTime;
@@ -299,11 +308,13 @@ public class Ass
                     _gGame_Time.GetComponent<TextMeshProUGUI>().color = new Color(229f / 255f, 30f / 255f, 38f / 255f);
                 }
             }
-            if (_fGame_Time <= 0&&_iNow_Level!=-1&& _iLevel_Point < 0)
+            Debug.Log(_iLevel_Point);
+            if ((_fGame_Time <= 0|| _iLevel_Point < 0) && _iNow_Level != -1)
             {
+                Debug.Log(_iLevel_Point);
                 GameOver();
             }
-            else if(_iNow_Level==-1&&_fGame_Time<=0 && _iLevel_Point < 0)
+            else if(_iNow_Level==-1&&(_fGame_Time<=0 || _iLevel_Point < 0))
             {
                 GameClear();
             }
@@ -392,7 +403,7 @@ public class Ass
     /// <returns></returns>
     public GameObject Create_Pin()
     {
-        if (m_15_Skill[2] == true)
+        if (m_15_Skill[2] == false)
         {
             _iPin_Num--;
         }
@@ -443,19 +454,19 @@ public class Ass
                 _iPin_Num = 15;
                 break;
             case 11:
-                _iPin_Num = 15;
+                _iPin_Num = 12;
                 break;
             case 12:
                 _iPin_Num = 15;
                 break;
             case 13:
-                _iPin_Num = 15;
+                _iPin_Num = 12;
                 break;
             case 14:
-                _iPin_Num = 15;
+                _iPin_Num = 10;
                 break;
             case 15:
-                _iPin_Num = 15;
+                _iPin_Num = 8;
                 break;
             case -1:
                 _iPin_Num = 1000;
@@ -475,22 +486,45 @@ public class Ass
             case "fail":
                 break;
             case "Clear":
-                _sClear_Level[_iNow_Level] = "true";
+                if(_iNow_Level!=15)
+                {
+                    
+                    _sClear_Level[_iNow_Level] = "true";
+                }
+               
+                
+                
                 break;
             case "one":
+
                 _sLevel_Star[_iNow_Level - 1, 0] = "true";
-                _sClear_Level[_iNow_Level] = "true";
+                _iPlayer_Point++;
+                if (_iNow_Level != 15)
+                {
+
+                    _sClear_Level[_iNow_Level] = "true";
+                }
                 break;
             case "two":
                 _sLevel_Star[_iNow_Level - 1, 0] = "true";
                 _sLevel_Star[_iNow_Level - 1, 1] = "true";
-                _sClear_Level[_iNow_Level] = "true";
+                _iPlayer_Point+=2;
+                if (_iNow_Level != 15)
+                {
+
+                    _sClear_Level[_iNow_Level] = "true";
+                }
                 break;
             case "three":
                 _sLevel_Star[_iNow_Level - 1, 0] = "true";
                 _sLevel_Star[_iNow_Level - 1, 1] = "true";
                 _sLevel_Star[_iNow_Level - 1, 2] = "true";
-                _sClear_Level[_iNow_Level] = "true";
+                _iPlayer_Point += 3;
+                if (_iNow_Level != 15)
+                {
+
+                    _sClear_Level[_iNow_Level] = "true";
+                }
                 break;
         }
     }
@@ -539,6 +573,7 @@ public class Ass
         {
             _gGameClear_Panel.SetActive(true);
             _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
+           
         }
         else if (_iNow_Level == -1)
         {
@@ -773,6 +808,96 @@ public class Ass
                     _sClear_Type = "one";
                 }
                 else if (_iLevel_Point < 400)
+                {
+                    _sClear_Type = "two";
+                }
+                else
+                {
+                    _sClear_Type = "three";
+                }
+                break;
+            case 11:
+                if (_iLevel_Point < 180)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 220)
+                {
+                    _sClear_Type = "one";
+                }
+                else if (_iLevel_Point < 250)
+                {
+                    _sClear_Type = "two";
+                }
+                else
+                {
+                    _sClear_Type = "three";
+                }
+                break;
+            case 12:
+                if (_iLevel_Point < 200)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 240)
+                {
+                    _sClear_Type = "one";
+                }
+                else if (_iLevel_Point < 280)
+                {
+                    _sClear_Type = "two";
+                }
+                else
+                {
+                    _sClear_Type = "three";
+                }
+                break;
+            case 13:
+                if (_iLevel_Point < 80)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 120)
+                {
+                    _sClear_Type = "one";
+                }
+                else if (_iLevel_Point < 150)
+                {
+                    _sClear_Type = "two";
+                }
+                else
+                {
+                    _sClear_Type = "three";
+                }
+                break;
+            case 14:
+                if (_iLevel_Point < 50)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 70)
+                {
+                    _sClear_Type = "one";
+                }
+                else if (_iLevel_Point < 100)
+                {
+                    _sClear_Type = "two";
+                }
+                else
+                {
+                    _sClear_Type = "three";
+                }
+                break;
+            case 15:
+                if (_iLevel_Point < 40)
+                {
+                    _sClear_Type = "Clear";
+                }
+                else if (_iLevel_Point < 60)
+                {
+                    _sClear_Type = "one";
+                }
+                else if (_iLevel_Point < 80)
                 {
                     _sClear_Type = "two";
                 }

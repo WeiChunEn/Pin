@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameState : ISceneState
 {
-    
+    private GameObject m_Protected;
     public GameState (SceneStateManager Manager):base(Manager)
     {
         this.StateName = "GameScene";
@@ -14,6 +14,8 @@ public class GameState : ISceneState
     public override void StateBegin()
     {
         Find_Btn();
+        m_Protected = GameObject.Find("Protected");
+        m_Protected.SetActive(false);
         Ass.Instance.Initinal();
         Debug.Log(Ass.Instance._iNow_Level);
        
@@ -39,11 +41,16 @@ public class GameState : ISceneState
         Button Over_Home_Btn = GameObject.Find("OverHome").GetComponent<Button>();
         Button Set_Btn1_5 = Set_Btn.transform.GetChild(0).GetComponent<Button>();
         Button Set_Btn6_10 = Set_Btn.transform.GetChild(1).GetComponent<Button>();
-        Button Set_Btn11_15 = Set_Btn.transform.GetChild(2).GetComponent<Button>();
+        Button Set_Btn11_13 = Set_Btn.transform.GetChild(2).GetComponent<Button>();
+        Button Set_Btn14_15 = Set_Btn.transform.GetChild(3).GetComponent<Button>();
         Button Set_Home = GameObject.Find("SetHome").GetComponent<Button>();
         Button Set_Music = GameObject.Find("SetMusic").GetComponent<Button>();
         Button Set_Close = GameObject.Find("SetClose").GetComponent<Button>();
         Button Set_Level = GameObject.Find("SetLevel").GetComponent<Button>();
+        if(Ass.Instance._iNow_Level==13||Ass.Instance._iNow_Level==14)
+        {
+            Next_Level_Btn.interactable = false;
+        }
         Clear_Level_Btn.onClick.AddListener(delegate ()
         {
 
@@ -84,7 +91,11 @@ public class GameState : ISceneState
         {
             Ass.Instance.Set_Open_Menu();
         });
-        Set_Btn11_15.onClick.AddListener(delegate ()
+        Set_Btn11_13.onClick.AddListener(delegate ()
+        {
+            Ass.Instance.Set_Open_Menu();
+        });
+        Set_Btn14_15.onClick.AddListener(delegate ()
         {
             Ass.Instance.Set_Open_Menu();
         });
@@ -109,8 +120,8 @@ public class GameState : ISceneState
         Debug.Log(Click_Btn.name);
        
         Ass.Instance._iNow_Level = 0;
-        
 
+        m_Protected.SetActive(true);
         m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
     }
     private void OnOverBackLevelBtnClick(Button Click_Btn)
@@ -121,11 +132,13 @@ public class GameState : ISceneState
         Ass.Instance.Load_Level();
         Ass.Instance. _iNow_Level = 0;
         Ass.Instance.Save_Data();
+        m_Protected.SetActive(true);
         m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
     }
     private void OnRestartLevelBtnClick(Button Click_Btn)
     {
         Debug.Log(Click_Btn.name);
+        m_Protected.SetActive(true);
         m_Manager.SetState(new GameState(m_Manager), "GameScene");
         
     }
@@ -140,6 +153,7 @@ public class GameState : ISceneState
         
         Ass.Instance._iNow_Level = 0;
         Ass.Instance.Save_Data();
+        m_Protected.SetActive(true);
         m_Manager.SetState(new MainState(m_Manager), "MainScene");
 
     }
@@ -148,18 +162,20 @@ public class GameState : ISceneState
         Debug.Log(Click_Btn.name);
        
         Ass.Instance._iNow_Level += 1;
-       
+        m_Protected.SetActive(true);
         m_Manager.SetState(new GameState(m_Manager), "GameScene");
     }
 
     private void OnSetHomeBtnClick(Button Clicl_Btn)
     {
         Ass.Instance._iNow_Level = 0;
+        m_Protected.SetActive(true);
         m_Manager.SetState(new MainState(m_Manager), "MainScene");
     }
     private void OnSetLevelBtnClick(Button Clicl_Btn)
     {
         Ass.Instance._iNow_Level = 0;
+        m_Protected.SetActive(true);
         m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
     }
 }

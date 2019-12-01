@@ -51,16 +51,7 @@ public class LevelState : ISceneState
         int tmp_Star_Num = 0;
         for (int i = 0; i < 15; i++)
         {
-            m_Level_Array[i] = GameObject.Find((i + 1).ToString());
-            if (Ass.Instance._sClear_Level[i] == "true" || Ass.Instance._sClear_Level[i] == "false")
-            {
-                m_Level_Array[i].tag = Ass.Instance._sClear_Level[i];
-            }
-            if (m_Level_Array[i].tag == "true")
-            {
-                
-                m_Level_Array[i].GetComponent<Button>().interactable = true;
-            }
+           
            
 
            
@@ -83,8 +74,36 @@ public class LevelState : ISceneState
 
                
             }
+            m_Level_Array[i] = GameObject.Find((i + 1).ToString());
+            if (Ass.Instance._sClear_Level[i] == "true" || Ass.Instance._sClear_Level[i] == "false")
+            {
+                if(i==13)
+                {
+                    if(tmp_Star_Num>=39)
+                    {
+                        m_Level_Array[i].tag = Ass.Instance._sClear_Level[i];
+                    }
+                }
+                else if(i==14)
+                {
+                    if (tmp_Star_Num >= 42)
+                    {
+                        m_Level_Array[i].tag = Ass.Instance._sClear_Level[i];
+                    }
+                }
+                else
+                {
+                    m_Level_Array[i].tag = Ass.Instance._sClear_Level[i];
+                }
+                
+            }
+            if (m_Level_Array[i].tag == "true")
+            {
+
+                m_Level_Array[i].GetComponent<Button>().interactable = true;
+            }
         }
-        Ass.Instance._iPlayer_Point = tmp_Star_Num*10;
+        Ass.Instance._iPlayer_Point = tmp_Star_Num;
         _gPlayer_Point.GetComponent<TextMeshProUGUI>().text = Ass.Instance._iPlayer_Point.ToString();
         
         

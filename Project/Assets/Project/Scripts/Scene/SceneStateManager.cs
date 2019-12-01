@@ -9,7 +9,7 @@ public class SceneStateManager
     private bool m_bRunBegin = false;
     private string m_LoadSceneName;
     private AsyncOperation asyncOperation;
-    private int displayProgress;
+    //private int displayProgress;
 
     public SceneStateManager()
     { }
