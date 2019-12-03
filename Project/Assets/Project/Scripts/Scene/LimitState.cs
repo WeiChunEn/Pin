@@ -9,6 +9,10 @@ public class LimitState : ISceneState
 {
     private GameObject m_Limit_Record;
     private GameObject m_Limit_Now_Name; //這次玩的人名
+    private GameObject m_Limit_Score_Text; //分數文字
+    private GameObject m_Can_Write_Text; //告知使用者能不能寫紀錄
+    private GameObject m_Write_Record_Menu; //寫紀錄的Menu
+    private Button m_Write_Record_Btn; //開啟寫分數欄的按鈕
     private int m_Limit_Now_Record;//這次的分數
     public bool _bCan_Write;//判斷分數有沒有比排行的高
     public LimitState(SceneStateManager Manager) : base(Manager)
@@ -19,8 +23,13 @@ public class LimitState : ISceneState
     {
         m_Limit_Record = GameObject.Find("Limit_Record");
         m_Limit_Now_Name = GameObject.Find("Input_Name");
+        m_Limit_Score_Text = GameObject.Find("Score");
+        m_Write_Record_Btn = GameObject.Find("LimitWrite").GetComponent<Button>();
+        m_Write_Record_Menu = GameObject.Find("Set_Record");
+        m_Can_Write_Text = GameObject.Find("WriteCheck");
         //取得按鈕
         Find_Btn();
+        m_Write_Record_Menu.SetActive(false);
         Ass.Instance.Initinal();
 
         Ass.Instance.Load_Data();
@@ -31,6 +40,31 @@ public class LimitState : ISceneState
     public override void StateUpdate()
     {
         Ass.Instance.Update();
+        m_Limit_Now_Record = Int32.Parse(GameObject.Find("PointText").GetComponent<TextMeshProUGUI>().text);
+        m_Limit_Score_Text.GetComponent<TextMeshProUGUI>().text = m_Limit_Now_Record.ToString();
+        if (m_Limit_Now_Record >= Ass.Instance._iAll_Limit_Int[7] )
+        {
+            _bCan_Write = true;
+        }
+        else
+        {
+            _bCan_Write = false;
+        }
+        if(Ass.Instance._bGame_Start==true)
+        {
+            if (_bCan_Write == true)
+            {
+                m_Can_Write_Text.GetComponent<Text>().text = "恭喜您可以把分數寫到排行榜上";
+                m_Write_Record_Btn.interactable = true;
+
+            }
+            else
+            {
+                m_Can_Write_Text.GetComponent<Text>().text = "很抱歉您的分數不夠格列在排行榜上";
+                m_Write_Record_Btn.interactable = false;
+            }
+        }
+        
     }
 
     private void Find_Btn()
@@ -73,6 +107,16 @@ public class LimitState : ISceneState
 
             Write_Score();
         });
+        Limit_Write_Record_No.onClick.AddListener(delegate ()
+        {
+
+            m_Write_Record_Menu.SetActive(false);
+        });
+        m_Write_Record_Btn.onClick.AddListener(delegate ()
+        {
+
+            m_Write_Record_Menu.SetActive(true);
+        });
 
     }
     /// <summary>
@@ -88,21 +132,22 @@ public class LimitState : ISceneState
     }
     public void Write_Score()
     {
-        m_Limit_Now_Record = Int32.Parse(GameObject.Find("PointText").GetComponent<TextMeshProUGUI>().text);
+        //m_Limit_Now_Record = Int32.Parse(GameObject.Find("PointText").GetComponent<TextMeshProUGUI>().text);
         //m_Limit_Now_Record = Ass.Instance._iLimit_Record;
-        if (m_Limit_Now_Record > Ass.Instance._iAll_Limit_Int[7])
-        {
-            _bCan_Write = true;
-            Ass.Instance._sAll_Limit_Record[7] = m_Limit_Now_Name.GetComponent<InputField>().text;
-            Ass.Instance._iAll_Limit_Int[7] = m_Limit_Now_Record;
-            Ass.Instance.Sort_Limit_Record();
-            Set_Record();
-        }
-        else
-        {
-            _bCan_Write = false;
-        }
+
+
+        Ass.Instance._sAll_Limit_Record[7] = m_Limit_Now_Name.GetComponent<InputField>().text;
+        Ass.Instance._iAll_Limit_Int[7] = m_Limit_Now_Record;
+        Ass.Instance.Sort_Limit_Record();
+        Set_Record();
+        m_Write_Record_Menu.SetActive(false);
+
+        m_Write_Record_Btn.interactable = false;
+        m_Can_Write_Text.GetComponent<Text>().text = "謝謝您的遊玩，請下次再光臨";
         
+
+
+
 
     }
     private void OnSetHomeBtnClick(Button Clicl_Btn)

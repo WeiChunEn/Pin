@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameState : ISceneState
 {
     private GameObject m_Protected;
+    private  GameObject Set_Btn;
     public GameState (SceneStateManager Manager):base(Manager)
     {
         this.StateName = "GameScene";
@@ -17,6 +18,27 @@ public class GameState : ISceneState
         m_Protected = GameObject.Find("Protected");
         m_Protected.SetActive(false);
         Ass.Instance.Initinal();
+        Set_Btn = GameObject.Find("Set_Btn");
+        Button Set_Btn1_5 = Set_Btn.transform.GetChild(0).GetComponent<Button>();
+        Button Set_Btn6_10 = Set_Btn.transform.GetChild(1).GetComponent<Button>();
+        Button Set_Btn11_13 = Set_Btn.transform.GetChild(2).GetComponent<Button>();
+        Button Set_Btn14_15 = Set_Btn.transform.GetChild(3).GetComponent<Button>();
+        Set_Btn1_5.onClick.AddListener(delegate ()
+        {
+            Ass.Instance.Set_Open_Menu();
+        });
+        Set_Btn6_10.onClick.AddListener(delegate ()
+        {
+            Ass.Instance.Set_Open_Menu();
+        });
+        Set_Btn11_13.onClick.AddListener(delegate ()
+        {
+            Ass.Instance.Set_Open_Menu();
+        });
+        Set_Btn14_15.onClick.AddListener(delegate ()
+        {
+            Ass.Instance.Set_Open_Menu();
+        });
         Debug.Log(Ass.Instance._iNow_Level);
        
     }
@@ -31,7 +53,8 @@ public class GameState : ISceneState
     }
     private void Find_Btn()
     {
-        GameObject Set_Btn = GameObject.Find("Set_Btn");
+
+       
         Button Clear_Level_Btn = GameObject.Find("Clear_Level_Btn").GetComponent<Button>();
         Button Clear_Restart_Btn = GameObject.Find("ClearRestart").GetComponent<Button>();
         Button Next_Level_Btn = GameObject.Find("NextLevel").GetComponent<Button>();
@@ -39,10 +62,7 @@ public class GameState : ISceneState
         Button Over_Level_Btn = GameObject.Find("Over_Level_Btn").GetComponent<Button>();
         Button Over_Restart_Btn = GameObject.Find("OverRestart").GetComponent<Button>();
         Button Over_Home_Btn = GameObject.Find("OverHome").GetComponent<Button>();
-        Button Set_Btn1_5 = Set_Btn.transform.GetChild(0).GetComponent<Button>();
-        Button Set_Btn6_10 = Set_Btn.transform.GetChild(1).GetComponent<Button>();
-        Button Set_Btn11_13 = Set_Btn.transform.GetChild(2).GetComponent<Button>();
-        Button Set_Btn14_15 = Set_Btn.transform.GetChild(3).GetComponent<Button>();
+       
         Button Set_Home = GameObject.Find("SetHome").GetComponent<Button>();
         Button Set_Music = GameObject.Find("SetMusic").GetComponent<Button>();
         Button Set_Close = GameObject.Find("SetClose").GetComponent<Button>();
@@ -83,22 +103,7 @@ public class GameState : ISceneState
         {
             OnNextLevelBtnClick(Next_Level_Btn);
         });
-        Set_Btn1_5.onClick.AddListener(delegate ()
-        {
-            Ass.Instance.Set_Open_Menu();
-        });
-        Set_Btn6_10.onClick.AddListener(delegate ()
-        {
-            Ass.Instance.Set_Open_Menu();
-        });
-        Set_Btn11_13.onClick.AddListener(delegate ()
-        {
-            Ass.Instance.Set_Open_Menu();
-        });
-        Set_Btn14_15.onClick.AddListener(delegate ()
-        {
-            Ass.Instance.Set_Open_Menu();
-        });
+       
         Set_Close.onClick.AddListener(delegate ()
         {
             Ass.Instance.Set_Close_Menu();

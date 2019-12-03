@@ -24,6 +24,7 @@ public class Ass
     public Rotater_System m_Rotater_System = null;
     private PlayerSystem m_Player_Ststem = null;
     private LevelSystem m_Level_System = null;
+    
     public bool _bGame_Start;
     public bool _bCountDown_Start;
     public int _iPin_Num;
@@ -64,48 +65,13 @@ public class Ass
         _bCountDown_Start = false;
         _fCount_Down = 0.0f;
         _fGame_Time = 60;
-        _gSet_Btn = GameObject.Find("Set_Btn");
+        
         _gCheck_Limit = GameObject.Find("Limit");
         if(_gCheck_Limit)
         {
             _iNow_Level = -1;
         }
-        if (_iNow_Level <= 5)
-        {
-            if (_gSet_Btn)
-            {
-                _gSet_Btn.transform.GetChild(0).gameObject.SetActive(true);
-            }
-
-            m_Pin = Resources.Load<GameObject>("Prefebs/Pin1-5");
-        }
-        else if (_iNow_Level <= 10)
-        {
-            
-            if (_gSet_Btn)
-            {
-                _gSet_Btn.transform.GetChild(1).gameObject.SetActive(true);
-            }
-            m_Pin = Resources.Load<GameObject>("Prefebs/Pin6-10");
-        }
-        else if (_iNow_Level <= 13)
-        {
-            _fGame_Time = 60;
-            if (_gSet_Btn)
-            {
-                _gSet_Btn.transform.GetChild(2).gameObject.SetActive(true);
-            }
-            m_Pin = Resources.Load<GameObject>("Prefebs/Pin11-13");
-        }
-        else if (_iNow_Level <= 15)
-        {
-            _fGame_Time = 80;
-            if (_gSet_Btn)
-            {
-                _gSet_Btn.transform.GetChild(3).gameObject.SetActive(true);
-            }
-            m_Pin = Resources.Load<GameObject>("Prefebs/Pin14-15");
-        }
+        
         if (_iNow_Level == 14)
         {
             m_Skill_Time = new int[2];
@@ -145,8 +111,44 @@ public class Ass
         _gCountDown = GameObject.Find("CountDown");
         _gCan_Shoot = GameObject.Find("CanShoot");
         _gGame_Time = GameObject.Find("GameTime");
+        _gSet_Btn = GameObject.Find("Set_Btn");
+        if (_iNow_Level <= 5)
+        {
+            if (_gSet_Btn)
+            {
+                _gSet_Btn.transform.GetChild(0).gameObject.SetActive(true);
+            }
 
-        if(_iNow_Level==-1)
+            m_Pin = Resources.Load<GameObject>("Prefebs/Pin1-5");
+        }
+        else if (_iNow_Level <= 10)
+        {
+
+            if (_gSet_Btn)
+            {
+                _gSet_Btn.transform.GetChild(1).gameObject.SetActive(true);
+            }
+            m_Pin = Resources.Load<GameObject>("Prefebs/Pin6-10");
+        }
+        else if (_iNow_Level <= 13)
+        {
+            _fGame_Time = 60;
+            if (_gSet_Btn)
+            {
+                _gSet_Btn.transform.GetChild(2).gameObject.SetActive(true);
+            }
+            m_Pin = Resources.Load<GameObject>("Prefebs/Pin11-13");
+        }
+        else if (_iNow_Level <= 15)
+        {
+            _fGame_Time = 80;
+            if (_gSet_Btn)
+            {
+                _gSet_Btn.transform.GetChild(3).gameObject.SetActive(true);
+            }
+            m_Pin = Resources.Load<GameObject>("Prefebs/Pin14-15");
+        }
+        if (_iNow_Level==-1)
         {
             _fGame_Time = 180;
             m_Pin = Resources.Load<GameObject>("Prefebs/PinLimit");
@@ -160,6 +162,7 @@ public class Ass
     public void Update()
     {
         m_Player_Ststem.Update();
+        
         if (_bCountDown_Start == true)
         {
             _fCount_Down += Time.deltaTime;
