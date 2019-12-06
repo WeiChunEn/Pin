@@ -27,33 +27,34 @@ public class SceneStateManager
         //    m_LoadSceneName = "StartScene";
         //}
         Debug.Log("SetState:" + State.ToString());
-
+        
         m_bRunBegin = false;
 
         // 載入場景
         LoadScene(LoadSceneName);
-
+        
         // 通知前一個State結束
         if (m_State != null)
         {
 
             m_State.StateEnd();
+            Debug.Log(m_State);
         }
 
 
         // 設定
         m_State = State;
+        Debug.Log(m_State);
     }
 
     // 載入場景
     private void LoadScene(string LoadSceneName)
     {
 
-        //if (LoadSceneName == null || LoadSceneName.Length == 0)
-        //    return;
+       
         asyncOperation = SceneManager.LoadSceneAsync(LoadSceneName);
 
-        //SceneManager.LoadSceneAsync(LoadSceneName);
+       
     }
 
     // 更新
@@ -65,11 +66,7 @@ public class SceneStateManager
         {
             return;
         }
-        //if (Application.isLoadingLevel)
-        //{
-        //    return;
-        //}
-
+        
 
 
 
