@@ -19,7 +19,7 @@ public class Rotater_System : GameSystem
     private GameObject m_Ball;
     private GameObject[] m_Rotater_Array = new GameObject[15];
     private GameObject m_Intro;
-    private GameObject _gRotate_Speed;
+    public GameObject _gRotate_Speed;
     private GameObject _gLimit_Rotater;
     private Button m_Close_Intro;
     private Button m_Game_Over;

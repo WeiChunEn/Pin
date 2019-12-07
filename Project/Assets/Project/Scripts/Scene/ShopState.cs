@@ -25,7 +25,7 @@ public class ShopState : ISceneState
         m_Buy_Window.SetActive(false);
         m_Check_Window.SetActive(false);
         m_Player_Point = GameObject.Find("Player_Point");
-        m_Player_Point.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetString("Player_Point");
+        m_Player_Point.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("Player_Point").ToString();
         
 
     }

@@ -103,9 +103,9 @@ public class LevelState : ISceneState
                 m_Level_Array[i].GetComponent<Button>().interactable = true;
             }
         }
-        Ass.Instance._iPlayer_Point = tmp_Star_Num;
+       // Ass.Instance._iPlayer_Point = tmp_Star_Num;
         _gPlayer_Point.GetComponent<TextMeshProUGUI>().text = Ass.Instance._iPlayer_Point.ToString();
-        PlayerPrefs.SetString("Player_Point", _gPlayer_Point.GetComponent<TextMeshProUGUI>().text);
+      
         
         
     }

@@ -21,10 +21,14 @@ public class Ass
     public GameObject _gSet_Btn; //設定的按鈕
     public GameObject _gSet_Menu; //設定的介面
     public GameObject _gLimit_Record;//極限紀錄
+    private GameObject _gSkill_Freeze;
+    private GameObject _gSkill_Gray;
+    private GameObject _gSkill_Add;
+    private GameObject _gSkill_Black;
     public Rotater_System m_Rotater_System = null;
     private PlayerSystem m_Player_Ststem = null;
     private LevelSystem m_Level_System = null;
-    
+
     public bool _bGame_Start;
     public bool _bCountDown_Start;
     public int _iPin_Num;
@@ -34,7 +38,7 @@ public class Ass
     public string _sClear_Type;         //通關狀態
     public string _sLimit_Record;       //這次極限人名
     public int _iLimit_Record;              //這次極限分數
-    public string[] _sAll_Limit_Record =new string[8]; //全部極限人名Array
+    public string[] _sAll_Limit_Record = new string[8]; //全部極限人名Array
     public int[] _iAll_Limit_Int = new int[8]; //全部極限分數Array
     public float _fCount_Down;          //倒數秒數
     public int _iPlayer_Point;      //玩家分數
@@ -42,8 +46,8 @@ public class Ass
     public float _fGame_Time;        //遊戲時間
     private int[] m_Skill_Time = new int[3]; //技能發動的時間
     private int[] m_Skill_Over_Time = new int[3]; //技能結束的時間
-    private bool[] m_14_Skill = new bool[2];  //  14關技能\
-    private bool[] m_15_Skill = new bool[3];  // 15關技能
+    private string[] m_14_Skill = new string[2];  //  14關技能\
+    private string[] m_15_Skill = new string[3];  // 15關技能
 
 
     //Singleton
@@ -65,33 +69,13 @@ public class Ass
         _bCountDown_Start = false;
         _fCount_Down = 0.0f;
         _fGame_Time = 60;
-        
+
         _gCheck_Limit = GameObject.Find("Limit");
-        if(_gCheck_Limit)
+        if (_gCheck_Limit)
         {
             _iNow_Level = -1;
         }
-        
-        if (_iNow_Level == 14)
-        {
-            m_Skill_Time = new int[2];
-            m_Skill_Over_Time = new int[2];
-            for (int i = 0; i < 2; i++)
-            {
-                m_Skill_Time[i] = UnityEngine.Random.Range(10, (int)_fGame_Time);
-                Debug.Log(m_Skill_Time[i]);
-            }
-        }
-        else if (_iNow_Level == 15)
-        {
-            m_Skill_Time = new int[3];
-            m_Skill_Over_Time = new int[3];
-            for (int i = 0; i < 3; i++)
-            {
-                m_Skill_Time[i] = UnityEngine.Random.Range(10, (int)_fGame_Time);
-                Debug.Log(m_Skill_Time[i]);
-            }
-        }
+
         _gGameCanvas = GameObject.Find("GameCanvas");
         _gGameOver_Panel = GameObject.Find("GameOver");
         _gGameClear_Panel = GameObject.Find("GameClear");
@@ -142,13 +126,45 @@ public class Ass
         else if (_iNow_Level <= 15)
         {
             _fGame_Time = 80;
+            if (_iNow_Level == 14)
+            {
+                m_Skill_Time = new int[2];
+                m_Skill_Over_Time = new int[2];
+                for (int i = 0; i < 2; i++)
+                {
+                    m_Skill_Time[i] = UnityEngine.Random.Range(10, (int)_fGame_Time);
+                    Debug.Log(m_Skill_Time[i]);
+                    m_14_Skill[i] = "";
+                }
+                _gSkill_Gray = GameObject.Find("Gray");
+                _gSkill_Freeze = GameObject.Find("Freeze");
+                _gSkill_Gray.SetActive(false);
+                _gSkill_Freeze.SetActive(false);
+            }
+            else
+            {
+                m_Skill_Time = new int[3];
+                m_Skill_Over_Time = new int[3];
+                for (int i = 0; i < 3; i++)
+                {
+                    m_Skill_Time[i] = UnityEngine.Random.Range(10, (int)_fGame_Time);
+                    Debug.Log(m_Skill_Time[i]);
+                    m_15_Skill[i] = "";
+                }
+                _gSkill_Add = GameObject.Find("Add");
+                _gSkill_Black = GameObject.Find("Black");
+                _gSkill_Add.SetActive(false);
+                _gSkill_Black.SetActive(false);
+            }
+
+            
             if (_gSet_Btn)
             {
                 _gSet_Btn.transform.GetChild(3).gameObject.SetActive(true);
             }
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin14-15");
         }
-        if (_iNow_Level==-1)
+        if (_iNow_Level == -1)
         {
             _fGame_Time = 180;
             m_Pin = Resources.Load<GameObject>("Prefebs/PinLimit");
@@ -161,8 +177,11 @@ public class Ass
     }
     public void Update()
     {
+        Debug.Log(m_15_Skill[0] + "1");
+        Debug.Log(m_15_Skill[1] + "2");
+        Debug.Log(m_15_Skill[2] + "3");
         m_Player_Ststem.Update();
-        
+
         if (_bCountDown_Start == true)
         {
             _fCount_Down += Time.deltaTime;
@@ -218,7 +237,7 @@ public class Ass
         {
 
             InputProcess();
-            
+
             m_Rotater_System.Update();
 
             _iLevel_Point = Int32.Parse(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
@@ -248,23 +267,51 @@ public class Ass
                 {
                     for (int i = 0; i < 2; i++)
                     {
-                        
+
                         if (m_Skill_Time[i] == Convert.ToInt32(_fGame_Time))
                         {
-                            
-                            
+
+
 
                             Skill_Start(i);
                             m_Skill_Time[i] = -1;
                             Debug.Log((m_Skill_Over_Time[i]));
                         }
-                        if(m_Skill_Over_Time[i] == Convert.ToInt32(_fGame_Time))
+                        if (m_Skill_Over_Time[i] == Convert.ToInt32(_fGame_Time))
                         {
-                            
+
                             m_Skill_Over_Time[i] = -1;
-                            m_14_Skill[i] = false;
+                            m_14_Skill[i] = "Finish";
+
                         }
                     }
+                    for (int i = 0; i < 2; i++)
+                    {
+                        if (m_14_Skill[i] == "true")
+                        {
+                            if (i == 0)
+                            {
+                                _gSkill_Freeze.SetActive(true);
+                            }
+                            else if (i == 1)
+                            {
+                                _gSkill_Gray.SetActive(true);
+                            }
+                        }
+                        else
+                        {
+                            if (i == 0)
+                            {
+                                _gSkill_Freeze.SetActive(false);
+                            }
+                            else if (i == 1)
+                            {
+                                _gSkill_Gray.SetActive(false);
+                            }
+                        }
+                    }
+
+
                 }
                 else if (_iNow_Level == 15)
                 {
@@ -283,12 +330,62 @@ public class Ass
                         {
 
                             m_Skill_Over_Time[i] = -1;
-                            m_15_Skill[i] = false;
+                            m_15_Skill[i] = "Finish";
+                        }
+                    }
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (m_15_Skill[i] == "true")
+                        {
+                            if (i == 0)
+                            {
+                                _gSkill_Black.SetActive(true);
+                            }
+                            else if (i == 1)
+                            {
+
+                                int tmpSpeed = Convert.ToInt32(m_Rotater_System._gRotate_Speed.transform.GetChild(0).name);
+                                if (tmpSpeed == 100||tmpSpeed==-100)
+                                {
+                                    tmpSpeed *= 2;
+                                }
+                                m_Rotater_System._gRotate_Speed.transform.GetChild(0).name = tmpSpeed.ToString();
+
+
+
+
+
+                            }
+                            else if (i == 2)
+                            {
+                                _gSkill_Add.SetActive(true);
+                            }
+                        }
+                        else if(m_15_Skill[i] == "Finish")
+                        {
+                            if (i == 0)
+                            {
+                                _gSkill_Black.SetActive(false);
+                            }
+                            else if (i == 1)
+                            {
+                                int tmpSpeed = Convert.ToInt32(m_Rotater_System._gRotate_Speed.transform.GetChild(0).name);
+                                if (tmpSpeed == 200 || tmpSpeed == -200)
+                                {
+                                    tmpSpeed /= 2;
+                                }
+                                m_Rotater_System._gRotate_Speed.transform.GetChild(0).name = tmpSpeed.ToString();
+
+                            }
+                            else if (i == 2)
+                            {
+                                _gSkill_Add.SetActive(false);
+                            }
                         }
                     }
                 }
             }
-            else if(_iNow_Level == -1)
+            else if (_iNow_Level == -1)
             {
                 _fGame_Time -= Time.deltaTime;
                 if (_fGame_Time > 60 && _fGame_Time <= 70 || _fGame_Time <= 10)
@@ -312,12 +409,12 @@ public class Ass
                 }
             }
             Debug.Log(_iLevel_Point);
-            if ((_fGame_Time <= 0|| _iLevel_Point < 0) && _iNow_Level != -1)
+            if ((_fGame_Time <= 0 || _iLevel_Point < 0) && _iNow_Level != -1)
             {
                 Debug.Log(_iLevel_Point);
                 GameOver();
             }
-            else if(_iNow_Level==-1&&(_fGame_Time<=0 || _iLevel_Point < 0))
+            else if (_iNow_Level == -1 && (_fGame_Time <= 0 || _iLevel_Point < 0))
             {
                 GameClear();
             }
@@ -358,14 +455,15 @@ public class Ass
             {
                  if(!EventSystem.current.currentSelectedGameObject)
                  {
-                    Create_Pin();
-                    if (_iPin_Num == 1)
+                      if(m_14_Skill[0]!=true)
                     {
+                        Create_Pin();
+                        if (_iPin_Num == 1)
+                        {
 
-                      m_Pin.tag = "Last";
-                     }   
-
-                  }
+                            m_Pin.tag = "Last";
+                        }
+                    }
             }
 
          }
@@ -377,7 +475,7 @@ public class Ass
             Debug.Log(EventSystem.current.currentSelectedGameObject);
             if (!EventSystem.current.currentSelectedGameObject)
             {
-                if(m_14_Skill[0]!=true)
+                if (m_14_Skill[0] != "true")
                 {
                     Create_Pin();
                     if (_iPin_Num == 1)
@@ -386,7 +484,7 @@ public class Ass
                         m_Pin.tag = "Last";
                     }
                 }
-                
+
 
 
             }
@@ -406,7 +504,7 @@ public class Ass
     /// <returns></returns>
     public GameObject Create_Pin()
     {
-        if (m_15_Skill[2] == false)
+        if (m_15_Skill[2] != "true")
         {
             _iPin_Num--;
         }
@@ -489,19 +587,19 @@ public class Ass
             case "fail":
                 break;
             case "Clear":
-                if(_iNow_Level!=15)
+                if (_iNow_Level != 15)
                 {
-                    
+
                     _sClear_Level[_iNow_Level] = "true";
                 }
-               
-                
-                
+
+
+
                 break;
             case "one":
 
                 _sLevel_Star[_iNow_Level - 1, 0] = "true";
-                _iPlayer_Point++;
+
                 if (_iNow_Level != 15)
                 {
 
@@ -511,7 +609,7 @@ public class Ass
             case "two":
                 _sLevel_Star[_iNow_Level - 1, 0] = "true";
                 _sLevel_Star[_iNow_Level - 1, 1] = "true";
-                _iPlayer_Point+=2;
+
                 if (_iNow_Level != 15)
                 {
 
@@ -522,7 +620,7 @@ public class Ass
                 _sLevel_Star[_iNow_Level - 1, 0] = "true";
                 _sLevel_Star[_iNow_Level - 1, 1] = "true";
                 _sLevel_Star[_iNow_Level - 1, 2] = "true";
-                _iPlayer_Point += 3;
+
                 if (_iNow_Level != 15)
                 {
 
@@ -547,7 +645,7 @@ public class Ass
     /// </summary>
     public void GameOver()
     {
-        
+
         _sClear_Type = "fail";
         if (_iNow_Level != -1)
         {
@@ -571,12 +669,12 @@ public class Ass
     public void GameClear()
     {
 
-        
+
         if (_iNow_Level != -1)
         {
             _gGameClear_Panel.SetActive(true);
             _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
-           
+
         }
         else if (_iNow_Level == -1)
         {
@@ -584,10 +682,12 @@ public class Ass
             _gCheck_Limit.GetComponent<Canvas>().sortingOrder = 1;
         }
         _bGame_Start = false;
+
         Set_Star();
         Load_Level();
-        Save_Data();
         _gGameClear_Panel.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = _iLevel_Point.ToString();
+        _iPlayer_Point += _iLevel_Point;
+        Save_Data();
         switch (_sClear_Type)
         {
             case "Clear":
@@ -605,7 +705,7 @@ public class Ass
         }
 
     }
-    
+
     /// <summary>
     /// 倒數計時
     /// </summary>
@@ -615,15 +715,15 @@ public class Ass
 
         _gCountDown.SetActive(false);
         _bGame_Start = true;
-        if(_iNow_Level!=-1)
+        if (_iNow_Level != -1)
         {
             _gGameCanvas.GetComponent<Canvas>().sortingOrder = -1;
         }
-        else if(_iNow_Level==-1)
+        else if (_iNow_Level == -1)
         {
             _gCheck_Limit.GetComponent<Canvas>().sortingOrder = -1;
         }
-        
+
         Set_Pin_Num();
         _bCountDown_Start = false;
         _fCount_Down = 0.0f;
@@ -928,7 +1028,7 @@ public class Ass
             {
                 _gCheck_Limit.GetComponent<Canvas>().sortingOrder = 4;
             }
-           
+
         }
 
     }
@@ -958,19 +1058,19 @@ public class Ass
         {
 
             int tmp = UnityEngine.Random.Range(0, 2);
-            if (tmp == 0 && m_14_Skill[tmp] == true)
+            if (tmp == 0 && (m_14_Skill[tmp] == "Finish" || m_14_Skill[tmp] == "true"))
             {
-                m_14_Skill[tmp + 1] = true;
+                m_14_Skill[tmp + 1] = "true";
                 m_Skill_Over_Time[tmp + 1] = m_Skill_Time[Skill_Num] - 10;
             }
-            else if (tmp == 1 && m_14_Skill[tmp] == true)
+            else if (tmp == 1 && (m_14_Skill[tmp] == "Finish" || m_14_Skill[tmp] == "true"))
             {
-                m_14_Skill[tmp - 1] = true;
+                m_14_Skill[tmp - 1] = "true";
                 m_Skill_Over_Time[tmp - 1] = m_Skill_Time[Skill_Num] - 10;
             }
             else
             {
-                m_14_Skill[tmp] = true;
+                m_14_Skill[tmp] = "true";
                 m_Skill_Over_Time[tmp] = m_Skill_Time[Skill_Num] - 10;
             }
 
@@ -982,59 +1082,84 @@ public class Ass
         }
         else if (_iNow_Level == 15)
         {
-
+           
             int tmp = UnityEngine.Random.Range(0, 3);
-            if (tmp == 0 && m_15_Skill[tmp] == true)
+           
+            if (tmp == 0 && (m_15_Skill[tmp] == "Finish"|| m_15_Skill[tmp] == "true"))
             {
+                Debug.Log("Styart1");
                 tmp = UnityEngine.Random.Range(1, 3);
-                if (tmp == 1 && m_15_Skill[tmp] == true)
+                if (tmp == 1 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
                 {
-                    m_15_Skill[tmp + 1] = true;
-                    m_Skill_Over_Time[tmp + 1] = m_Skill_Time[Skill_Num] - 10;
+                   
+                    m_15_Skill[tmp+1] = "true";
+                    m_Skill_Over_Time[tmp+1] = m_Skill_Time[Skill_Num] - 10;
+                    Debug.Log("Styart111");
                 }
-                else if(tmp==2&&m_15_Skill[tmp]==true)
+                else if (tmp == 2 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
                 {
-                    m_15_Skill[tmp - 1] = true;
-                    m_Skill_Over_Time[tmp - 1] = m_Skill_Time[Skill_Num] - 10;
+                    m_15_Skill[tmp-1] = "true";
+                    m_Skill_Over_Time[tmp-1] = m_Skill_Time[Skill_Num] - 10;
+                    Debug.Log("Styart111");
+                }
+                else
+                {
+                    m_15_Skill[tmp] = "true";
+                    m_Skill_Over_Time[tmp] = m_Skill_Time[Skill_Num] - 10;
+                }
+            }
+            else if (tmp == 1 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
+            {
+                Debug.Log("Styart2");
+                tmp = 0;
+                if (tmp == 0 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
+                {
+                    tmp = 2;
+                    m_15_Skill[tmp ] = "true";
+                    m_Skill_Over_Time[tmp] = m_Skill_Time[Skill_Num] - 10;
+                    Debug.Log("Styart222");
+                }
+                else if (tmp == 0 && (m_15_Skill[tmp] != "Finish" || m_15_Skill[tmp] != "true"))
+                {
+                    m_15_Skill[tmp] = "true";
+                    m_Skill_Over_Time[tmp] = m_Skill_Time[Skill_Num] - 10;
+                    Debug.Log("Styart222");
                 }
 
+
             }
-            else if (tmp == 1 && m_15_Skill[tmp] == true)
+            else if (tmp == 2 &&( m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
             {
-                if (m_15_Skill[tmp - 1]==true)
-                {
-                    m_15_Skill[tmp + 1] = true;
-                    m_Skill_Over_Time[tmp + 1] = m_Skill_Time[Skill_Num] - 10;
-                }
-                else if(m_15_Skill[tmp + 1])
-                {
-                    m_15_Skill[tmp - 1] = true;
-                    m_Skill_Over_Time[tmp - 1] = m_Skill_Time[Skill_Num] - 10;
-                }
-                
-            }
-            else if(tmp == 2 && m_15_Skill[tmp] == true)
-            {
+                Debug.Log("Styart3");
                 tmp = UnityEngine.Random.Range(0, 2);
-                if (tmp == 1 && m_15_Skill[tmp] == true)
+                if (tmp == 1 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
                 {
-                    m_15_Skill[tmp - 1] = true;
+                    m_15_Skill[tmp - 1] = "true";
                     m_Skill_Over_Time[tmp - 1] = m_Skill_Time[Skill_Num] - 10;
+                    Debug.Log("Styart333");
                 }
-                else if (tmp == 0 && m_15_Skill[tmp] == true)
+                else if (tmp == 0 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
                 {
-                    m_15_Skill[tmp + 1] = true;
+                    m_15_Skill[tmp + 1] = "true";
                     m_Skill_Over_Time[tmp + 1] = m_Skill_Time[Skill_Num] - 10;
+                    Debug.Log("Styart333");
                 }
+                else
+                {
+                    m_15_Skill[tmp] = "true";
+                    m_Skill_Over_Time[tmp] = m_Skill_Time[Skill_Num] - 10;
+                }
+
             }
             else
             {
-                m_15_Skill[tmp] = true;
+                Debug.Log(tmp);
+                m_15_Skill[tmp ] = "true";
                 m_Skill_Over_Time[tmp] = m_Skill_Time[Skill_Num] - 10;
+                Debug.Log("Styart444");
             }
-            Debug.Log(m_15_Skill[0]);
-            Debug.Log(m_15_Skill[1]);
-            Debug.Log(m_15_Skill[2]);
+          
+            
 
         }
     }
@@ -1043,29 +1168,29 @@ public class Ass
     /// </summary>
     public void Save_Data()
     {
-        if(_iNow_Level!=-1)
+        if (_iNow_Level != -1)
         {
             for (int i = 0; i < 15; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    PlayerPrefs.SetString("PlayerStar" + i.ToString()+"_" + j.ToString(), _sLevel_Star[i, j]);
+                    PlayerPrefs.SetString("PlayerStar" + i.ToString() + "_" + j.ToString(), _sLevel_Star[i, j]);
 
                 }
-                  PlayerPrefs.SetString("PlayerLevel" + i.ToString(), _sClear_Level[i]);
+                PlayerPrefs.SetString("PlayerLevel" + i.ToString(), _sClear_Level[i]);
 
             }
         }
         else
         {
-           
+
             for (int i = 0; i < 8; i++)
             {
                 PlayerPrefs.SetString("Player_Limit_Name" + i.ToString(), _sAll_Limit_Record[i]);
                 PlayerPrefs.SetInt("Player_Limit_Score" + i.ToString(), _iAll_Limit_Int[i]);
             }
         }
-        
+        PlayerPrefs.SetInt("Player_Point", _iPlayer_Point);
     }
     /// <summary>
     /// 排序極限分數
@@ -1095,7 +1220,11 @@ public class Ass
     /// </summary>
     public void Load_Data()
     {
-        if(_iNow_Level!=-1)
+        //string tmp;
+        //tmp = PlayerPrefs.GetString("Player_Point");
+        //_iPlayer_Point = Int32.Parse(tmp);
+        _iPlayer_Point = PlayerPrefs.GetInt("Player_Point");
+        if (_iNow_Level != -1)
         {
             for (int i = 0; i < 15; i++)
             {
@@ -1110,24 +1239,24 @@ public class Ass
         }
         else
         {
-            for(int i = 0; i<8;i++)
+            for (int i = 0; i < 8; i++)
             {
-                if(PlayerPrefs.GetString("Player_Limit_Name" + i.ToString())!="")
+                if (PlayerPrefs.GetString("Player_Limit_Name" + i.ToString()) != "")
                 {
-                    
+
                     _sAll_Limit_Record[i] = PlayerPrefs.GetString("Player_Limit_Name" + i.ToString());
                     _iAll_Limit_Int[i] = PlayerPrefs.GetInt("Player_Limit_Score" + i.ToString());
                 }
                 else
                 {
-                    
+
                     _sAll_Limit_Record[i] = "未命名";
                     _iAll_Limit_Int[i] = Int32.Parse("0");
                 }
-                
+
             }
-            
+
         }
-       
+
     }
 }
