@@ -104,6 +104,7 @@ public class Ass
             }
 
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin1-5");
+            m_Pin.tag = "Pin";
         }
         else if (_iNow_Level <= 10)
         {
@@ -113,6 +114,7 @@ public class Ass
                 _gSet_Btn.transform.GetChild(1).gameObject.SetActive(true);
             }
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin6-10");
+            m_Pin.tag = "Pin";
         }
         else if (_iNow_Level <= 13)
         {
@@ -122,6 +124,7 @@ public class Ass
                 _gSet_Btn.transform.GetChild(2).gameObject.SetActive(true);
             }
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin11-13");
+            m_Pin.tag = "Pin";
         }
         else if (_iNow_Level <= 15)
         {
@@ -157,12 +160,13 @@ public class Ass
                 _gSkill_Black.SetActive(false);
             }
 
-            
+
             if (_gSet_Btn)
             {
                 _gSet_Btn.transform.GetChild(3).gameObject.SetActive(true);
             }
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin14-15");
+            m_Pin.tag = "Pin";
         }
         if (_iNow_Level == -1)
         {
@@ -340,12 +344,13 @@ public class Ass
                             if (i == 0)
                             {
                                 _gSkill_Black.SetActive(true);
+                                m_Rotater_System.m_Rotater.name = "Minus";
                             }
                             else if (i == 1)
                             {
 
                                 int tmpSpeed = Convert.ToInt32(m_Rotater_System._gRotate_Speed.transform.GetChild(0).name);
-                                if (tmpSpeed == 100||tmpSpeed==-100)
+                                if (tmpSpeed == 100 || tmpSpeed == -100)
                                 {
                                     tmpSpeed *= 2;
                                 }
@@ -361,11 +366,12 @@ public class Ass
                                 _gSkill_Add.SetActive(true);
                             }
                         }
-                        else if(m_15_Skill[i] == "Finish")
+                        else if (m_15_Skill[i] == "Finish")
                         {
                             if (i == 0)
                             {
                                 _gSkill_Black.SetActive(false);
+                                m_Rotater_System.m_Rotater.name = "15";
                             }
                             else if (i == 1)
                             {
@@ -413,9 +419,11 @@ public class Ass
             {
                 Debug.Log(_iLevel_Point);
                 GameOver();
+
             }
             else if (_iNow_Level == -1 && (_fGame_Time <= 0 || _iLevel_Point < 0))
             {
+
                 GameClear();
             }
 
@@ -646,6 +654,8 @@ public class Ass
     public void GameOver()
     {
 
+        m_15_Skill[0] = "Finish";
+        m_14_Skill[1] = "Finish";
         _sClear_Type = "fail";
         if (_iNow_Level != -1)
         {
@@ -658,8 +668,7 @@ public class Ass
             _gCheck_Limit.GetComponent<Canvas>().sortingOrder = 1;
         }
         _bGame_Start = false;
-
-
+      
 
 
     }
@@ -669,7 +678,8 @@ public class Ass
     public void GameClear()
     {
 
-
+        m_15_Skill[0] = "Finish";
+        m_14_Skill[1] = "Finish";
         if (_iNow_Level != -1)
         {
             _gGameClear_Panel.SetActive(true);
@@ -682,7 +692,7 @@ public class Ass
             _gCheck_Limit.GetComponent<Canvas>().sortingOrder = 1;
         }
         _bGame_Start = false;
-
+       
         Set_Star();
         Load_Level();
         _gGameClear_Panel.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = _iLevel_Point.ToString();
@@ -1082,24 +1092,24 @@ public class Ass
         }
         else if (_iNow_Level == 15)
         {
-           
+
             int tmp = UnityEngine.Random.Range(0, 3);
-           
-            if (tmp == 0 && (m_15_Skill[tmp] == "Finish"|| m_15_Skill[tmp] == "true"))
+
+            if (tmp == 0 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
             {
                 Debug.Log("Styart1");
                 tmp = UnityEngine.Random.Range(1, 3);
                 if (tmp == 1 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
                 {
-                   
-                    m_15_Skill[tmp+1] = "true";
-                    m_Skill_Over_Time[tmp+1] = m_Skill_Time[Skill_Num] - 10;
+
+                    m_15_Skill[tmp + 1] = "true";
+                    m_Skill_Over_Time[tmp + 1] = m_Skill_Time[Skill_Num] - 10;
                     Debug.Log("Styart111");
                 }
                 else if (tmp == 2 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
                 {
-                    m_15_Skill[tmp-1] = "true";
-                    m_Skill_Over_Time[tmp-1] = m_Skill_Time[Skill_Num] - 10;
+                    m_15_Skill[tmp - 1] = "true";
+                    m_Skill_Over_Time[tmp - 1] = m_Skill_Time[Skill_Num] - 10;
                     Debug.Log("Styart111");
                 }
                 else
@@ -1115,7 +1125,7 @@ public class Ass
                 if (tmp == 0 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
                 {
                     tmp = 2;
-                    m_15_Skill[tmp ] = "true";
+                    m_15_Skill[tmp] = "true";
                     m_Skill_Over_Time[tmp] = m_Skill_Time[Skill_Num] - 10;
                     Debug.Log("Styart222");
                 }
@@ -1128,7 +1138,7 @@ public class Ass
 
 
             }
-            else if (tmp == 2 &&( m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
+            else if (tmp == 2 && (m_15_Skill[tmp] == "Finish" || m_15_Skill[tmp] == "true"))
             {
                 Debug.Log("Styart3");
                 tmp = UnityEngine.Random.Range(0, 2);
@@ -1154,12 +1164,12 @@ public class Ass
             else
             {
                 Debug.Log(tmp);
-                m_15_Skill[tmp ] = "true";
+                m_15_Skill[tmp] = "true";
                 m_Skill_Over_Time[tmp] = m_Skill_Time[Skill_Num] - 10;
                 Debug.Log("Styart444");
             }
-          
-            
+
+
 
         }
     }

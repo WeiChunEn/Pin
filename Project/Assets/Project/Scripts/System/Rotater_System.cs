@@ -15,7 +15,7 @@ public class Rotater_System : GameSystem
     public int m_Level_Point;
     private GameObject m_Pin_Num;
     private GameObject m_Level_Point_Text;
-    private GameObject m_Rotater;
+    public GameObject m_Rotater;
     private GameObject m_Ball;
     private GameObject[] m_Rotater_Array = new GameObject[15];
     private GameObject m_Intro;

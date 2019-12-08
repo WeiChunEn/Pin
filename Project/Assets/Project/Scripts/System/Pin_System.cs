@@ -590,6 +590,11 @@ public class Pin_System : MonoBehaviour
                     _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
                 }
                 break;
+            case "Minus":
+                tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
+                tmp -= 10;
+                _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+                break;
             case "Limit_1":
                 if (-90.0 <= _fBall_Degree && _fBall_Degree <= 0.0 || 0.0 <= _fBall_Degree && _fBall_Degree <= 90.0)
                 {
