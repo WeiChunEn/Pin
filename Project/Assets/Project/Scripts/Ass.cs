@@ -25,12 +25,17 @@ public class Ass
     private GameObject _gSkill_Gray;
     private GameObject _gSkill_Add;
     private GameObject _gSkill_Black;
+    private AudioSource m_Limitaudio;
+    public AudioSource m_Levelaudio;
+    private AudioSource m_Speed_Audio;
     public Rotater_System m_Rotater_System = null;
     private PlayerSystem m_Player_Ststem = null;
     private LevelSystem m_Level_System = null;
 
     public bool _bGame_Start;
     public bool _bCountDown_Start;
+    public string _sEquip_Effect = "0" ; //裝備的特效
+    public string[] _sHave_Effect = new string[5]; //擁有的特效
     public int _iPin_Num;
     public int _iNow_Level;
     public string[] _sClear_Level = new string[15];     //關卡Array
@@ -69,7 +74,7 @@ public class Ass
         _bCountDown_Start = false;
         _fCount_Down = 0.0f;
         _fGame_Time = 60;
-
+        
         _gCheck_Limit = GameObject.Find("Limit");
         if (_gCheck_Limit)
         {
@@ -96,39 +101,52 @@ public class Ass
         _gCan_Shoot = GameObject.Find("CanShoot");
         _gGame_Time = GameObject.Find("GameTime");
         _gSet_Btn = GameObject.Find("Set_Btn");
-        if (_iNow_Level <= 5)
+        Set_Effect();
+        if (_iNow_Level <= 5&&_iNow_Level!=-1)
         {
             if (_gSet_Btn)
             {
                 _gSet_Btn.transform.GetChild(0).gameObject.SetActive(true);
+                m_Levelaudio = GameObject.Find("LevelAudio").GetComponent<AudioSource>();
+                m_Levelaudio.clip = Resources.Load<AudioClip>("Music/1-5");
+                m_Levelaudio.Play();
             }
-
+            
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin1-5");
             m_Pin.tag = "Pin";
         }
-        else if (_iNow_Level <= 10)
+        else if (_iNow_Level <= 10 && _iNow_Level != -1)
         {
 
             if (_gSet_Btn)
             {
                 _gSet_Btn.transform.GetChild(1).gameObject.SetActive(true);
+                m_Levelaudio = GameObject.Find("LevelAudio").GetComponent<AudioSource>();
+                m_Levelaudio.clip = Resources.Load<AudioClip>("Music/6-10");
+                m_Levelaudio.Play();
             }
+           
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin6-10");
             m_Pin.tag = "Pin";
         }
-        else if (_iNow_Level <= 13)
+        else if (_iNow_Level <= 13 && _iNow_Level != -1)
         {
             _fGame_Time = 60;
             if (_gSet_Btn)
             {
                 _gSet_Btn.transform.GetChild(2).gameObject.SetActive(true);
+                m_Levelaudio = GameObject.Find("LevelAudio").GetComponent<AudioSource>();
+                m_Levelaudio.clip = Resources.Load<AudioClip>("Music/11-13");
+                m_Levelaudio.Play();
             }
+            
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin11-13");
             m_Pin.tag = "Pin";
         }
-        else if (_iNow_Level <= 15)
+        else if (_iNow_Level <= 15 && _iNow_Level != -1)
         {
             _fGame_Time = 80;
+           
             if (_iNow_Level == 14)
             {
                 m_Skill_Time = new int[2];
@@ -156,6 +174,7 @@ public class Ass
                 }
                 _gSkill_Add = GameObject.Find("Add");
                 _gSkill_Black = GameObject.Find("Black");
+                m_Speed_Audio = GameObject.Find("Speed").GetComponent<AudioSource>();
                 _gSkill_Add.SetActive(false);
                 _gSkill_Black.SetActive(false);
             }
@@ -164,6 +183,9 @@ public class Ass
             if (_gSet_Btn)
             {
                 _gSet_Btn.transform.GetChild(3).gameObject.SetActive(true);
+                m_Levelaudio = GameObject.Find("LevelAudio").GetComponent<AudioSource>();
+                m_Levelaudio.clip = Resources.Load<AudioClip>("Music/14-15");
+                m_Levelaudio.Play();
             }
             m_Pin = Resources.Load<GameObject>("Prefebs/Pin14-15");
             m_Pin.tag = "Pin";
@@ -174,6 +196,7 @@ public class Ass
             m_Pin = Resources.Load<GameObject>("Prefebs/PinLimit");
             _gLimit_Panel = GameObject.Find("Limit_Menu");
             _gLimit_Panel.SetActive(false);
+            m_Limitaudio = GameObject.Find("LimitMusic").GetComponent<AudioSource>();
             _gSet_Menu.SetActive(false);
             m_Pin.tag = "Pin";
         }
@@ -356,7 +379,7 @@ public class Ass
                                 }
                                 m_Rotater_System._gRotate_Speed.transform.GetChild(0).name = tmpSpeed.ToString();
 
-
+                                m_Speed_Audio.Play();
 
 
 
@@ -381,7 +404,7 @@ public class Ass
                                     tmpSpeed /= 2;
                                 }
                                 m_Rotater_System._gRotate_Speed.transform.GetChild(0).name = tmpSpeed.ToString();
-
+                               
                             }
                             else if (i == 2)
                             {
@@ -661,10 +684,12 @@ public class Ass
         {
             _gGameOver_Panel.SetActive(true);
             _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
+              
         }
         else if (_iNow_Level == -1)
         {
             _gLimit_Panel.SetActive(true);
+            m_Limitaudio.Stop();
             _gCheck_Limit.GetComponent<Canvas>().sortingOrder = 1;
         }
         _bGame_Start = false;
@@ -684,11 +709,12 @@ public class Ass
         {
             _gGameClear_Panel.SetActive(true);
             _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
-
+           
         }
         else if (_iNow_Level == -1)
         {
             _gLimit_Panel.SetActive(true);
+            m_Limitaudio.Stop();
             _gCheck_Limit.GetComponent<Canvas>().sortingOrder = 1;
         }
         _bGame_Start = false;
@@ -728,6 +754,7 @@ public class Ass
         if (_iNow_Level != -1)
         {
             _gGameCanvas.GetComponent<Canvas>().sortingOrder = -1;
+          
         }
         else if (_iNow_Level == -1)
         {
@@ -1174,6 +1201,34 @@ public class Ass
         }
     }
     /// <summary>
+    /// 選擇特效
+    /// </summary>
+    public void Set_Effect()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (_sHave_Effect[i] == "true")
+            {
+                _sEquip_Effect = i.ToString();
+            }
+        }
+        switch (_sEquip_Effect)
+        {
+            case "0":
+                break;
+            case "1":
+                break;
+            case "2":
+                break;
+            case "3":
+                break;
+            case "4":
+                break;
+            case "5":
+                break;
+        }
+    }
+    /// <summary>
     /// 存取資料
     /// </summary>
     public void Save_Data()
@@ -1201,6 +1256,11 @@ public class Ass
             }
         }
         PlayerPrefs.SetInt("Player_Point", _iPlayer_Point);
+        for(int i = 0; i<5;i++)
+        {
+            PlayerPrefs.SetString("Player_Have_Effect" + i.ToString(), _sHave_Effect[i]);
+            
+        }
     }
     /// <summary>
     /// 排序極限分數
@@ -1265,6 +1325,11 @@ public class Ass
                 }
 
             }
+
+        }
+        for (int i = 0; i < 5; i++)
+        {
+             _sHave_Effect[i] = PlayerPrefs.GetString("Player_Have_Effect" + i.ToString());
 
         }
 

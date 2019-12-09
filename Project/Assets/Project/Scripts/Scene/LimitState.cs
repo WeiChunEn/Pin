@@ -7,6 +7,7 @@ using System;
 
 public class LimitState : ISceneState
 {
+    private AudioSource m_audioSource;
     private GameObject m_Limit_Record;
     private GameObject m_Limit_Now_Name; //這次玩的人名
     private GameObject m_Limit_Score_Text; //分數文字
@@ -21,6 +22,7 @@ public class LimitState : ISceneState
     }
     public override void StateBegin()
     {
+        m_audioSource = GameObject.Find("LimitMusic").GetComponent<AudioSource>();
         m_Limit_Record = GameObject.Find("Limit_Record");
         m_Limit_Now_Name = GameObject.Find("Input_Name");
         m_Limit_Score_Text = GameObject.Find("Score");

@@ -7,7 +7,7 @@ using TMPro;
 
 public class LevelState : ISceneState
 {
-
+    private AudioSource m_audioSource;
     private GameObject m_FirstPage;
     private GameObject m_SecondPage;
     private GameObject m_ThirdPage;
@@ -35,6 +35,7 @@ public class LevelState : ISceneState
         _gPlayer_Point = GameObject.Find("Player_Point");
         m_Protected = GameObject.Find("Protected");
         m_Protected.SetActive(false);
+        m_audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
         Ass.Instance.Load_Data();
         Find_Btn();
         Find_Level();
@@ -185,10 +186,11 @@ public class LevelState : ISceneState
         if (Click_Btn.gameObject.GetComponent<Image>().sprite.name == "SoundOn")
         {
             Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOff");
-
+            m_audioSource.Stop();
         }
         else
         {
+            m_audioSource.Play();
             Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOn");
         }
 

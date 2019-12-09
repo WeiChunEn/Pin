@@ -108,6 +108,7 @@ public class GameState : ISceneState
         {
             Ass.Instance.Set_Close_Menu();
         });
+        Set_Music.onClick.AddListener(() => OnSoundBtnClick(Set_Music));
         Set_Level.onClick.AddListener(delegate ()
         {
             OnSetLevelBtnClick(Set_Level);
@@ -182,5 +183,20 @@ public class GameState : ISceneState
         Ass.Instance._iNow_Level = 0;
         m_Protected.SetActive(true);
         m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
+    }
+    private void OnSoundBtnClick(Button Click_Btn)
+    {
+        if (Click_Btn.gameObject.GetComponent<Image>().sprite.name == "SoundOn")
+        {
+            Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOff");
+            Ass.Instance.m_Levelaudio.Stop();
+        }
+        else
+        {
+           
+            Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOn");
+            Ass.Instance.m_Levelaudio.Play();
+        }
+
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MainState : ISceneState
 {
-
+    private AudioSource m_Audio;
     private GameObject m_LeaderBoard;
     private GameObject m_Protected;
     private Button Leader_Btn;
@@ -26,6 +26,7 @@ public class MainState : ISceneState
         m_LeaderBoard = GameObject.Find("LeaderBoard");
         m_Protected = GameObject.Find("Protected");
         m_Limit_Record = GameObject.Find("Limit_Record");
+        m_Audio = GameObject.Find("Main Camera").GetComponent<AudioSource>();
         Load_Data();
         Set_Record();
         m_Protected.SetActive(false);
@@ -95,10 +96,12 @@ public class MainState : ISceneState
     {
         if (Click_Btn.gameObject.GetComponent<Image>().sprite.name == "SoundOn")
         {
+            m_Audio.Stop();
             Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOff");
         }
         else
         {
+            m_Audio.Play();
             Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOn");
         }
 

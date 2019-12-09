@@ -10,6 +10,8 @@ public class ShopState : ISceneState
     private GameObject m_Player_Point;
     private GameObject m_Buy_Window;
     private GameObject m_Check_Window;
+    private GameObject m_Protected;
+    private AudioSource m_audioSource;
     public ShopState(SceneStateManager Manager):base(Manager)
     {
         this.StateName = "ShopScene";
@@ -20,6 +22,9 @@ public class ShopState : ISceneState
     {
         m_Buy_Window = GameObject.Find("Buy_Window");
         m_Check_Window = GameObject.Find("Check_Window");
+        m_Protected = GameObject.Find("Protected");
+        m_Protected.SetActive(false);
+        m_audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
         //取得按鈕
         Find_Btn();
         m_Buy_Window.SetActive(false);
@@ -61,12 +66,14 @@ public class ShopState : ISceneState
     {
        
         Debug.Log(Click_Btn.name);
+        m_Protected.SetActive(true);
         m_Manager.SetState(new MainState(m_Manager), "MainScene");
     }
     private void OnLevelBtnClick(Button Click_Btn)
     {
 
         Debug.Log(Click_Btn.name);
+        m_Protected.SetActive(true);
         m_Manager.SetState(new LevelState(m_Manager), "LevelScene");
     }
     private void OnSoundBtnClick(Button Click_Btn)
@@ -74,10 +81,12 @@ public class ShopState : ISceneState
         if (Click_Btn.gameObject.GetComponent<Image>().sprite.name == "SoundOn")
         {
             Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOff");
+            m_audioSource.Stop();
         }
         else
         {
             Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOn");
+            m_audioSource.Play();
         }
 
     }
