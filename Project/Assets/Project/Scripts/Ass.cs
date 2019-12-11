@@ -101,7 +101,7 @@ public class Ass
         _gCan_Shoot = GameObject.Find("CanShoot");
         _gGame_Time = GameObject.Find("GameTime");
         _gSet_Btn = GameObject.Find("Set_Btn");
-        Set_Effect();
+        
         if (_iNow_Level <= 5&&_iNow_Level!=-1)
         {
             if (_gSet_Btn)
@@ -488,6 +488,7 @@ public class Ass
                  {
                       if(m_14_Skill[0]!=true)
                     {
+                        Set_Effect();
                         Create_Pin();
                         if (_iPin_Num == 1)
                         {
@@ -508,6 +509,7 @@ public class Ass
             {
                 if (m_14_Skill[0] != "true")
                 {
+                    Set_Effect();
                     Create_Pin();
                     if (_iPin_Num == 1)
                     {
@@ -1203,30 +1205,40 @@ public class Ass
     /// <summary>
     /// 選擇特效
     /// </summary>
-    public void Set_Effect()
+    public GameObject Set_Effect()
     {
+        
         for (int i = 0; i < 5; i++)
         {
-            if (_sHave_Effect[i] == "true")
+            if (_sHave_Effect[i] == "Equip")
             {
                 _sEquip_Effect = i.ToString();
             }
         }
+        GameObject Effect = Resources.Load<GameObject>("Prefebs/" + _sEquip_Effect);
+        GameObject Effect_Spawn = GameObject.Find("Effect");
         switch (_sEquip_Effect)
         {
-            case "0":
-                break;
+           
             case "1":
-                break;
+                return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
+                
             case "2":
-                break;
+                return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
+               
             case "3":
-                break;
+                return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
+                
             case "4":
-                break;
+                return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
+                
             case "5":
-                break;
+                return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
+                
         }
+        Effect = Resources.Load<GameObject>("Prefebs/0" );
+        
+        return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
     }
     /// <summary>
     /// 存取資料

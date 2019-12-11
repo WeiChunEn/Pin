@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 82493664420095992}
   m_Layer: 5
   m_Name: Pin6-10
-  m_TagString: Last
+  m_TagString: Pin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

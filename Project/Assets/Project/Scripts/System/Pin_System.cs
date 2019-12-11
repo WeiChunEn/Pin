@@ -72,6 +72,9 @@ public class Pin_System : MonoBehaviour
             }
 
             _gCheck_Point.transform.SetParent(col.transform);
+            //GameObject Effect = Resources.Load<GameObject>("Prefebs/0");
+
+           // Instantiate(Effect, col.transform.position, col.transform.rotation);
             _rb.velocity = Vector2.zero;
             transform.SetParent(col.transform);
 
