@@ -325,7 +325,7 @@ public class Ass
                                 _gSkill_Gray.SetActive(true);
                             }
                         }
-                        else
+                        else if(m_14_Skill[i]=="Finish")
                         {
                             if (i == 0)
                             {
