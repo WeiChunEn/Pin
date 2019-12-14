@@ -486,8 +486,8 @@ public class Ass
             {
                  if(!EventSystem.current.currentSelectedGameObject)
                  {
-                      if(m_14_Skill[0]!=true)
-                    {
+                      if(m_14_Skill[0]!="true")
+                     {
                         Set_Effect();
                         Create_Pin();
                         if (_iPin_Num == 1)
@@ -495,11 +495,11 @@ public class Ass
 
                             m_Pin.tag = "Last";
                         }
-                    }
+                     }
+                  }
+
+           }
             }
-
-         }
-
 #else
 
         if (Input.GetButtonDown("Fire1") && _gCan_Shoot.tag == "true")
