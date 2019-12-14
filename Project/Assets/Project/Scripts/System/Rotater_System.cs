@@ -100,7 +100,7 @@ public class Rotater_System : GameSystem
             }
             else if (m_Ass._iPin_Num > 50)
             {
-                m_Pin_Num.GetComponent<TextMeshPro>().text = "∞";
+                //m_Pin_Num.GetComponent<TextMeshPro>().text = "∞";
             }
 
             
