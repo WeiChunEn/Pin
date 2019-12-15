@@ -1,9 +1,4 @@
 fileFormatVersion: 2
-guid: 48ba3a414e82bb548a8d2d1664981ebc
-labels:
-- ball
-- bubble
-- cartoonfx
-- electric
-- particles
-- toon
+guid: 1b0e7c44751a85148a89c2eb3acee250
+NativeFormatImporter:
+  userData: 

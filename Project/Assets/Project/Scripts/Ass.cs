@@ -25,6 +25,7 @@ public class Ass
     private GameObject _gSkill_Gray;
     private GameObject _gSkill_Add;
     private GameObject _gSkill_Black;
+    private GameObject _gGame_Finish; //通關畫面
     private AudioSource m_Limitaudio;
     public AudioSource m_Levelaudio;
     private AudioSource m_Speed_Audio;
@@ -84,11 +85,17 @@ public class Ass
         _gGameCanvas = GameObject.Find("GameCanvas");
         _gGameOver_Panel = GameObject.Find("GameOver");
         _gGameClear_Panel = GameObject.Find("GameClear");
+        _gGame_Finish = GameObject.Find("Finish_Panel");
         _gSet_Menu = GameObject.Find("Set_Menu");
         if (_gGameOver_Panel && _gGameClear_Panel)
         {
             _gGameOver_Panel.SetActive(false);
             _gGameClear_Panel.SetActive(false);
+            if(_iNow_Level!=-1)
+            {
+                _gGame_Finish.SetActive(false);
+            }
+           
             _gSet_Menu.SetActive(false);
             m_Pin.tag = "Pin";
         }
@@ -707,7 +714,7 @@ public class Ass
 
         m_15_Skill[0] = "Finish";
         m_14_Skill[1] = "Finish";
-        if (_iNow_Level != -1)
+        if (_iNow_Level != -1&&_iNow_Level!=15)
         {
             _gGameClear_Panel.SetActive(true);
             _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
@@ -718,6 +725,12 @@ public class Ass
             _gLimit_Panel.SetActive(true);
             m_Limitaudio.Stop();
             _gCheck_Limit.GetComponent<Canvas>().sortingOrder = 1;
+        }
+        else if(_iNow_Level == 15)
+        {
+           
+            _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
+
         }
         _bGame_Start = false;
        

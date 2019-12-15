@@ -26,7 +26,7 @@ public class Pin_System : MonoBehaviour
         _gCheck_Limit = GameObject.Find("Limit");
         if (_gCheck_Limit)
         {
-            _fSpeed = 60.0f;
+            _fSpeed = 100.0f;
         }
         else
         {

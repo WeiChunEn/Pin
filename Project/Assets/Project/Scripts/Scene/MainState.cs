@@ -20,7 +20,7 @@ public class MainState : ISceneState
     }
     public override void StateBegin()
     {
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         //取得按鈕
         Find_Btn();
         m_LeaderBoard = GameObject.Find("LeaderBoard");
