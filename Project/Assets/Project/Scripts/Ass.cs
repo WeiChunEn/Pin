@@ -1220,38 +1220,41 @@ public class Ass
     /// </summary>
     public GameObject Set_Effect()
     {
-        
+       
         for (int i = 0; i < 5; i++)
         {
+            Debug.Log(_sHave_Effect[i]);
             if (_sHave_Effect[i] == "Equip")
             {
-                _sEquip_Effect = i.ToString();
+                _sEquip_Effect = (i+1).ToString();
             }
         }
         GameObject Effect = Resources.Load<GameObject>("Prefebs/" + _sEquip_Effect);
         GameObject Effect_Spawn = GameObject.Find("Effect");
+        Debug.Log(_sEquip_Effect);
         switch (_sEquip_Effect)
         {
-           
+            
             case "1":
                 return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
-                
+
             case "2":
                 return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
-               
+
             case "3":
                 return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
-                
+
             case "4":
                 return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
-                
+
             case "5":
                 return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
-                
+            default:
+                Effect = Resources.Load<GameObject>("Prefebs/0");
+                return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
+               
         }
-        Effect = Resources.Load<GameObject>("Prefebs/0" );
         
-        return UnityEngine.Object.Instantiate(Effect, Effect_Spawn.transform.position, Effect_Spawn.transform.rotation, Effect_Spawn.transform);
     }
     /// <summary>
     /// 存取資料
@@ -1286,6 +1289,7 @@ public class Ass
             PlayerPrefs.SetString("Player_Have_Effect" + i.ToString(), _sHave_Effect[i]);
             
         }
+         PlayerPrefs.SetString("Player_Equip_Effect",_sEquip_Effect);
     }
     /// <summary>
     /// 排序極限分數
@@ -1357,6 +1361,7 @@ public class Ass
              _sHave_Effect[i] = PlayerPrefs.GetString("Player_Have_Effect" + i.ToString());
 
         }
+        _sEquip_Effect = PlayerPrefs.GetString("Player_Equip_Effect");
 
     }
 }

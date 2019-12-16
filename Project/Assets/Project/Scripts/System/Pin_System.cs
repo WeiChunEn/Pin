@@ -30,7 +30,7 @@ public class Pin_System : MonoBehaviour
         }
         else
         {
-            _fSpeed = 5.0f;
+            _fSpeed = 8.0f;
         }
 
         _rb = GetComponent<Rigidbody2D>();
