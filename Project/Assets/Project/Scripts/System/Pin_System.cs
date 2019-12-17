@@ -595,7 +595,7 @@ public class Pin_System : MonoBehaviour
                 break;
             case "Minus":
                 tmp = Convert.ToInt32(_gPoint_Text.GetComponent<TextMeshProUGUI>().text);
-                tmp -= 10;
+                tmp -= 50;
                 _gPoint_Text.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
                 break;
             case "Limit_1":

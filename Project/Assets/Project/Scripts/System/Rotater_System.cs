@@ -110,7 +110,11 @@ public class Rotater_System : GameSystem
             }
             else if (m_Ball.tag == "Clear")
             {
-                m_Ass.GameClear();
+               
+                    m_Ass.GameClear();
+               
+                
+
             }
 
 

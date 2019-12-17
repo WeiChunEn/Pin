@@ -12,6 +12,7 @@ public class ShopState : ISceneState
     private GameObject m_Check_Window;
     private GameObject m_Protected;
     private AudioSource m_audioSource;
+    private AudioSource m_Buy_Audio;
     private List<GameObject> Effect_List = new List<GameObject>();
     public ShopState(SceneStateManager Manager):base(Manager)
     {
@@ -26,6 +27,7 @@ public class ShopState : ISceneState
         m_Protected = GameObject.Find("Protected");
         m_Protected.SetActive(false);
         m_audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        m_Buy_Audio = GameObject.Find("Buy_Audio").GetComponent<AudioSource>();
         //取得按鈕
         Find_Btn();
         m_Buy_Window.SetActive(false);
@@ -45,6 +47,7 @@ public class ShopState : ISceneState
     public override void StateUpdate()
     {
         Set_Effect_Btn();
+       
     }
     private void Find_Btn()
     {
@@ -57,11 +60,12 @@ public class ShopState : ISceneState
         }
         //Debug.Log(Effect_List.Count);
 
-        if(Ass.Instance._sHave_Effect[0]=="")
+
+        if (Ass.Instance._sHave_Effect[0] == "")
         {
             Effect_List[0].GetComponent<Button>().onClick.AddListener(() => Buy_Effect_Btn(0));
         }
-        else 
+        else
         {
             Effect_List[0].GetComponent<Button>().onClick.AddListener(() => Equip_Effect_Btn(0));
         }
@@ -98,7 +102,6 @@ public class ShopState : ISceneState
             Effect_List[4].GetComponent<Button>().onClick.AddListener(() => Equip_Effect_Btn(4));
         }
 
-      
         Button Home_Btn = GameObject.Find("Home_Btn").GetComponent<Button>();
         Button Sound_Btn = GameObject.Find("Sound_Btn").GetComponent<Button>();
         Button Level_Btn = GameObject.Find("Select_Level_Btn").GetComponent<Button>();
@@ -155,7 +158,7 @@ public class ShopState : ISceneState
 
     private void OnBuyBtnClick(Button Click_Btn)
     {
-
+        //m_Buy_Audio.Play();
         Debug.Log(Click_Btn.name);
         m_Buy_Window.SetActive(true);
     }
@@ -177,9 +180,27 @@ public class ShopState : ISceneState
     }
     private void Buy_Effect_Btn(int Num)
     {
-
+       
+        m_Buy_Audio.Play();
         Ass.Instance._sHave_Effect[Num] = "UnEquip";
-       // Effect_List[Num].GetComponent<Button>().onClick.AddListener(() => Equip_Effect_Btn(Num));
+        int tmp = int.Parse(m_Player_Point.GetComponent<TextMeshProUGUI>().text);
+        tmp -= int.Parse(Effect_List[Num].transform.GetChild(0).GetComponent<Text>().text);
+        Debug.Log(tmp);
+        Ass.Instance._iPlayer_Point = tmp;
+        PlayerPrefs.SetInt("Player_Point", Ass.Instance._iPlayer_Point);
+        m_Player_Point.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+
+
+        // Effect_List[0].GetComponent<Button>().onClick.AddListener(() => Buy_Effect_Btn(0));
+
+
+        Effect_List[Num].GetComponent<Button>().onClick.RemoveAllListeners();
+            Effect_List[Num].GetComponent<Button>().onClick.AddListener(() => Equip_Effect_Btn(Num));
+       
+
+
+
+        // Effect_List[Num].GetComponent<Button>().onClick.AddListener(() => Equip_Effect_Btn(Num));
     }
     private void Equip_Effect_Btn(int Num)
     {
@@ -202,17 +223,30 @@ public class ShopState : ISceneState
     }
     private void Set_Effect_Btn()
     {
-        for(int i =0;i< Effect_List.Count; i++)
+       
+        for (int i =0;i< Effect_List.Count; i++)
         {
+
+            Debug.Log(Ass.Instance._sHave_Effect[i] + i.ToString());
             if (int.Parse(m_Player_Point.GetComponent<TextMeshProUGUI>().text) >= int.Parse(Effect_List[i].transform.GetChild(0).GetComponent<Text>().text))
             {
-                Effect_List[i].GetComponent<Button>().interactable = true;
-                //if (Ass.Instance._sHave_Effect[i] == "Have")
-                //{
-                //    //Effect_List[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Shop/CanEquip");
-                //    Effect_List[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Shop/Equiping");
-                //}
-                if(Ass.Instance._sHave_Effect[i]=="Equip")
+                if(Ass.Instance._sHave_Effect[i] == "")
+                {
+                    Effect_List[i].GetComponent<Button>().interactable = true;
+                }
+               
+            }
+            else
+            {
+                if (Ass.Instance._sHave_Effect[i] == "")
+                {
+                    Effect_List[i].GetComponent<Button>().interactable = false;
+                }
+                
+            }
+            if(Ass.Instance._sHave_Effect[i] != "")
+            {
+                if (Ass.Instance._sHave_Effect[i] == "Equip")
                 {
                     SpriteState tmp = new SpriteState
                     {
@@ -221,12 +255,12 @@ public class ShopState : ISceneState
                     };
                     Effect_List[i].GetComponent<Button>().spriteState = tmp;
                     Effect_List[i].GetComponent<Button>().interactable = false;
-                    //Effect_List[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Shop/Equiping");
-                   // Effect_List[i].GetComponent<Button>().spriteState.pressedSprite = Resources.Load<Sprite>("Shop/Equiping");
+                   
+                    // Effect_List[i].GetComponent<Button>().spriteState.pressedSprite = Resources.Load<Sprite>("Shop/Equiping");
                 }
-                else if(Ass.Instance._sHave_Effect[i] != "Equip"&& Ass.Instance._sHave_Effect[i] == "UnEquip")
+                else if (Ass.Instance._sHave_Effect[i] != "Equip" && Ass.Instance._sHave_Effect[i] == "UnEquip")
                 {
-                    //Effect_List[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Shop/CanEquip");
+                    Effect_List[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Shop/CanEquip");
                     SpriteState tmp = new SpriteState
                     {
                         disabledSprite = Resources.Load<Sprite>("Shop/Equiping"),
@@ -234,7 +268,7 @@ public class ShopState : ISceneState
                     };
                     Effect_List[i].GetComponent<Button>().spriteState = tmp;
                     Effect_List[i].GetComponent<Button>().interactable = true;
-                
+
                 }
             }
            

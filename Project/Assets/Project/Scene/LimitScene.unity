@@ -2314,15 +2314,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6c35f6e1cec1f2b45a2a8198498bf450, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 00ca4688bf462224b8d576b6c56082a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 20.22, y: 20.259998}
+  m_Size: {x: 20.22, y: 20.35}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 --- !u!1 &578421976
 GameObject:
@@ -3289,7 +3289,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 81de24edcefcd6d41868d2330cb25162, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 168a4023edc51f549a073f5a054007ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3297,7 +3297,7 @@ SpriteRenderer:
   m_Size: {x: 20.22, y: 20.259998}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 --- !u!1 &789585845
 GameObject:
@@ -5853,7 +5853,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1397153274}
   m_Layer: 5
-  m_Name: 100
+  m_Name: 80
   m_TagString: +
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7156,7 +7156,7 @@ Transform:
   m_GameObject: {fileID: 1716787942}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -344.1, z: 0}
-  m_LocalScale: {x: 69.79027, y: 64.74701, z: 12.949403}
+  m_LocalScale: {x: 137.70438, y: 127.753426, z: 25.550686}
   m_Children: []
   m_Father: {fileID: 247376877}
   m_RootOrder: 1
@@ -8220,15 +8220,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3afc775785c069f47add9a26e69a9104, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 371a77d819e62d54f8eba185aeab83a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 20.22, y: 20.259998}
+  m_Size: {x: 20.39, y: 20.44}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 --- !u!1 &2066753009
 GameObject:

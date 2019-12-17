@@ -161,6 +161,7 @@ public class LimitState : ISceneState
     private void OnRestartLimitBtnClick(Button Click_Btn)
     {
         Debug.Log(Click_Btn.name);
+        Ass.Instance._iPlayer_Point += m_Limit_Now_Record;
         Ass.Instance.Save_Data();
         m_Manager.SetState(new LimitState(m_Manager), "LimitScene");
 
@@ -168,7 +169,7 @@ public class LimitState : ISceneState
     private void OnBackHomeBtnClick(Button Click_Btn)
     {
         Debug.Log(Click_Btn.name);
-
+        Ass.Instance._iPlayer_Point += m_Limit_Now_Record; 
         Ass.Instance.Save_Data();
         Ass.Instance._iNow_Level = 0;
         m_Manager.SetState(new MainState(m_Manager), "MainScene");

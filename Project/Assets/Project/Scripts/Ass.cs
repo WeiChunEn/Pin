@@ -25,10 +25,10 @@ public class Ass
     private GameObject _gSkill_Gray;
     private GameObject _gSkill_Add;
     private GameObject _gSkill_Black;
-    private GameObject _gGame_Finish; //通關畫面
+    public GameObject _gGame_Finish; //通關畫面
     private AudioSource m_Limitaudio;
     public AudioSource m_Levelaudio;
-    private AudioSource m_Speed_Audio;
+    private GameObject m_Speed_Audio;
     public Rotater_System m_Rotater_System = null;
     private PlayerSystem m_Player_Ststem = null;
     private LevelSystem m_Level_System = null;
@@ -181,7 +181,8 @@ public class Ass
                 }
                 _gSkill_Add = GameObject.Find("Add");
                 _gSkill_Black = GameObject.Find("Black");
-                m_Speed_Audio = GameObject.Find("Speed").GetComponent<AudioSource>();
+                m_Speed_Audio = GameObject.Find("Speed");
+                m_Speed_Audio.SetActive(false);
                 _gSkill_Add.SetActive(false);
                 _gSkill_Black.SetActive(false);
             }
@@ -378,7 +379,7 @@ public class Ass
                             }
                             else if (i == 1)
                             {
-
+                                
                                 int tmpSpeed = Convert.ToInt32(m_Rotater_System._gRotate_Speed.transform.GetChild(0).name);
                                 if (tmpSpeed == 100 || tmpSpeed == -100)
                                 {
@@ -386,7 +387,7 @@ public class Ass
                                 }
                                 m_Rotater_System._gRotate_Speed.transform.GetChild(0).name = tmpSpeed.ToString();
 
-                                m_Speed_Audio.Play();
+                                m_Speed_Audio.SetActive(true);
 
 
 
@@ -424,7 +425,7 @@ public class Ass
             else if (_iNow_Level == -1)
             {
                 _fGame_Time -= Time.deltaTime;
-                if (_fGame_Time > 60 && _fGame_Time <= 70 || _fGame_Time <= 10)
+                if (_fGame_Time > 60 && _fGame_Time < 70 || _fGame_Time <= 10|| _fGame_Time > 120 && _fGame_Time < 130)
                 {
                     _gGame_Time.GetComponent<TextMeshProUGUI>().text = "0" + ((int)_fGame_Time / 60).ToString() + ":" + "0" + ((int)_fGame_Time % 60).ToString();
 
@@ -730,6 +731,7 @@ public class Ass
         {
            
             _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
+            _gGame_Finish.SetActive(true);
 
         }
         _bGame_Start = false;
