@@ -15,6 +15,7 @@ public class LimitState : ISceneState
     private GameObject m_Write_Record_Menu; //寫紀錄的Menu
     private Button m_Write_Record_Btn; //開啟寫分數欄的按鈕
     private int m_Limit_Now_Record;//這次的分數
+
     public bool _bCan_Write;//判斷分數有沒有比排行的高
     public LimitState(SceneStateManager Manager) : base(Manager)
     {
@@ -99,7 +100,7 @@ public class LimitState : ISceneState
         {
             Ass.Instance.Set_Close_Menu();
         });
-
+        Set_Music.onClick.AddListener(() => OnSoundBtnClick(Set_Music));
         Set_Home.onClick.AddListener(delegate ()
         {
             OnSetHomeBtnClick(Set_Home);
@@ -150,6 +151,21 @@ public class LimitState : ISceneState
 
 
 
+
+    }
+    private void OnSoundBtnClick(Button Click_Btn)
+    {
+        if (Click_Btn.gameObject.GetComponent<Image>().sprite.name == "SoundOn")
+        {
+            Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOff");
+            m_audioSource.Pause();
+        }
+        else
+        {
+
+            Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOn");
+            m_audioSource.Play();
+        }
 
     }
     private void OnSetHomeBtnClick(Button Clicl_Btn)

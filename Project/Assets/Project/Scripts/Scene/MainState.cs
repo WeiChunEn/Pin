@@ -96,7 +96,7 @@ public class MainState : ISceneState
     {
         if (Click_Btn.gameObject.GetComponent<Image>().sprite.name == "SoundOn")
         {
-            m_Audio.Stop();
+            m_Audio.Pause();
             Click_Btn.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Element/SoundOff");
         }
         else

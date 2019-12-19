@@ -686,7 +686,16 @@ public class Ass
     /// </summary>
     public void GameOver()
     {
-
+        if (_iNow_Level == 14)
+        {
+            _gSkill_Gray.SetActive(false);
+            _gSkill_Freeze.SetActive(false);
+        }
+        else if (_iNow_Level == 15)
+        {
+            _gSkill_Add.SetActive(false);
+            _gSkill_Black.SetActive(false);
+        }
         m_15_Skill[0] = "Finish";
         m_14_Skill[1] = "Finish";
         _sClear_Type = "fail";
@@ -712,7 +721,16 @@ public class Ass
     /// </summary>
     public void GameClear()
     {
-
+        if(_iNow_Level==14)
+        {
+            _gSkill_Gray.SetActive(false);
+            _gSkill_Freeze.SetActive(false);
+        }
+        else if(_iNow_Level ==15)
+        {
+            _gSkill_Add.SetActive(false);
+            _gSkill_Black.SetActive(false);
+        }
         m_15_Skill[0] = "Finish";
         m_14_Skill[1] = "Finish";
         if (_iNow_Level != -1&&_iNow_Level!=15)
