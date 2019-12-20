@@ -119,8 +119,8 @@ public class ShopState : ISceneState
         Sound_Btn.onClick.AddListener(() => OnSoundBtnClick(Sound_Btn));
         Level_Btn.onClick.AddListener(() => OnLevelBtnClick(Level_Btn));
         Buy_Btn.onClick.AddListener(() => OnBuyBtnClick(Buy_Btn));
-        Small_Btn.onClick.AddListener(() => OnMoneyBtnClick(Small_Btn));
-        Big_Btn.onClick.AddListener(() => OnMoneyBtnClick(Big_Btn));
+       // Small_Btn.onClick.AddListener(() => OnMoneyBtnClick(Small_Btn));
+        //Big_Btn.onClick.AddListener(() => OnMoneyBtnClick(Big_Btn));
         Close_Btn.onClick.AddListener(() => OnCloseBtnClick(Close_Btn));
         No_Btn.onClick.AddListener(() => OnNoBtnClick(No_Btn));
         Debug.Log(Home_Btn.name);
