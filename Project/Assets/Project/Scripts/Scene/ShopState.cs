@@ -37,36 +37,21 @@ public class ShopState : ISceneState
         Ass.Instance.Initinal();
         for (int i = 0; i < 5; i++)
         {
-            Ass.Instance._sHave_Effect[i] = PlayerPrefs.GetString("Player_Have_Effect" + i.ToString());
-
-        }
-        Ass.Instance._sEquip_Effect = PlayerPrefs.GetString("Player_Equip_Effect");
-
-    }
-
-    public override void StateUpdate()
-    {
-        Set_Effect_Btn();
-       
-    }
-    private void Find_Btn()
-    {
-        for(int i = 0; i <5;i++)
-        {
-            GameObject tmp = GameObject.Find( (i+1).ToString());
-            Effect_List.Add(tmp);
             
-           
+            Ass.Instance._sHave_Effect[i] = PlayerPrefs.GetString("Player_Have_Effect" + i.ToString());
+            if(Ass.Instance._sHave_Effect[i]==null)
+            {
+                Ass.Instance._sHave_Effect[i] = "";
+            }
+
         }
-        //Debug.Log(Effect_List.Count);
-
-
         if (Ass.Instance._sHave_Effect[0] == "")
         {
             Effect_List[0].GetComponent<Button>().onClick.AddListener(() => Buy_Effect_Btn(0));
         }
         else
         {
+            Debug.Log(Ass.Instance._sHave_Effect[0]);
             Effect_List[0].GetComponent<Button>().onClick.AddListener(() => Equip_Effect_Btn(0));
         }
         if (Ass.Instance._sHave_Effect[1] == "")
@@ -101,6 +86,38 @@ public class ShopState : ISceneState
         {
             Effect_List[4].GetComponent<Button>().onClick.AddListener(() => Equip_Effect_Btn(4));
         }
+        Ass.Instance._sEquip_Effect = PlayerPrefs.GetString("Player_Equip_Effect");
+
+    }
+
+    public override void StateUpdate()
+    {
+        Set_Effect_Btn();
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+
+
+            int tmp = 50000;
+            Debug.Log(tmp);
+            Ass.Instance._iPlayer_Point = tmp;
+            PlayerPrefs.SetInt("Player_Point", Ass.Instance._iPlayer_Point);
+            m_Player_Point.GetComponent<TextMeshProUGUI>().text = tmp.ToString();
+
+        }
+    }
+    private void Find_Btn()
+    {
+        for(int i = 0; i <5;i++)
+        {
+            GameObject tmp = GameObject.Find( (i+1).ToString());
+            Effect_List.Add(tmp);
+
+            Debug.Log(Ass.Instance._sHave_Effect[i]);
+        }
+        //Debug.Log(Effect_List.Count);
+
+
+      
 
         Button Home_Btn = GameObject.Find("Home_Btn").GetComponent<Button>();
         Button Sound_Btn = GameObject.Find("Sound_Btn").GetComponent<Button>();
@@ -195,7 +212,7 @@ public class ShopState : ISceneState
 
 
         Effect_List[Num].GetComponent<Button>().onClick.RemoveAllListeners();
-            Effect_List[Num].GetComponent<Button>().onClick.AddListener(() => Equip_Effect_Btn(Num));
+           Effect_List[Num].GetComponent<Button>().onClick.AddListener(() => Equip_Effect_Btn(Num));
        
 
 
@@ -204,6 +221,7 @@ public class ShopState : ISceneState
     }
     private void Equip_Effect_Btn(int Num)
     {
+        Debug.Log(123);
         Set_Another_Effect();
         Ass.Instance._sHave_Effect[Num] = "Equip";
         

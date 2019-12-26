@@ -11,8 +11,8 @@ public class LevelState : ISceneState
     private GameObject m_FirstPage;
     private GameObject m_SecondPage;
     private GameObject m_ThirdPage;
-    private GameObject[,] m_Level_Star_Array;
-    private GameObject[] m_Level_Array;
+    private GameObject[,] m_Level_Star_Array=new GameObject[15, 3];
+    private GameObject[] m_Level_Array=new GameObject[15];
     private GameObject m_Protected;
     public GameObject _gPlayer_Point;
     private Button m_First_Next_Page_Btn;
@@ -45,10 +45,90 @@ public class LevelState : ISceneState
 
 
     }
+    public override void StateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Open_All_Level();
+        }
+    }
+
+    private void Open_All_Level()
+    {
+        for(int i = 0;i<15;i++)
+        {
+            Ass.Instance._sClear_Level[i] = "true";
+            //Ass.Instance._sClear_Level[i] = "false";
+            for (int j = 0; j<3;j++)
+            {
+                Ass.Instance._sLevel_Star[i, j] = "true";
+            }
+        }
+       // m_Level_Star_Array = new GameObject[15, 3];
+       // m_Level_Array = new GameObject[15];
+        int tmp_Star_Num = 0;
+        for (int i = 0; i < 15; i++)
+        {
+
+
+
+
+            for (int j = 0; j < 3; j++)
+            {
+                //m_Level_Star_Array[i, j] = GameObject.Find((i + 1).ToString()).transform.GetChild(j).gameObject;
+                if (Ass.Instance._sLevel_Star[i, j] == "true")
+                {
+                    m_Level_Star_Array[i, j].tag = Ass.Instance._sLevel_Star[i, j];
+                }
+
+                if (m_Level_Star_Array[i, j].tag == "true")
+                {
+                    m_Level_Star_Array[i, j].SetActive(true);
+                    tmp_Star_Num++;
+
+                }
+
+
+
+
+            }
+            //m_Level_Array[i] = GameObject.Find((i + 1).ToString());
+            if (Ass.Instance._sClear_Level[i] == "true" || Ass.Instance._sClear_Level[i] == "false")
+            {
+                if (i == 13)
+                {
+                    if (tmp_Star_Num >= 39)
+                    {
+                        m_Level_Array[i].tag = Ass.Instance._sClear_Level[i];
+                    }
+                }
+                else if (i == 14)
+                {
+                    if (tmp_Star_Num >= 42)
+                    {
+                        m_Level_Array[i].tag = Ass.Instance._sClear_Level[i];
+                    }
+                }
+                else
+                {
+                    m_Level_Array[i].tag = Ass.Instance._sClear_Level[i];
+                }
+
+            }
+            if (m_Level_Array[i].tag == "true")
+            {
+
+                m_Level_Array[i].GetComponent<Button>().interactable = true;
+            }
+        }
+        // Ass.Instance._iPlayer_Point = tmp_Star_Num;
+        _gPlayer_Point.GetComponent<TextMeshProUGUI>().text = Ass.Instance._iPlayer_Point.ToString();
+
+    }
     private void Find_Level()
     {
-        m_Level_Star_Array = new GameObject[15, 3];
-        m_Level_Array = new GameObject[15];
+      //  m_Level_Star_Array = new GameObject[15, 3];
+     //   m_Level_Array = new GameObject[15];
         int tmp_Star_Num = 0;
         for (int i = 0; i < 15; i++)
         {
