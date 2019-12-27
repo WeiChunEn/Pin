@@ -33,6 +33,7 @@ public class Ass
     private PlayerSystem m_Player_Ststem = null;
     private LevelSystem m_Level_System = null;
 
+    public bool _bCheck_End; //檢查是不是通關最後一關
     public bool _bGame_Start;
     public bool _bCountDown_Start;
     public string _sEquip_Effect = "0" ; //裝備的特效
@@ -460,6 +461,16 @@ public class Ass
 
 
         }
+        else
+        {
+            if(_iNow_Level==15)
+            {
+                if(_bCheck_End==true)
+                {
+
+                }
+            }
+        }
 
 
 
@@ -697,6 +708,9 @@ public class Ass
             _gSkill_Black.SetActive(false);
         }
         m_15_Skill[0] = "Finish";
+        m_15_Skill[1] = "Finish";
+        m_15_Skill[2] = "Finish";
+        m_14_Skill[0] = "Finish";
         m_14_Skill[1] = "Finish";
         _sClear_Type = "fail";
         if (_iNow_Level != -1)
@@ -732,6 +746,9 @@ public class Ass
             _gSkill_Black.SetActive(false);
         }
         m_15_Skill[0] = "Finish";
+        m_15_Skill[1] = "Finish";
+        m_15_Skill[2] = "Finish";
+        m_14_Skill[0] = "Finish";
         m_14_Skill[1] = "Finish";
         if (_iNow_Level != -1&&_iNow_Level!=15)
         {
@@ -750,6 +767,7 @@ public class Ass
            
             _gGameCanvas.GetComponent<Canvas>().sortingOrder = 1;
             _gGame_Finish.SetActive(true);
+            _bCheck_End = true;
 
         }
         _bGame_Start = false;

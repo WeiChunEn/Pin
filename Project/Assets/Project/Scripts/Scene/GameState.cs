@@ -8,6 +8,7 @@ public class GameState : ISceneState
 {
     private GameObject m_Protected;
     private  GameObject Set_Btn;
+    private float _mEnd_Count;
     public GameState (SceneStateManager Manager):base(Manager)
     {
         this.StateName = "GameScene";
@@ -45,6 +46,18 @@ public class GameState : ISceneState
     public override void StateUpdate()
     {
         Ass.Instance.Update();
+        if(Ass.Instance._bCheck_End==true)
+        {
+            _mEnd_Count += Time.deltaTime;
+            if(_mEnd_Count>=5.0f)
+            {
+                _mEnd_Count = 0.0f;
+                Ass.Instance._bCheck_End = false;
+                Ass.Instance._iNow_Level = 0;
+                Ass.Instance.Save_Data();
+                m_Manager.SetState(new MainState(m_Manager), "MainScene");
+            }
+        }
     }
     public override void StateEnd()
     {
