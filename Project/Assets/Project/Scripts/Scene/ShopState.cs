@@ -11,6 +11,7 @@ public class ShopState : ISceneState
     private GameObject m_Buy_Window;
     private GameObject m_Check_Window;
     private GameObject m_Protected;
+    private GameObject m_Check_Btn;
     private AudioSource m_audioSource;
     private AudioSource m_Buy_Audio;
     private List<GameObject> Effect_List = new List<GameObject>();
@@ -33,7 +34,9 @@ public class ShopState : ISceneState
         m_Buy_Window.SetActive(false);
         m_Check_Window.SetActive(false);
         m_Player_Point = GameObject.Find("Player_Point");
+
         m_Player_Point.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("Player_Point").ToString();
+        Ass.Instance._iPlayer_Point = PlayerPrefs.GetInt("Player_Point");
         Ass.Instance.Initinal();
         for (int i = 0; i < 5; i++)
         {
@@ -126,6 +129,7 @@ public class ShopState : ISceneState
         Button Small_Btn = GameObject.Find("Small").GetComponent<Button>();
         Button Big_Btn = GameObject.Find("Big").GetComponent<Button>();
         Button Close_Btn = GameObject.Find("Close").GetComponent<Button>();
+        Button Yes_Btn = GameObject.Find("Yes").GetComponent<Button>();
         Button No_Btn = GameObject.Find("No").GetComponent<Button>();
         Home_Btn.onClick.AddListener(delegate ()
         {
@@ -136,9 +140,10 @@ public class ShopState : ISceneState
         Sound_Btn.onClick.AddListener(() => OnSoundBtnClick(Sound_Btn));
         Level_Btn.onClick.AddListener(() => OnLevelBtnClick(Level_Btn));
         Buy_Btn.onClick.AddListener(() => OnBuyBtnClick(Buy_Btn));
-       // Small_Btn.onClick.AddListener(() => OnMoneyBtnClick(Small_Btn));
-        //Big_Btn.onClick.AddListener(() => OnMoneyBtnClick(Big_Btn));
+       Small_Btn.onClick.AddListener(() => OnMoneyBtnClick(Small_Btn));
+        Big_Btn.onClick.AddListener(() => OnMoneyBtnClick(Big_Btn));
         Close_Btn.onClick.AddListener(() => OnCloseBtnClick(Close_Btn));
+        Yes_Btn.onClick.AddListener(() => OnYesBtnClick(No_Btn));
         No_Btn.onClick.AddListener(() => OnNoBtnClick(No_Btn));
         Debug.Log(Home_Btn.name);
     }
@@ -190,6 +195,23 @@ public class ShopState : ISceneState
 
         Debug.Log(Click_Btn.name);
         m_Check_Window.SetActive(true);
+        m_Check_Btn = Click_Btn.gameObject;
+    }
+    private void OnYesBtnClick(Button Click_Btn)
+    {
+        if(m_Check_Btn.name == "Small" )
+        {
+            Ass.Instance._iPlayer_Point += 100;
+            PlayerPrefs.SetInt("Player_Point", Ass.Instance._iPlayer_Point);
+            m_Player_Point.GetComponent<TextMeshProUGUI>().text = Ass.Instance._iPlayer_Point.ToString();
+        }
+        else if(m_Check_Btn.name == "Big")
+        {
+            Ass.Instance._iPlayer_Point += 500;
+            PlayerPrefs.SetInt("Player_Point", Ass.Instance._iPlayer_Point);
+            m_Player_Point.GetComponent<TextMeshProUGUI>().text = Ass.Instance._iPlayer_Point.ToString();
+        }
+            m_Check_Window.SetActive(false);
     }
     private void OnNoBtnClick(Button Click_Btn)
     {

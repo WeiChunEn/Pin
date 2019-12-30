@@ -40,17 +40,21 @@ public class MainState : ISceneState
         {
             m_LeaderBoard.tag = "true";
             Leader_Btn.interactable = true;
-            
+
 
         }
         else if (info.normalizedTime >= 1.0f && info.IsName("LeaderBoard_Close") && m_LeaderBoard.tag == "true")
         {
             m_LeaderBoard.tag = "false";
             Leader_Btn.interactable = true;
-            
-        }
-       
 
+        }
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            PlayerPrefs.DeleteAll();
+            Load_Data();
+            Set_Record();
+        }
 
 
 
@@ -111,19 +115,19 @@ public class MainState : ISceneState
     {
         if (m_LeaderBoard.tag == "false")
         {
-            
-            
+
+
             m_LeaderBoard.GetComponent<Animator>().SetTrigger("Open");
-           
+
 
 
         }
         else if (m_LeaderBoard.tag == "true")
         {
-            
-            
+
+
             m_LeaderBoard.GetComponent<Animator>().SetTrigger("Close");
-           
+
 
 
         }
@@ -133,25 +137,25 @@ public class MainState : ISceneState
 
     public void Load_Data()
     {
-       
-            for (int i = 0; i < 8; i++)
+
+        for (int i = 0; i < 8; i++)
+        {
+            if (PlayerPrefs.GetString("Player_Limit_Name" + i.ToString()) != "")
             {
-                if (PlayerPrefs.GetString("Player_Limit_Name" + i.ToString()) != "")
-                {
 
-                    m_All_Limit_Record[i] = PlayerPrefs.GetString("Player_Limit_Name" + i.ToString());
-                    m_All_Limit_Int[i] = PlayerPrefs.GetInt("Player_Limit_Score" + i.ToString());
-                }
-                else
-                {
+                m_All_Limit_Record[i] = PlayerPrefs.GetString("Player_Limit_Name" + i.ToString());
+                m_All_Limit_Int[i] = PlayerPrefs.GetInt("Player_Limit_Score" + i.ToString());
+            }
+            else
+            {
 
-                    m_All_Limit_Record[i] = "未命名";
-                    m_All_Limit_Int[i] = Int32.Parse("0");
-                }
-
+                m_All_Limit_Record[i] = "未命名";
+                m_All_Limit_Int[i] = Int32.Parse("0");
             }
 
-        
+        }
+
+
 
     }
 

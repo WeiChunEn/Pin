@@ -49,7 +49,7 @@ public class GameState : ISceneState
         if(Ass.Instance._bCheck_End==true)
         {
             _mEnd_Count += Time.deltaTime;
-            if(_mEnd_Count>=5.0f)
+            if(_mEnd_Count>=10.0f)
             {
                 _mEnd_Count = 0.0f;
                 Ass.Instance._bCheck_End = false;

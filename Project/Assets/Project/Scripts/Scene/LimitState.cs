@@ -14,6 +14,7 @@ public class LimitState : ISceneState
     private GameObject m_Can_Write_Text; //告知使用者能不能寫紀錄
     private GameObject m_Write_Record_Menu; //寫紀錄的Menu
     private Button m_Write_Record_Btn; //開啟寫分數欄的按鈕
+    private GameObject m_Protected;
     private int m_Limit_Now_Record;//這次的分數
 
     public bool _bCan_Write;//判斷分數有沒有比排行的高
@@ -23,6 +24,8 @@ public class LimitState : ISceneState
     }
     public override void StateBegin()
     {
+        m_Protected = GameObject.Find("Protected");
+        m_Protected.SetActive(false);
         m_audioSource = GameObject.Find("LimitMusic").GetComponent<AudioSource>();
         m_Limit_Record = GameObject.Find("Limit_Record");
         m_Limit_Now_Name = GameObject.Find("Input_Name");
@@ -171,7 +174,7 @@ public class LimitState : ISceneState
     private void OnSetHomeBtnClick(Button Clicl_Btn)
     {
         Ass.Instance._iNow_Level = 0;
-
+        m_Protected.SetActive(true);
         m_Manager.SetState(new MainState(m_Manager), "MainScene");
     }
     private void OnRestartLimitBtnClick(Button Click_Btn)
@@ -179,6 +182,7 @@ public class LimitState : ISceneState
         Debug.Log(Click_Btn.name);
         Ass.Instance._iPlayer_Point += m_Limit_Now_Record;
         Ass.Instance.Save_Data();
+        m_Protected.SetActive(true);
         m_Manager.SetState(new LimitState(m_Manager), "LimitScene");
 
     }
@@ -188,6 +192,7 @@ public class LimitState : ISceneState
         Ass.Instance._iPlayer_Point += m_Limit_Now_Record; 
         Ass.Instance.Save_Data();
         Ass.Instance._iNow_Level = 0;
+        m_Protected.SetActive(true);
         m_Manager.SetState(new MainState(m_Manager), "MainScene");
 
     }
