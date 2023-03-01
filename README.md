@@ -7,7 +7,7 @@
 
 一般的なレベルに加えて、プレイヤーが特定の制限時間内に自分自身に挑戦できる特別なレベルもあります。 プレイヤーがこのゲームをプレイする意欲を高めるために、どのレベルでも獲得したポイントは、ショップで注射器発射エフェクト購入できますし、ゲーム中のプレーヤーがより面白くなります。<br>
 
-#### ビデオリンク(Video link)：https://drive.google.com/open?id=1EUcRc0jag1fgonZ-IsHKicu9CLSGvX9z <br>
+#### ビデオリンク(Video link)：https://drive.google.com/file/d/1-Ino66zDga9P8odAVFlodMXbXZ7uBxtz/view?usp=share_link<br>
 ### 下記図面をご参考ください
 
 ![Alt text](https://imgur.com/aMA4XPF.jpg "Start Menu")
